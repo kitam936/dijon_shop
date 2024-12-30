@@ -14,10 +14,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
-            AreaSeeder::class,
+            // AreaSeeder::class,
             UserSeeder::class,
-            CompanySeeder::class,
-            ShopSeeder::class
+            // CompanySeeder::class,
+            // ShopSeeder::class,
+            // BrandSeeder::class,
+            // UnitSeeder::class,
 
             ]);
     }

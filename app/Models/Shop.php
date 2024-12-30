@@ -41,11 +41,6 @@ class Shop extends Model
         return $this->hasMany(Sale::class);
     }
 
-    public function delivery()
-    {
-        return $this->hasMany(Delivery::class);
-    }
-
     public function stock()
     {
         return $this->hasMany(Stock::class);

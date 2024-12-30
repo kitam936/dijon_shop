@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\AnalysisController;
+use App\Http\Controllers\DataController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,10 @@ use Inertia\Inertia;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+
+Route::get('analysis',[AnalysisController::class,'index'])->name('analysis');
 
 Route::get('/', function () {
     return Inertia::render('hello-world');
@@ -32,6 +39,84 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::prefix('admin')
+->middleware('can:admin')
+->group(function(){
+    Route::get('/data/data_menu', [DataController::class, 'menu'])->name('admin.data.data_menu');
+    Route::get('/data', [DataController::class, 'create'])->name('admin.data.create');
+    Route::get('data/data_index', [DataController::class, 'index'])->name('admin.data.data_index');
+    Route::get('data/brand_index', [DataController::class, 'brand_index'])->name('admin.data.brand_index');
+    Route::get('data/unit_index', [DataController::class, 'unit_index'])->name('admin.data.unit_index');
+    Route::get('data/hinban_index', [DataController::class, 'hinban_index'])->name('admin.data.hinban_index');
+    Route::get('data/sku_index', [DataController::class, 'sku_index'])->name('admin.data.sku_index');
+    Route::get('data/col_index', [DataController::class, 'col_index'])->name('admin.data.col_index');
+    Route::get('data/size_index', [DataController::class, 'size_index'])->name('admin.data.size_index');
+    Route::get('data/area_index', [DataController::class, 'area_index'])->name('admin.data.area_index');
+    Route::get('data/company_index', [DataController::class, 'company_index'])->name('admin.data.company_index');
+    Route::get('data/shop_index', [DataController::class, 'shop_index'])->name('admin.data.shop_index');
+    Route::get('data/sales_index', [DataController::class, 'sales_index'])->name('admin.data.sales_index');
+    Route::get('data/deliv_index', [DataController::class, 'delivery_index'])->name('admin.data.deliv_index');
+    Route::get('data/stock_index', [DataController::class, 'stock_index'])->name('admin.data.stock_index');
+    Route::POST('data/stock_upload', [DataController::class, 'stock_upload'])->name('admin.data.stock_upload');
+    Route::POST('data/shop_upsert', [DataController::class, 'shop_upsert'])->name('admin.data.shop_upsert');
+    Route::POST('data/sales_upload', [DataController::class, 'sales_upload'])->name('admin.data.sales_upload');
+    Route::POST('data/deliv_upload', [DataController::class, 'delivery_upload'])->name('admin.data.deliv_upload');
+    Route::POST('data/hinban_upsert', [DataController::class, 'hinban_upsert'])->name('admin.data.hinban_upsert');
+    Route::POST('data/sku_upsert', [DataController::class, 'sku_upsert'])->name('admin.data.sku_upsert');
+    Route::POST('data/col_upsert', [DataController::class, 'col_upsert'])->name('admin.data.col_upsert');
+    Route::POST('data/size_upsert', [DataController::class, 'size_upsert'])->name('admin.data.size_upsert');
+    Route::POST('data/company_upsert', [DataController::class, 'company_upsert'])->name('admin.data.company_upsert');
+    Route::POST('data/area_upsert', [DataController::class, 'area_upsert'])->name('admin.data.area_upsert');
+    Route::POST('data/unit_upsert', [DataController::class, 'unit_upsert'])->name('admin.data.unit_upsert');
+    Route::POST('data/brand_upsert', [DataController::class, 'brand_upsert'])->name('admin.data.brand_upsert');
+    Route::get('data/shop_edit/{shop}', [DataController::class, 'shop_edit'])->name('admin.data.shop_edit');
+    Route::get('report_update/{shop}', [DataController::class, 'shop_update'])->name('admin.data.shop_update');
+    Route::post('report_update/{shop}', [DataController::class, 'shop_update'])->name('admin.data.shop_update');
+    Route::delete('report_destroy/{shop}', [DataController::class, 'shop_destroy'])->name('admin.data.shop_destroy');
+    Route::get('data/delete_index', [DataController::class, 'delete_index'])->name('admin.data.delete_index');
+    Route::delete('sales_destroy', [DataController::class, 'sales_destroy'])->name('admin.data.sales_destroy');
+    Route::delete('deliv_destroy', [DataController::class, 'deliv_destroy'])->name('admin.data.deliv_destroy');
+    Route::delete('stock_destroy', [DataController::class, 'stock_destroy'])->name('admin.data.stock_destroy');
+    Route::delete('sku_destroy', [DataController::class, 'sku_destroy'])->name('admin.data.sku_destroy');
+    Route::delete('hinban_destroy', [DataController::class, 'hinban_destroy'])->name('admin.data.hinban_destroy');
+    Route::delete('shop_destroy', [DataController::class, 'shop_destroy'])->name('admin.data.shop_destroy');
+    Route::delete('shop_destroy_all', [DataController::class, 'shop_destroy_all'])->name('admin.data.shop_destroy_all');
+    Route::delete('company_destroy', [DataController::class, 'company_destroy'])->name('admin.data.company_destroy');
+    Route::delete('area_destroy', [DataController::class, 'area_destroy'])->name('admin.data.area_destroy');
+    Route::delete('unit_destroy', [DataController::class, 'unit_destroy'])->name('admin.data.unit_destroy');
+    Route::delete('brand_destroy', [DataController::class, 'brand_destroy'])->name('admin.data.brand_destroy');
+    Route::delete('col_destroy', [DataController::class, 'col_destroy'])->name('admin.data.col_destroy');
+    Route::delete('size_destroy', [DataController::class, 'size_destroy'])->name('admin.data.size_destroy');
+    Route::delete('user_destroy/{user}', [UserController::class, 'user_destroy'])->name('admin.user_destroy');
+});
+
+Route::prefix('manager')
+->middleware('can:manager-higher')
+->group(function(){
+    Route::get('role_list', [UserController::class, 'role_list'])->name('role_list');
+    Route::get('role_edit/{user}', [UserController::class, 'role_edit'])->name('role_edit');
+    Route::get('role_update/{user}', [UserController::class, 'role_update'])->name('role_update');
+    Route::post('role_update/{user}', [UserController::class, 'role_update'])->name('role_update');
+
+
+});
+
+Route::middleware('can:user-higher')
+->group(function(){
+    Route::get('ac_info', [UserController::class, 'ac_info'])->name('ac_info');
+    Route::get('ac_info_edit/{user}', [UserController::class, 'ac_info_edit'])->name('ac_info_edit');
+    Route::get('pw_change/{user}', [UserController::class, 'pw_change'])->name('pw_change');
+    Route::post('pw_update/{user}', [UserController::class, 'pw_update'])->name('pw_update');
+    Route::get('pw_change_admin/{user}', [UserController::class, 'pw_change_admin'])->name('pw_change_admin');
+    Route::post('pw_update_admin/{user}', [UserController::class, 'pw_update_admin'])->name('pw_update_admin');
+    Route::get('memberlist', [UserController::class, 'memberlist'])->name('memberlist');
+    Route::get('member_detail/{user}', [UserController::class, 'show'])->name('member_detail');
+    Route::get('member_edit/{user}', [UserController::class, 'edit'])->name('member_edit');
+    Route::get('member_update1/{user}', [UserController::class, 'member_update_rs1'])->name('member_update1');
+    Route::post('member_update1/{user}', [UserController::class, 'member_update_rs1'])->name('member_update1');
+
 });
 
 require __DIR__.'/auth.php';

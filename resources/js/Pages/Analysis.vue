@@ -1,50 +1,50 @@
 <script setup>
-// import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-// import { Head } from '@inertiajs/vue3';
-// import FlashMessage from '@/Components/FlashMessage.vue';
-// import { onMounted, reactive ,ref, computed} from 'vue';
-// import {getToday} from '@/common/'
-// import { useForm } from '@inertiajs/inertia-vue3';
-// import axios from 'axios';
-// import Chart from '@/Components/Chart.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head } from '@inertiajs/vue3';
+import FlashMessage from '@/Components/FlashMessage.vue';
+import { onMounted, reactive ,ref, computed} from 'vue';
+import {getToday} from '@/common/'
+import { useForm } from '@inertiajs/inertia-vue3';
+import axios from 'axios';
+import Chart from '@/Components/Chart.vue'
 
-// onMounted (()=>{
-//     form.startDate = getToday()
-//     form.endDate = getToday()
-// })
+onMounted (()=>{
+    form.startDate = getToday()
+    form.endDate = getToday()
+})
 
-// const form = useForm({
-//     startDate:null,
-//     endDate:null,
-//     type:'perDay'
-// })
+const form = useForm({
+    startDate:null,
+    endDate:null,
+    type:'perDay'
+})
 
-// const data = reactive({})
+const data = reactive({})
 
-// const getData = async() =>{
-//     try{
-//         await axios.get('/api/analysis/',{
-//             params:{
-//                 startDate:form.startDate,
-//                 endDate:form.endDate,
-//                 type:form.type
+const getData = async() =>{
+    try{
+        await axios.get('/api/analysis/',{
+            params:{
+                startDate:form.startDate,
+                endDate:form.endDate,
+                type:form.type
 
-//             }
-//         })
-//         .then(res => {
-//             data.data = res.data.data
-//             if (res.data.labels) { data.labels = res.data.labels }
-//             if (res.data.eachCount) { data.eachCount = res.data.eachCount }
-//             data.totals = res.data.totals;
-//             data.previousTotals = res.data.previousTotals;
-//             data.type = res.data.type;
+            }
+        })
+        .then(res => {
+            data.data = res.data.data
+            if (res.data.labels) { data.labels = res.data.labels }
+            if (res.data.eachCount) { data.eachCount = res.data.eachCount }
+            data.totals = res.data.totals;
+            data.previousTotals = res.data.previousTotals;
+            data.type = res.data.type;
 
-//             console.log(res.data)
-//     })
-//     }catch(e){
-//         console.log(e.message)
-//     }
-// }
+            console.log(res.data)
+    })
+    }catch(e){
+        console.log(e.message)
+    }
+}
 
 </script>
 
@@ -54,7 +54,7 @@
     <div>
         <h1>Hello, Vue!  Morning analysis</h1>
     </div>
-    <!-- <Head title="データ分析" />
+    <Head title="データ分析" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -102,7 +102,7 @@
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout> -->
+    </AuthenticatedLayout>
 </template>
 
 <style scoped>
