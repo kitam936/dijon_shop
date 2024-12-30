@@ -16,6 +16,18 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('memberlist')" :active="request()->routeIs('memberlist')">
+                        Member
+                    </x-nav-link>
+                </div>
+                @can('admin')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <x-nav-link :href="route('admin.data.data_menu')" :active="request()->routeIs('admin.data.data_menu')">
+                    データ管理
+                </x-nav-link>
+                </div>
+                @endcan
             </div>
 
             <!-- Settings Dropdown -->
@@ -71,6 +83,13 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
+        @can('admin')
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('admin.data.data_menu')" :active="request()->routeIs('admin.data.deta_menu')">
+                データ管理
+            </x-responsive-nav-link>
+        </div>
+        @endcan
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
