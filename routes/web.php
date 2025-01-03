@@ -5,7 +5,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\AnalysisController;
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\TestMailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,7 +94,11 @@ Route::prefix('admin')
     Route::delete('brand_destroy', [DataController::class, 'brand_destroy'])->name('admin.data.brand_destroy');
     Route::delete('col_destroy', [DataController::class, 'col_destroy'])->name('admin.data.col_destroy');
     Route::delete('size_destroy', [DataController::class, 'size_destroy'])->name('admin.data.size_destroy');
+    Route::get('user_create', [UserController::class, 'create'])->name('admin.user_create');
+    Route::POST('user_store', [UserController::class, 'store'])->name('admin.user_store');
+    Route::get('user_edit/{user}', [UserController::class, 'edit'])->name('admin.user_edit');
     Route::delete('user_destroy/{user}', [UserController::class, 'user_destroy'])->name('admin.user_destroy');
+
 });
 
 Route::prefix('manager')
@@ -116,7 +125,30 @@ Route::middleware('can:user-higher')
     Route::get('member_edit/{user}', [UserController::class, 'edit'])->name('member_edit');
     Route::get('member_update1/{user}', [UserController::class, 'member_update_rs1'])->name('member_update1');
     Route::post('member_update1/{user}', [UserController::class, 'member_update_rs1'])->name('member_update1');
-
+    Route::get('shop_index', [ShopController::class, 'index'])->name('shop_index');
+    Route::get('shop_show/{shop}', [ShopController::class, 'show'])->name('shop_show');
+    Route::get('product_index', [ProductController::class, 'index'])->name('product_index');
+    Route::get('product_show/{hinban}', [ProductController::class, 'show'])->name('product_show');
+    Route::get('sku_stock/{sku}', [ProductController::class, 'sku_zaiko'])->name('sku_stock');
+    Route::get('report_list', [ReportController::class, 'report_list'])->name('report_list');
+    Route::get('report_detail/{report}', [ReportController::class, 'report_detail'])->name('report_detail');
+    Route::get('report_create/{shop}', [ReportController::class, 'report_create'])->name('report_create');
+    Route::get('report_create2', [ReportController::class, 'report_create2'])->name('report_create2');
+    Route::post('report_store', [ReportController::class, 'report_store_rs'])->name('report_store');
+    Route::post('report_store2', [ReportController::class, 'report_store_rs2'])->name('report_store2');
+    Route::get('report_edit/{report}', [ReportController::class, 'report_edit'])->name('report_edit');
+    Route::post('report_update/{report}', [ReportController::class, 'report_update_rs'])->name('report_update');
+    Route::delete('report_destroy/{report}', [ReportController::class, 'report_destroy'])->name('report_destroy');
+    Route::get('report_image1/{report}', [ReportController::class, 'image1_show'])->name('report_image1');
+    Route::get('report_image2/{report}', [ReportController::class, 'image2_show'])->name('report_image2');
+    Route::get('report_image3/{report}', [ReportController::class, 'image3_show'])->name('report_image3');
+    Route::get('report_image4/{report}', [ReportController::class, 'image4_show'])->name('report_image4');
+    Route::get('comment_detail/{comment}', [CommentController::class, 'comment_detail'])->name('comment_detail');
+    Route::get('comment_create/{report}', [CommentController::class, 'comment_create'])->name('comment_create');
+    Route::post('comment_store', [CommentController::class, 'comment_store'])->name('comment_store');
+    Route::get('comment_edit/{comment}', [CommentController::class, 'comment_edit'])->name('comment_edit');
+    Route::post('comment_update/{comment}', [CommentController::class, 'comment_update'])->name('comment_update');
+    Route::delete('comment_destroy/{comment}', [CommentController::class, 'comment_destroy'])->name('comment_destroy');
 });
 
 require __DIR__.'/auth.php';

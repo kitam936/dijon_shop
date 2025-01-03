@@ -18,7 +18,7 @@
                        データを{{ $count }}件　登録しました。
                     </div>
                     <div class="pl-20">
-                        <button onclick="location.href='{{ route('admin.data.create') }}'" class="text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded ">データ管理画面</button>
+                        <button onclick="location.href='{{ route('admin.data.create') }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">データ管理画面</button>
                     </div>
                 </div>
             </div>

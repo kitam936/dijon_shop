@@ -427,8 +427,9 @@ class DataController extends Controller
                 $data_arr[$i]['price'] = $line[7];
                 $data_arr[$i]['cost'] = $line[8];
                 $data_arr[$i]['hinban_info'] = $line[9];
-				$data_arr[$i]['created_at'] = $line[10];
-				$data_arr[$i]['updated_at'] = $line[11];
+                $data_arr[$i]['vendor_id'] = $line[10];
+				$data_arr[$i]['created_at'] = $line[11];
+				$data_arr[$i]['updated_at'] = $line[12];
                 $count++;
 			}
 

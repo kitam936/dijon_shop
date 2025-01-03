@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('hinban_image')
             ->nullable();
             $table->text('hinban_info')->nullable();
+            $table->integer('vendor_id');
             $table->timestamps();
         });
     }
