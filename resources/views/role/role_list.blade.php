@@ -27,11 +27,11 @@
                         <input class="w-44 h-8 ml-0 md:ml-4 rounded text-sm pt-1" id="user_name" placeholder="Name入力検索" name="user_name"  class="border">
 
                 <div class="ml-2 md:ml-4">
-                    <button type="button" class="w-32 h-8 bg-indigo-500 text-white ml-2 hover:bg-indigo-600 rounded" onclick="location.href='{{ route('role_list') }}'" >全表示</button>
+                    <button type="button" class="w-32 h-8 text-sm bg-indigo-500 text-white ml-2 hover:bg-indigo-600 rounded" onclick="location.href='{{ route('role_list') }}'" >全表示</button>
                 </div>
 
                 <div class="ml-2 md:ml-4">
-                    <button type="button" class="w-32 h-8 bg-indigo-500 text-white ml-2 hover:bg-indigo-600 rounded"  onclick="location.href='{{ route('memberlist') }}'" >MemberList</button>
+                    <button type="button" class="w-32 h-8 text-sm bg-indigo-500 text-white ml-2 hover:bg-indigo-600 rounded"  onclick="location.href='{{ route('memberlist') }}'" >Memberリスト</button>
                 </div>
             </div>
 

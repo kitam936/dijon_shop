@@ -16,9 +16,12 @@
         @can('admin')
 
         <div class="flex md:ml-32">
-        <div class="ml-2 mb-0 md:mb-0">
-            <button type="button" onclick="location.href='{{ route('pw_change_admin',['user'=>$user->id])}}'" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-600 rounded ">パスワード変更</button>
-        </div>
+            <div class="ml-2 mb-0 md:mb-0">
+                <button type="button" onclick="location.href='{{ route('admin.user_edit',['user'=>$user->id])}}'" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-600 rounded ">編集</button>
+            </div>
+            <div class="ml-2 mb-0 md:mb-0">
+                <button type="button" onclick="location.href='{{ route('pw_change_admin',['user'=>$user->id])}}'" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-600 rounded ">パスワード変更</button>
+            </div>
 
         <form id="delete_{{$user->id}}" method="POST" action="{{ route('admin.user_destroy',['user'=>$user->id]) }}">
             @csrf

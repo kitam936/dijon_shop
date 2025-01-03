@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Storage;
 use InterventionImage;
 use App\Models\Role;
 use App\Models\User;
+use Throwable;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -23,17 +25,49 @@ class UserController extends Controller
         ->get();
         $users = DB::table('users')
         ->join('roles','roles.id','=','users.role_id')
-        ->select('users.id','users.name','users.role_id','roles.role_name','users.user_info')
-
-        ->where('users.role_id','LIKE','%'.($request->role_id).'%')
-        ->where('users.name','LIKE','%'.($request->user_name).'%')
-        ->paginate(30);
+        ->select('users.id','users.name','users.role_id','roles.role_name','users.user_info','users.mailService')
+        ->where('users.user_info','LIKE','%'.($request->search).'%')
+        ->orWhere('users.name','LIKE','%'.($request->search).'%')
+        ->paginate(50);
         $login_user = User::findOrFail(Auth::id());
 
                 // dd($companies,$areas,$shops);
 
         return view('user.index',compact('roles','users','login_user'));
         // dd($roles,$areas,$users);
+    }
+
+    public function create()
+    {
+        return view('user.create');
+    }
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'user_info' => ['string', 'max:255'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        try{
+            DB::transaction(function()use($request){
+                User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'user_info' => $request->user_info,
+                    'password' => Hash::make($request->password),
+                ]);
+
+            },2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
+
+        return to_route('memberlist')->with(['message'=>'登録されました','status'=>'info']);
     }
 
     public function show($id)
@@ -55,62 +89,15 @@ class UserController extends Controller
     {
         $login_user=Auth::id();
         $user = DB::table('users')
-        ->join('areas','areas.id','=','users.area_id')
         ->join('roles','roles.id','=','users.role_id')
         ->where('users.id',$id)
-        ->select('users.id','users.name','users.name_kana','users.email','users.role_id','roles.role_name','users.area_id','areas.area_name','users.user_info','users.photo1','users.photo2',)
+        ->select('users.id','users.name','users.email','users.role_id','roles.role_name','users.user_info','users.mailService')
         ->first();
-        $areas = DB::table('areas')
-        ->select(['areas.id','areas.area_name'])
-        ->get();
+
         // dd($companies,$areas,$shops);
 
-        return view('user.member_edit',compact('login_user','user','areas'));
+        return view('user.member_edit',compact('login_user','user'));
         // dd($login_user,$user);
-    }
-
-    public function member_update_rs11(Request $request, $id)
-    {
-        $user=User::findOrFail($id);
-
-        $login_user = User::findOrFail(Auth::id());
-
-        if(!is_null($request->file('photo1'))){
-            $fileName1 = uniqid(rand().'_');
-            $extension1 = $request->file('photo1')->extension();
-            $fileNameToStore1 = $fileName1. '.' . $extension1;
-            $resizedImage1 = InterventionImage::make($request->file('photo1'))->resize(400, 400,function($constraint){$constraint->aspectRatio();})->encode();
-            Storage::put('public/user/' . $fileNameToStore1, $resizedImage1 );
-        }else{
-            $fileNameToStore1 = $user->photo1;
-        };
-
-        if(!is_null($request->file('photo2'))){
-            $fileName2 = uniqid(rand().'_');
-            $extension2 = $request->file('photo2')->extension();
-            $fileNameToStore2 = $fileName2. '.' . $extension2;
-            $resizedImage2 = InterventionImage::make($request->file('photo2'))->resize(400, 400,function($constraint){$constraint->aspectRatio();})->encode();
-            Storage::put('public/user/' . $fileNameToStore2, $resizedImage2 );
-        }else{
-            $fileNameToStore2 = $user->photo2;
-        };
-
-        $user->name = $request->name;
-        $user->name_kana = $request->name_kana;
-        $user->email = $request->email;
-        // $user->password = $request->password;
-        $user->user_info = $request->user_info;
-        $user->area_id = $request->area_id;
-        $user->photo1 = $fileNameToStore1;
-        $user->photo2 = $fileNameToStore2;
-
-
-
-        // dd($request->name,$request->name_kana,$request->realname,$request->realname_kana,$request->user_info,);
-
-        $user->save();
-
-        return to_route('ac_info')->with(['message'=>'アカウント情報が更新されました','status'=>'info']);
     }
 
     public function member_update_rs1(Request $request, $id)
@@ -119,54 +106,13 @@ class UserController extends Controller
 
         $login_user = User::findOrFail(Auth::id());
 
-        // dd($user->photo1,$request->photo2);
-
-        $filrPath1 = 'public/user/' . $user->photo1;
-        if(!empty($request->photo1) && (Storage::exists($filrPath1))){
-            Storage::delete($filrPath1);
-            // dd($filrPath1,$request->photo1);
-        }
-        $filrPath2 = 'public/user/' . $user->photo2;
-        if((!empty($request->photo2))&&(Storage::exists($filrPath2))){
-            Storage::delete($filrPath2);
-        }
-
-        if(!is_null($request->file('photo1'))){
-            $fileName1 = uniqid(rand().'_');
-            $extension1 = $request->file('photo1')->extension();
-            $fileNameToStore1 = $fileName1. '.' . $extension1;
-            $resizedImage1 = InterventionImage::make($request->file('photo1'))->resize(400, 400,function($constraint){$constraint->aspectRatio();})->encode();
-            Storage::put('public/user/' . $fileNameToStore1, $resizedImage1 );
-        }else{
-            $fileNameToStore1 = $user->photo1;
-        };
-
-        if(!is_null($request->file('photo2'))){
-            $fileName2 = uniqid(rand().'_');
-            $extension2 = $request->file('photo2')->extension();
-            $fileNameToStore2 = $fileName2. '.' . $extension2;
-            $resizedImage2 = InterventionImage::make($request->file('photo2'))->resize(400, 400,function($constraint){$constraint->aspectRatio();})->encode();
-            Storage::put('public/user/' . $fileNameToStore2, $resizedImage2 );
-        }else{
-            $fileNameToStore2 = $user->photo2;
-        };
-
         $user->name = $request->name;
-        $user->name_kana = $request->name_kana;
         $user->email = $request->email;
-        // $user->password = $request->password;
+        $user->mailService = $request->mailService;
         $user->user_info = $request->user_info;
-        $user->area_id = $request->area_id;
-        $user->photo1 = $fileNameToStore1;
-        $user->photo2 = $fileNameToStore2;
-
-
-
-        // dd($request->name,$request->name_kana,$request->realname,$request->realname_kana,$request->user_info,);
-
         $user->save();
 
-        return to_route('ac_info')->with(['message'=>'アカウント情報が更新されました','status'=>'info']);
+        return to_route('memberlist')->with(['message'=>'情報が更新されました','status'=>'info']);
     }
 
 
@@ -184,7 +130,7 @@ class UserController extends Controller
 
         User::findOrFail($id)->delete();
 
-        return to_route('memberlist')->with(['message'=>'メンバーアカウントが削除されました','status'=>'alert']);
+        return to_route('memberlist')->with(['message'=>'メンバーが削除されました','status'=>'alert']);
     }
 
     public function role_list(Request $request)
@@ -265,49 +211,9 @@ class UserController extends Controller
 
         $user->save();
 
-        return to_route('role_list')->with(['message'=>'Role情報が更新されました','status'=>'info']);
+        return to_route('role_list')->with(['message'=>'情報が更新されました','status'=>'info']);
     }
 
-    public function ac_info()
-    {
-
-        $user=User::findOrFail(Auth::id());
-
-        $user2 = DB::table('users')
-        ->join('areas','areas.id','=','users.area_id')
-        ->join('roles','roles.id','=','users.role_id')
-        ->where('users.id',$user->id)
-        ->select('users.id','users.name','users.name_kana','users.email','users.role_id','roles.role_name','users.area_id','areas.area_name','users.user_info','users.photo1','users.photo2',)
-        ->first();
-
-        $favorites = DB::table('favorites')
-        ->join('circuits','circuits.id','=','favorites.cir_id')
-        ->join('areas','areas.id','=','circuits.area_id')
-        ->where('favorites.user_id',Auth::id())
-        ->paginate(20);
-
-        return view('user.ac_info',compact('user','user2','favorites'));
-        // dd($user2);
-    }
-
-    public function ac_info_edit($id)
-    {
-        $login_user=User::findOrFail(Auth::id());
-
-        $user = DB::table('users')
-        ->join('areas','areas.id','=','users.area_id')
-        ->join('roles','roles.id','=','users.role_id')
-        ->where('users.id',$id)
-        ->select('users.id','users.name','users.name_kana','users.email','users.role_id','roles.role_name','users.area_id','areas.area_name','users.user_info','users.photo1','users.photo2',)
-        ->first();
-
-        $areas = DB::table('areas')
-        ->select(['areas.id','areas.area_name'])
-        ->get();
-        // dd($companies,$areas,$shops);
-
-        return view('user.ac_info_edit',compact('login_user','user','areas'));
-    }
 
     public function pw_change($id)
     {

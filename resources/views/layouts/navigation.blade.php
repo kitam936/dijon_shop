@@ -4,10 +4,8 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        {{-- <x-application-logo class="block h-6 w-24 fill-current text-gray-800" /> --}}
-                    </a>
+                <div class="w-12 shrink-0 flex items-center">
+                    <x-application-logo class="block w-12 fill-current text-gray-800" />
                 </div>
 
                 <!-- Navigation Links -->
@@ -19,6 +17,21 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('memberlist')" :active="request()->routeIs('memberlist')">
                         Member
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('shop_index')" :active="request()->routeIs('shop_index')">
+                        Shop
+                    </x-nav-link>
+                </div>
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('report_list')" :active="request()->routeIs('report_list')">
+                        店舗Report
+                    </x-nav-link>
+                </div> --}}
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('product_index')" :active="request()->routeIs('product_index')">
+                        商品
                     </x-nav-link>
                 </div>
                 @can('admin')
@@ -81,6 +94,26 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('memberlist')" :active="request()->routeIs('memberlist')">
+                Member
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('shop_index')" :active="request()->routeIs('shop_index')">
+                Shop
+            </x-responsive-nav-link>
+        </div>
+        {{-- <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('report_list')" :active="request()->routeIs('report_list')">
+                売上分析
+            </x-responsive-nav-link>
+        </div> --}}
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('product_index')" :active="request()->routeIs('product_index')">
+                商品
             </x-responsive-nav-link>
         </div>
         @can('admin')
