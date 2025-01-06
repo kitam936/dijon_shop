@@ -23,9 +23,10 @@ class ProductController extends Controller
         ->where('hinbans.year_code','LIKE','%'.($request->year_code).'%')
         ->where('units.season_id','LIKE','%'.($request->season_code).'%')
         ->where('hinbans.unit_id','LIKE','%'.($request->unit_code).'%')
+        ->where('hinbans.face','LIKE','%'.($request->face).'%')
         ->where('hinbans.brand_id','LIKE','%'.($request->brand_code).'%')
         ->where('hinbans.id','LIKE','%'.($request->hinban_code).'%')
-        ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id as hinban_id','hinbans.hinban_name','hinbans.m_price','hinbans.price'])
+        ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id as hinban_id','hinbans.hinban_name','hinbans.m_price','hinbans.price','hinbans.face'])
         ->orderBy('hinbans.year_code','desc')
         ->orderBy('hinbans.brand_id','asc')
         ->orderBy('hinbans.id','desc')
@@ -36,12 +37,19 @@ class ProductController extends Controller
         ->groupBy(['year_code'])
         ->orderBy('year_code','desc')
         ->get();
+        $faces=DB::table('hinbans')
+        ->whereNotNull('face')
+        ->select(['face'])
+        ->groupBy(['face'])
+        ->orderBy('face','asc')
+        ->get();
         $seasons=DB::table('units')
         ->select(['season_id','season_name'])
         ->groupBy(['season_id','season_name'])
         ->orderBy('season_id','asc')
         ->get();
         $units=DB::table('units')
+        ->where('units.season_id','LIKE','%'.$request->season_code.'%')
         ->select(['id'])
         ->groupBy(['id'])
         ->orderBy('id','asc')
@@ -52,7 +60,7 @@ class ProductController extends Controller
         ->orderBy('id','asc')
         ->get();
 
-        return view('product.index',compact('products','seasons','units','years','products_sele','brands'));
+        return view('product.index',compact('products','seasons','units','years','products_sele','brands','faces'));
     }
 
     public function show($id)

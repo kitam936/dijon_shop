@@ -61,6 +61,7 @@
                         <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">年</th>
                         <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">BR</th>
                         <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">UNIT</th>
+                        <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Face</th>
                         <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">品番</th>
                         <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">品名</th>
                         <th class="w-3/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">元売価</th>
@@ -74,6 +75,7 @@
                         <td class="w-1/15 md:px-4 py-1"> {{ $product->year_code }} </td>
                         <td class="w-1/15 md:px-4 py-1">{{ $product->brand_id }}</td>
                         <td class="w-1/15 md:px-4 py-1"> {{ $product->unit_id }}</td>
+                        <td class="w-1/15 md:px-4 py-1"> {{ $product->face }}</td>
                         <td class="w-2/15 md:px-4 py-1"> {{ $product->id }}</td>
                         <td class="w-4/15 md:px-4 py-1 text-left">{{ $product->hinban_name }}</td>
                         <td class="w-1/15 md:px-4 py-1 text-right">{{ number_format($product->m_price )}}</td>

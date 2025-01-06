@@ -15,6 +15,11 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('analysis_index')" :active="request()->routeIs('analysis_index')">
+                        売上Data
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('memberlist')" :active="request()->routeIs('memberlist')">
                         Member
                     </x-nav-link>
@@ -34,10 +39,11 @@
                         商品
                     </x-nav-link>
                 </div>
+
                 @can('admin')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                 <x-nav-link :href="route('admin.data.data_menu')" :active="request()->routeIs('admin.data.data_menu')">
-                    データ管理
+                        データ管理
                 </x-nav-link>
                 </div>
                 @endcan
@@ -97,6 +103,11 @@
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('analysis_index')" :active="request()->routeIs('analysis_index')">
+                売上Data
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('memberlist')" :active="request()->routeIs('memberlist')">
                 Member
             </x-responsive-nav-link>
@@ -116,6 +127,7 @@
                 商品
             </x-responsive-nav-link>
         </div>
+
         @can('admin')
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('admin.data.data_menu')" :active="request()->routeIs('admin.data.deta_menu')">

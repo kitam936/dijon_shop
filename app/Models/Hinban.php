@@ -26,6 +26,7 @@ class Hinban extends Model
         'cost',
         'hinban_info',
         'vendor_id',
+        'face',
         'hinban_image'
     ];
 
