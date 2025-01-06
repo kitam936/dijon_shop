@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('brand_id')->constrained();
             $table->foreignId('unit_id');
             $table->integer('year_code');
-            $table->integer('shohin_gun');
+            $table->integer('shohin_gun')->nullable();
             $table->string('hinban_name');
             $table->integer('m_price');
             $table->integer('price');
@@ -27,6 +27,7 @@ return new class extends Migration
             ->nullable();
             $table->text('hinban_info')->nullable();
             $table->integer('vendor_id');
+            $table->string('face')->nullable();
             $table->timestamps();
         });
     }

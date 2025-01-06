@@ -83,7 +83,7 @@ class DataController extends Controller
         ->where('year_code','LIKE','%'.$request->year_code.'%')
         ->where('brand_id','LIKE','%'.$request->brand_code.'%')
         ->where('unit_id','LIKE','%'.$request->unit_code.'%')
-        ->paginate(15);
+        ->paginate(100);
         $years=DB::table('hinbans')
         ->select(['year_code'])
         ->groupBy(['year_code'])
@@ -428,8 +428,9 @@ class DataController extends Controller
                 $data_arr[$i]['cost'] = $line[8];
                 $data_arr[$i]['hinban_info'] = $line[9];
                 $data_arr[$i]['vendor_id'] = $line[10];
-				$data_arr[$i]['created_at'] = $line[11];
-				$data_arr[$i]['updated_at'] = $line[12];
+                $data_arr[$i]['face'] = $line[11];
+				$data_arr[$i]['created_at'] = $line[12];
+				$data_arr[$i]['updated_at'] = $line[13];
                 $count++;
 			}
 

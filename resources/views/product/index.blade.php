@@ -40,19 +40,31 @@
                         <option value="{{ $unit->id }}" @if(\Request::get('unit_code') == $unit->id ) selected @endif >{{ $unit->id  }}</option>
                     @endforeach
                     </select>
+
+                </div>
+                <div>
+                    <label for="face" class="mr-4 md:mr-0 items-center text-sm mt-2  text-gray-800 dark:text-gray-200 leading-tight" >Face：</label>
+                    <select class="w-24 h-8 rounded text-sm pt-1 mr-4 mb-2 border " id="face" name="face" type="text" >
+                    <option value="" @if(\Request::get('face') == '0') selected @endif >指定なし</option>
+                    @foreach ($faces as $face)
+                        <option value="{{ $face->face }}" @if(\Request::get('face') == $face->face ) selected @endif >{{ $face->face  }}</option>
+                    @endforeach
+                    </select>
+                </div>
+
                 </div>
                 <div class="flex">
-                    <label for="hinban_code" class="items-center text-sm mt-2 mr-1 text-gray-800 dark:text-gray-200 leading-tight" >品番CD：</label>
+                    <label for="hinban_code" class="items-center text-sm mt-2 mr-0 text-gray-800 dark:text-gray-200 leading-tight" >品番CD：</label>
                     <input class="w-44 h-8 rounded text-sm pt-1" id="hinban_code" placeholder="品番入力（一部でも可）" name="hinban_code" type="number" class="border">
                     <div>
                     <button  type="button" class="w-24 h-8 ml-2 text-center text-gray-900 bg-gray-200 border-0 py-0 px-2 focus:outline-none hover:bg-gray-300 rounded">品番検索</button>
                     </div>
+                    <div class="pl-2 mt-0 md:mt-0 md:ml-0 ml-2 ">
+                        <button type="button" class="w-20 h-8 bg-indigo-500 text-white ml-0 hover:bg-indigo-600 rounded lg:ml-2 " onclick="location.href='{{ route('product_index') }}'" >全表示</button>
+                    </div>
+                </div>
 
-                </div>
-                <div class="pl-2 mt-2 md:mt-0 md:ml-0 ml-14 ">
-                    <button type="button" class="w-20 h-8 bg-indigo-500 text-white ml-0 hover:bg-indigo-600 rounded lg:ml-2 " onclick="location.href='{{ route('product_index') }}'" >全表示</button>
-                </div>
-            </div>
+
         </form>
     </x-slot>
 
@@ -70,6 +82,7 @@
                         <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">BR</th>
                         <th class="w-2/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">季節</th>
                         <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">UNIT</th>
+                        <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Face</th>
                         <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">品番</th>
                         <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">品名</th>
                         <th class="w-3/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">元売価</th>
@@ -84,6 +97,7 @@
                         <td class="w-1/15 md:px-4 py-1">{{ $product->brand_id }}</td>
                         <td class="w-1/15 md:px-4 py-1">{{ $product->season_name }}</td>
                         <td class="w-1/15 md:px-4 py-1"> {{ $product->unit_id }}</td>
+                        <td class="w-1/15 md:px-4 py-1"> {{ $product->face }}</td>
                         <td class="w-2/15 md:px-4 py-1"> <a href="{{ route('product_show',['hinban'=>$product->id]) }}" class="w-20 h-8 bg-indigo-500 text-white ml-2 hover:bg-indigo-600 rounded"  >{{ $product->hinabn_id }}</a></td>
                         <td class="w-4/15 md:px-4 py-1 text-left">{{ Str::limit($product->hinban_name,20) }}</td>
                         <td class="w-1/15 md:px-4 py-1 text-right">{{ number_format($product->m_price )}}</td>
@@ -113,6 +127,7 @@
                         <th class="w-1/15 h-4 md:px-2 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">BR</th>
                         <th class="w-3/15 h-4 md:px-2 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">季節</th>
                         <th class="w-1/15 h-4 md:px-2 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">UNIT</th>
+                        <th class="w-1/15 h-4 md:px-2 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Face</th>
                         <th class="w-1/15 h-4 md:px-2 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">品番</th>
                         <th class="w-4/15 h-4 md:px-2 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">品名</th>
                         <th class="w-1/15 h-4 md:px-2 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">元売価</th>
@@ -128,6 +143,7 @@
                         <td class="w-1/15 h-2 md:px-2 py-0">{{ $product->brand_id }}</td>
                         <td class="w-3/15 h-2 text-sm md:px-2 py-0 md:text-ml">{{ $product->season_name }}</td>
                         <td class="w-1/15 h-2 md:px-2 py-0"> {{ $product->unit_id }}</td>
+                        <td class="w-1/15 md:px-4 py-1"> {{ $product->face }}</td>
                         <td class="w-1/15 h-2 md:px-2 py-0"><a href="{{ route('product_show',['hinban'=>$product->hinban_id]) }}" class=text-blue-500> {{ $product->hinban_id }}</a></td>
                         <td class="w-4/15 h-2 pl-2 text-sm md:px-2 py-0 text-left ">{{ Str::limit($product->hinban_name,20) }}</td>
                         <td class="w-1/15 h-2 px-2 md:px-2 py-0 text-right">{{ number_format($product->m_price )}}</td>
@@ -144,6 +160,7 @@
                 'brand_code'=>\Request::get('brand_code'),
                 'season_code'=>\Request::get('season_code'),
                 'unit_code'=>\Request::get('unit_code'),
+                'face'=>\Request::get('face'),
                 'hinban_code'=>\Request::get('hinban_code'),
             ])->links()}}
         </div>
@@ -169,6 +186,11 @@
 
         const unit = document.getElementById('unit_code')
         unit.addEventListener('change', function(){
+        this.form.submit()
+        })
+
+        const face = document.getElementById('face')
+        face.addEventListener('change', function(){
         this.form.submit()
         })
 

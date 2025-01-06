@@ -149,6 +149,9 @@ Route::middleware('can:user-higher')
     Route::get('comment_edit/{comment}', [CommentController::class, 'comment_edit'])->name('comment_edit');
     Route::post('comment_update/{comment}', [CommentController::class, 'comment_update'])->name('comment_update');
     Route::delete('comment_destroy/{comment}', [CommentController::class, 'comment_destroy'])->name('comment_destroy');
+    Route::get('analysis_index', [AnalysisController::class, 'analysis_index'])->name('analysis_index');
+    Route::get('sales_transition', [AnalysisController::class, 'sales_transition'])->name('sales_transition');
+    Route::get('sales_total', [AnalysisController::class, 'sales_total'])->name('sales_total');
 });
 
 require __DIR__.'/auth.php';
