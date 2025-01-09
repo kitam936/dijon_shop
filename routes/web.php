@@ -11,6 +11,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TestMailController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -152,6 +153,13 @@ Route::middleware('can:user-higher')
     Route::get('analysis_index', [AnalysisController::class, 'analysis_index'])->name('analysis_index');
     Route::get('sales_transition', [AnalysisController::class, 'sales_transition'])->name('sales_transition');
     Route::get('sales_total', [AnalysisController::class, 'sales_total'])->name('sales_total');
+    Route::get('sales_product', [AnalysisController::class, 'sales_product'])->name('sales_product');
+    Route::get('stocks_product', [AnalysisController::class, 'stocks_product'])->name('stocks_product');
+    Route::get('sales_transition_reset', [AnalysisController::class, 'sales_transition_reset'])->name('sales_transition_reset');
+    Route::get('sales_total_reset', [AnalysisController::class, 'sales_total_reset'])->name('sales_total_reset');
+    Route::get('sales_product_reset', [AnalysisController::class, 'sales_product_reset'])->name('sales_product_reset');
+    Route::get('stocks_product_reset', [AnalysisController::class, 'stocks_product_reset'])->name('stocks_product_reset');
+    Route::get('order_index', [OrderController::class, 'order_index'])->name('order_index');
 });
 
 require __DIR__.'/auth.php';

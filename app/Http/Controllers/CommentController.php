@@ -58,7 +58,7 @@ class CommentController extends Controller
 
         foreach($users as $user){
             // $comment_info = $comment_info[0];
-            dd($request->report_id2,$user,$comment_info);
+            // dd($request->report_id2,$user,$comment_info);
             SendCommentMail::dispatch($comment_info,$user);
         }
 

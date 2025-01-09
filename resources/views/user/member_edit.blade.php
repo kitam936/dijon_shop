@@ -27,8 +27,24 @@
 
                     <div class="-m-2">
                         <div class="px-2 mx-auto">
+                            <div class="flex ml-0 mb-2  md:mb-1">
+                                <div class="relative ml-0 mt-2 px-0 py-1">
+                                    <div>
+                                    <label for="sh_id" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">所属</label>
+                                    </div>
+                                    <div>
+                                        <select class="w-80 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" id="sh_id" name="sh_id"  class="border">
+                                            <option value="" @if(\Request::get('sh_id') == '0') selected @endif >{{ $user->shop_name }}</option>
+                                            <option value="{{ $user->shop_id }}" @if(\Request::get('sh_id') == '0') selected @endif ></option>
+                                            @foreach ($shops as $shop)
+                                                <option value="{{ $shop->id }}" @if(\Request::get('sh_id') == $shop->id) selected @endif >{{ $shop->shop_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="relative">
-                                <label for="name" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">ニックネーム</label>
+                                <label for="name" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">名前</label>
                                 <input id="name" name="name" value=" {{ $user->name }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></input>
                             </div>
 

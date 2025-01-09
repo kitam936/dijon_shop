@@ -76,7 +76,7 @@
                     @foreach ($reports as $report)
                     <tr>
                         {{-- <td class="w-2/12 md:px-4 py-1 text-left">  {{ $report->id }} </td> --}}
-                        <td class="w-3/15 text-sm md:px-4 py-1 text-left">  {{ Str::limit($report->created_at,10) }} </td>
+                        <td class="w-3/15 text-sm md:px-4 py-1 text-left"> {{\Carbon\Carbon::parse($report->created_at)->format("y/m/d H:i")}} </td>
                         <td class="w-2/15 pr-2 text-sm md:px-4 py-1 text-left">  {{ Str::limit($report->area_name,8) }} </td>
                         <td class="w-4/15 text-sm md:px-4 py-1 text-left">  {{ Str::limit($report->co_name,10) }} </td>
                         <td class="w-4/15 pl-2 text-sm md:px-4 py-1 text-left">  {{ Str::limit($report->shop_name,12) }} </td>

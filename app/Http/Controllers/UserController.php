@@ -11,6 +11,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Storage;
 use InterventionImage;
 use App\Models\Role;
+use App\Models\Shop;
 use App\Models\User;
 use Throwable;
 use Illuminate\Support\Facades\Log;
@@ -25,7 +26,8 @@ class UserController extends Controller
         ->get();
         $users = DB::table('users')
         ->join('roles','roles.id','=','users.role_id')
-        ->select('users.id','users.name','users.role_id','roles.role_name','users.user_info','users.mailService')
+        ->join('shops','shops.id','=','users.shop_id')
+        ->select('users.id','users.name','users.role_id','roles.role_name','users.user_info','shops.shop_name','users.mailService')
         ->where('users.user_info','LIKE','%'.($request->search).'%')
         ->orWhere('users.name','LIKE','%'.($request->search).'%')
         ->paginate(50);
@@ -39,7 +41,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('user.create');
+        $shops = Shop::All();
+        return view('user.create',compact('shops'));
     }
 
 
@@ -58,6 +61,7 @@ class UserController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'user_info' => $request->user_info,
+                    'shop_id' => $request->sh_id,
                     'password' => Hash::make($request->password),
                 ]);
 
@@ -75,8 +79,9 @@ class UserController extends Controller
         $login_user = User::findOrFail(Auth::id());
         $user = DB::table('users')
         ->join('roles','roles.id','=','users.role_id')
+        ->join('shops','shops.id','=','users.shop_id')
         ->where('users.id',$id)
-        ->select('users.id','users.name','users.email','users.role_id','roles.role_name','users.user_info')
+        ->select('users.id','users.name','users.email','users.role_id','roles.role_name','users.user_info','shops.shop_name')
         ->first();
 
 
@@ -90,13 +95,15 @@ class UserController extends Controller
         $login_user=Auth::id();
         $user = DB::table('users')
         ->join('roles','roles.id','=','users.role_id')
+        ->join('shops','shops.id','=','users.shop_id')
         ->where('users.id',$id)
-        ->select('users.id','users.name','users.email','users.role_id','roles.role_name','users.user_info','users.mailService')
+        ->select('users.id','users.name','users.email','users.role_id','roles.role_name','users.user_info','users.mailService','users.shop_id','shops.shop_name')
         ->first();
+        $shops = Shop::All();
 
         // dd($companies,$areas,$shops);
-
-        return view('user.member_edit',compact('login_user','user'));
+        // dd($shops,$user);
+        return view('user.member_edit',compact('login_user','user','shops'));
         // dd($login_user,$user);
     }
 
@@ -110,6 +117,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->mailService = $request->mailService;
         $user->user_info = $request->user_info;
+        $user->shop_id = $request->sh_id;
         $user->save();
 
         return to_route('memberlist')->with(['message'=>'情報が更新されました','status'=>'info']);
@@ -142,7 +150,8 @@ class UserController extends Controller
 
         $users = DB::table('users')
         ->join('roles','roles.id','=','users.role_id')
-        ->select('users.id','users.name','users.role_id','roles.role_name','users.user_info')
+        ->join('shops','shops.id','=','users.shop_id')
+        ->select('users.id','users.name','users.role_id','roles.role_name','users.user_info','shop_name')
         ->where('users.role_id','LIKE','%'.($request->role_id).'%')
         ->where('users.name','LIKE','%'.($request->user_name).'%')
         ->paginate(50);

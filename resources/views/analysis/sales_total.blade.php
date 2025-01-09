@@ -2,10 +2,15 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            累計売上順位<br>
+            社店累計売上順<br>
         </h2>
-        <div class="pl-2 mt-0 md:mt-0 md:ml-60 ml-40 ">
-            <button type="button" class="w-32 h-8 bg-indigo-500 text-white hover:bg-indigo-600 rounded lg:ml-2 " onclick="location.href='{{ route('analysis_index') }}'" >Menu</button>
+        <div class="flex">
+            <div class="pl-2 mt-2 ml-12 ">
+                <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('analysis_index') }}'" >DataMenu</button>
+            </div>
+            <div class="pl-2 mt-2  ml-20 ">
+                <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('sales_total_reset') }}'" >選択リセット</button>
+            </div>
         </div>
 
         {{-- <span class="items-center text-sm mt-2 text-gray-800 dark:text-gray-200 leading-tight" >　※Brand・店舗を選択してください　　　</span> --}}
@@ -31,14 +36,14 @@
             </div> --}}
             <div class="flex mb-2">
                 <label for="YW1" class="items-center text-sm mt-1 " >期間  (週) </label>
-                <select class="w-32 h-8 md:ml-8 rounded text-sm items-center pt-1" id="YW1" name="YW1" type="number" >
+                <select class="w-36 h-8 ml-6 rounded text-sm items-center pt-1" id="YW1" name="YW1" type="number" >
                     <option value="{{ $max_YW }}" @if(\Request::get('YW1') == '0') selected @endif >週選択(from)</option>
                     @foreach ($YWs as $YW)
                         <option value="{{ $YW->YW }}" @if(\Request::get('YW1') == $YW->YW) selected @endif >{{ floor(($YW->YM)/100)%100 }}年{{ ($YW->YM)%100 }}月{{ ($YW->YW)%100 }}週</option>
                     @endforeach
                 </select>
                 <label for="YW2" class="items-center text-sm mt-2 ml-2 text-gray-800 dark:text-gray-200 leading-tight" >～</label>
-                <select class="w-32 h-8 ml-2 rounded text-sm items-center pt-1" id="YW2" name="YW2" type="number" class="border">
+                <select class="w-36 h-8 ml-2 rounded text-sm items-center pt-1" id="YW2" name="YW2" type="number" class="border">
                     <option value="{{ $max_YW }}" @if(\Request::get('YW2') == '0') selected @endif >週選択(to)</option>
                     @foreach ($YWs as $YW)
                         <option value="{{ $YW->YW }}" @if(\Request::get('YW2') == $YW->YW) selected @endif >{{ floor(($YW->YM)/100)%100 }}年{{ ($YW->YM)%100 }}月{{ ($YW->YW)%100 }}週</option>
@@ -46,18 +51,18 @@
                 </select>
             </div>
             <div class="flex">
-                <label for="type1" class="mr-8 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">社店種別</label>
+                <label for="type1" class="mr-6 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">社店種別</label>
                 <select id="type1" name="type1" class="w-28 h-8 rounded text-sm pt-1 border mr-2 mb-2" type="text">
-                    <option value="sh" @if(\Request::get('type1') == '0') selected @endif >選択</option>
+                    <option value="sh" @if(\Request::get('type1') == '0' || \Request::get('type1') == "sh") selected @endif >店別 </option>
                     {{-- <option value="dry">dry</option> --}}
                     <option value="co" @if(\Request::get('type1') == "co") selected @endif>社別</option>
-                    <option value="sh" @if(\Request::get('type1') == "sh") selected @endif>店別</option>
+                    {{-- <option value="sh" @if(\Request::get('type1') == "sh") selected @endif>店別</option> --}}
                     {{-- <option value="wet">wet</option> --}}
                 </select>
             </div>
 
             <div class="flex">
-                <label for="brand_code" class="mr-6 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Brand指定</label>
+                <label for="brand_code" class="mr-4 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Brand指定</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-5 " id="brand_code" name="brand_code" type="number" >
                     <option value="" @if(\Request::get('brand_code') == '0') selected @endif >選択なし</option>
                     @foreach ($brands as $brand)
@@ -75,7 +80,7 @@
 
 
             <div class="flex">
-                <label for="unit_id" class="mr-5 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Unit指定　</label>
+                <label for="unit_id" class="mr-3 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Unit指定　</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-5 " id="unit_id" name="unit_id" >
                 <option value="" @if(\Request::get('unit_id') == '0') selected @endif >選択なし</option>
                 @foreach ($units as $unit)
@@ -101,13 +106,14 @@
         </div> --}}
         </form>
 
-        <div class="ml-0 py-0 md:w-1/2 border">
+        <div class="mt-3 py-0 md:w-1/2 border">
             <div class=" w-full  sm:px-0 lg:px-0 border mt-0 ml-0">
-                <div class='border bg-gray-100 h-6'>
-
-                    当期累計：　{{ number_format(round($total->total)/1000) }}千円　　　
-                    前期累計：　{{ number_format(round($pv_total->total)/1000)}}千円　
-
+                <div class='pl-2 border bg-gray-100 h-6 text-sm'>
+                    当期累計：{{ number_format(round($total->total)/1000) }}千円　
+                    前期累計：{{ number_format(round($pv_total->total)/1000)}}千円　
+                    @if($pv_total->total>0)
+                    前期比：{{ number_format(($total->total/$pv_total->total)*100)}}％
+                    @endif
                 </div>
             </div>
         </div>
@@ -120,24 +126,24 @@
             <table class="mx-auto table-auto bg-white w-full text-center whitespace-no-wrap">
                 <thead >
                 <tr>
-                    <th class="w-1/4 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Name</th>
-                    <th class="w-1/4 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">当期売上(千円)</th>
-                    <th class="w-1/4 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">前期売上(千円)</th>
-                    <th class="w-1/4 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">前期比(%)</th>
+                    <th class="w-3/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Name</th>
+                    <th class="w-3/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">当期売上(千)</th>
+                    <th class="w-3/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">前期売上(千)</th>
+                    <th class="w-3/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">前期比(%)</th>
                 </tr>
                 </thead>
 
                 <tbody>
                     @foreach ($merged_data as $data)
                 <tr>
-                    <td class="w-1/4 md:px-4 py-1">{{ $data->name }}</td>
+                    <td class="w-3/12 md:px-4 py-1 text-sm">{{ $data->name }}</td>
 
-                    <td class="w-1/4 pr-24 md:px-4 py-1 text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(round($data->total)/1000)}}</span></td>
-                    <td class="w-1/4 pr-24 md:px-4 py-1 text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(round($data->pv_total)/1000)}}</span></td>
+                    <td class="w-3/12 pr-8 md:px-4 py-1 text-sm text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(round($data->total)/1000)}}</span></td>
+                    <td class="w-3/12 pr-8 md:px-4 py-1 text-sm text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(round($data->pv_total)/1000)}}</span></td>
                     @if($data->pv_total>0)
-                    <td class="w-1/4 pr-24 md:px-4 py-1 text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(($data->total/$data->pv_total)*100)}}</span></td>
+                    <td class="w-3/12 pr-8 md:px-4 py-1 text-sm text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(($data->total/$data->pv_total)*100)}}</span></td>
                     @else
-                    <td class="w-1/4 pr-24 md:px-4 py-1 text-right"><span style="font-variant-numeric:tabular-nums"> --</span></td>
+                    <td class="w-3/12 pr-8 md:px-4 py-1 text-right"><span style="font-variant-numeric:tabular-nums"> --</span></td>
                     @endif
                 </tr>
                 @endforeach

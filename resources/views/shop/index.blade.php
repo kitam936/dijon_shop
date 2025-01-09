@@ -10,7 +10,7 @@
                 <button type="button" onclick="location.href='{{ route('report_list') }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">店舗Report一覧</button>
             </div>
 
-            <div class="ml-00 mt-2 md:ml-4 md:mt-0">
+            <div class="ml-00 mt-0 ml-4 md:mt-0">
                 <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('report_create2') }}'" >新規Report</button>
             </div>
         </div>
