@@ -16,12 +16,22 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('analysis_index')" :active="request()->routeIs('analysis_index')">
-                        売上Data
+                        Data分析
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('memberlist')" :active="request()->routeIs('memberlist')">
-                        Member
+                    <x-nav-link :href="route('report_list')" :active="request()->routeIs('report_list')">
+                        店舗Report
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('order_index')" :active="request()->routeIs('order_index')">
+                        追加要望リスト
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('product_index')" :active="request()->routeIs('product_index')">
+                        商品
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -29,16 +39,17 @@
                         Shop
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('memberlist')" :active="request()->routeIs('memberlist')">
+                        Member
+                    </x-nav-link>
+                </div>
+
                 {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('report_list')" :active="request()->routeIs('report_list')">
                         店舗Report
                     </x-nav-link>
                 </div> --}}
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('product_index')" :active="request()->routeIs('product_index')">
-                        商品
-                    </x-nav-link>
-                </div>
 
                 @can('admin')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -104,12 +115,22 @@
         </div>
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('analysis_index')" :active="request()->routeIs('analysis_index')">
-                売上Data
+                Data分析
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('memberlist')" :active="request()->routeIs('memberlist')">
-                Member
+            <x-responsive-nav-link :href="route('report_list')" :active="request()->routeIs('report_list')">
+                店舗Report
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('order_index')" :active="request()->routeIs('order_index')">
+                追加要望リスト
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('product_index')" :active="request()->routeIs('product_index')">
+                商品
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">
@@ -117,16 +138,18 @@
                 Shop
             </x-responsive-nav-link>
         </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('memberlist')" :active="request()->routeIs('memberlist')">
+                Member
+            </x-responsive-nav-link>
+        </div>
+
         {{-- <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('report_list')" :active="request()->routeIs('report_list')">
                 売上分析
             </x-responsive-nav-link>
         </div> --}}
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('product_index')" :active="request()->routeIs('product_index')">
-                商品
-            </x-responsive-nav-link>
-        </div>
+
 
         @can('admin')
         <div class="pt-2 pb-3 space-y-1">

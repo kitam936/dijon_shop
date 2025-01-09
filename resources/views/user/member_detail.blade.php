@@ -62,6 +62,12 @@
                                     </div>
 
                                     <div class="relative ">
+                                        <label for="shop_name" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">所属</label>
+                                        <div  id="shop_name" name="shop_name" value="{{$user->shop_name}}" class="pl-2 w-60 h-6 text-sm items-center bg-gray-100 border rounded">{{$user->shop_name}}
+                                        </div>
+                                    </div>
+
+                                    <div class="relative ">
                                     <label for="user_name" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">ネーム</label>
                                     <div  id="user_name" name="user_name" value="{{$user->name}}" class="pl-2 w-60 h-6 text-sm items-center bg-gray-100 border rounded">{{$user->name}}
                                     </div>

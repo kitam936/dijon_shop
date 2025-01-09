@@ -45,7 +45,7 @@
                 <thead>
                     <tr>
                         <th class="w-1/10 md:1/10 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Id</th>
-                        <th class="w-2/10 md:2/10 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">権限</th>
+                        <th class="w-2/10 md:2/10 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">所属</th>
                         <th class="w-3/10 md:3/10 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Name</th>
                         <th class="w-4/10 md:4/10 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Info</th>
                         <th class="w-2/12 md:2/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">メール配信</th>
@@ -57,7 +57,7 @@
                     @foreach ($users as $user)
                     <tr>
                         <td class="w-1/12 md:1/12 text-sm md:px-4 py-1 text-center"> {{ $user->id }} </td>
-                        <td class="w-2/12 md:2/12 text-sm md:px-4 py-1 text-center"> {{ $user->role_name }} </td>
+                        <td class="w-2/12 md:2/12 text-sm md:px-4 py-1 text-center"> {{ $user->shop_name }} </td>
                         <td class="w-2/12 md:2/12 text-sm md:px-4 py-1 text-center text-indigo-500"><a href="{{ route('member_detail',['user'=>$user->id]) }}" >{{ Str::limit($user->name,30) }}</a></td>
                         <td class="w-3/12 md:3/12 text-xs md:px-4 py-1 text-center">{{ Str::limit($user->user_info,28) }}</td>
                         @if($user->mailService==1)

@@ -27,6 +27,20 @@
                                   <label for="name" class="leading-7 text-sm text-gray-600">名前</label>
                                   <input type="text" id="name" name="name" value="{{ old('name') }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
+                                <div class="flex ml-0 mb-2  md:mb-4">
+                                    <div>
+                                    <label for="name" class="leading-7 text-sm text-gray-600">所属</label>
+                                    <div>
+                                        <select class="w-80 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" id="sh_id" name="sh_id"  class="border">
+                                            <option value="" @if(\Request::get('sh_id') == '0') selected @endif >所属選択</option>
+                                            @foreach ($shops as $shop)
+                                                <option value="{{ $shop->id }}" @if(\Request::get('sh_id') == $shop->id) selected @endif >{{ $shop->shop_name }}</option>
+                                                {{-- <input class="w-44 h-8 ml-0 md:ml-4 rounded text-sm pt-1"  name="info"  class="border">{{ $shop->id }} --}}
+                                            @endforeach
+                                        </select><br>
+                                    </div>
+                                    </div>
+                                </div>
                                 <div class="relative">
                                   <label for="email" class="leading-7 text-sm text-gray-600">メールアドレス</label>
                                   <input type="email" id="email" name="email" value="{{ old('email') }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">

@@ -21,9 +21,12 @@ class Subtotal implements Scope
         ->join('hinbans','hinbans.id','=','skus.hinban_id')
         ->join('brands','brands.id','=','hinbans.brand_id')
         ->join('units','units.id','=','hinbans.unit_id')
+        ->join('cols','cols.id','=','skus.col_id')
+        ->join('sizes','sizes.id','=','skus.size_id')
         ->select('shops.company_id','companies.co_name','sales.shop_id','shops.shop_name',
-         'sales.YM','sales.YW','sales.YMD','sales.sku_id','skus.hinban_id','hinbans.hinban_name',
-         'hinbans.brand_id','brands.brand_name','sales.pcs','sales.kingaku','hinbans.unit_id','units.season_id','units.season_name','hinbans.face')
+         'sales.YM','sales.YW','sales.YMD','sales.sku_id','skus.hinban_id','hinbans.hinban_name','hinbans.price','hinbans.m_price',
+         'hinbans.brand_id','brands.brand_name','sales.pcs','sales.kingaku','hinbans.unit_id','units.season_id','units.season_name','hinbans.face',
+         'col_id','col_name','size_id','size_name','hinbans.vendor_id')
         ;
 
         $builder->fromSub($sql,'salesdata_subtotal');

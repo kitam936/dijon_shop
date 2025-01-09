@@ -10,6 +10,10 @@
         <div class="ml-2 mb-2 md:mb-0">
             <button type="button" onclick="location.href='{{ route('product_index') }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">商品一覧</button>
         </div>
+        <div class="flex ml-4">
+            <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('sales_product') }}'" >商品別売上</button>
+
+        </div>
 
 
         @can('staff-higher')

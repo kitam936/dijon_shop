@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->text('user_info')->nullable();
             $table->tinyInteger('role_id')->default(9);
+            $table->integer('shop_id');
             $table->boolean('mailService')->default(true);
             $table->rememberToken();
             $table->timestamps();
