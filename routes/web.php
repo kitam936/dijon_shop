@@ -130,6 +130,7 @@ Route::middleware('can:user-higher')
     Route::get('shop_show/{shop}', [ShopController::class, 'show'])->name('shop_show');
     Route::get('product_index', [ProductController::class, 'index'])->name('product_index');
     Route::get('product_show/{hinban}', [ProductController::class, 'show'])->name('product_show');
+    Route::get('product_show0/{hinban}', [ProductController::class, 'show0'])->name('product_show0');
     Route::get('sku_stock/{sku}', [ProductController::class, 'sku_zaiko'])->name('sku_stock');
     Route::get('report_list', [ReportController::class, 'report_list'])->name('report_list');
     Route::get('report_detail/{report}', [ReportController::class, 'report_detail'])->name('report_detail');

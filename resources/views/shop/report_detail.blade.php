@@ -9,23 +9,41 @@
 
         <x-flash-message status="session('status')"/>
         <div class="md:flex ml-8 ">
+        <div class="flex">
         <div class="ml-2 mb-2 md:mb-0">
             <button type="button" onclick="location.href='{{ route('report_list') }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">店舗Report一覧</button>
         </div>
         <div class="ml-2 mb-2 md:mb-0">
             <button type="button" onclick="location.href='{{ route('shop_index') }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">店舗一覧</button>
         </div>
+        </div>
+        <div class="flex">
         <div class="ml-2 mb-2 md:mb-0">
             <button type="button" onclick="location.href='{{ route('comment_create',['report'=>$report->id]) }}'" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-700 rounded ">コメント登録</button>
         </div>
 
         {{--  @foreach ($reports as $report)  --}}
         @if($login_user == $report->user_id)
-        <div class="ml-2 mb-2 md:mb-0">
+
+        <div class="ml-2 mb-0 md:mb-0">
             <button type="button" onclick="location.href='{{ route('report_edit',['report'=>$report->id])}}'" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-600 rounded ">編集</button>
         </div>
+        </div>
+        @if ( ($report->created_at) > (\Carbon\Carbon::today()->addDay(-1)) && !($comment_exist))
+        {{-- @if ( ($report->created_at) > (\Carbon\Carbon::today()->addDay(-1)) ) --}}
+        <div>
+        <form id="delete_{{$report->id}}" method="POST" action="{{ route('report_destroy',['report' => $report->id]) }}">
+            @csrf
+            @method('delete')
+            <div class="md:px-4 py-0">
+                <div class="p-0 w-full flex ml-2 mt-0 md:mt-0">
+                <a href="#" data-id="{{ $report->id }}" onclick="deletePost(this)" class="w-32 text-center text-sm text-white bg-red-500 border-0 py-1 px-2 focus:outline-none hover:bg-red-700 rounded  ">削除</a>
+                </div>
+            </div>
+        </form>
+        </div>
         @endif
-
+        @endif
         {{--  @endforeach  --}}
         </div>
 
@@ -117,11 +135,11 @@
             <table class="md:w-full bg-white table-auto w-full text-center whitespace-no-wrap">
                <thead>
                     <tr>
-                        <th class="w-2/12 md:1/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Id</th>
-                        <th class="w-2/12 md:1/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Date</th>
+                        <th class="w-1/12 md:1/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Id</th>
+                        <th class="w-3/12 md:1/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Date</th>
                         <th class="w-3/12 md:2/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Name</th>
-                        <th class="w-2/12 md:5/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Comment</th>
-                        {{-- <th class="w-2/12 md:2/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">詳細</th> --}}
+                        <th class="w-5/12 md:5/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Comment</th>
+                        {{-- <th class="w-2/12 md:2/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">件</th> --}}
 
                     </tr>
                 </thead>
@@ -129,10 +147,10 @@
                 <tbody>
                     @foreach ($comments as $comment)
                     <tr>
-                        <td class="w-2/12 md:1/12 text-sm md:px-4 py-1 text-left"> {{ $comment->id }}</td>
-                        <td class="w-2/12 md:1/12 text-sm md:px-4 py-1 text-left"> {{ $comment->updated_at }} </td>
-                        <td class="w-3/12 md:2/12 text-sm md:px-4 py-1 text-left">{{ $comment->name }}</td>
-                        <td class="w-3/12 md:2/12 text-sm md:px-4 py-1 text-left"><a href="{{ route('comment_detail',['comment'=>$comment->id]) }}" class="w-20 h-8 text-indigo-500 ml-2 "  >{{(Str::limit($comment->comment,30)) }} </a></td>
+                        <td class="w-1/12 md:1/12 text-sm md:px-4 py-1 text-center"> {{ $comment->id }}</td>
+                        <td class="w-3/12 md:1/12 text-sm md:px-4 py-1 text-center"> {{\Carbon\Carbon::parse($comment->updated_at)->format("y/m/d H:i")}} </td>
+                        <td class="w-3/12 md:2/12 text-sm md:px-4 py-1 text-center">{{ $comment->name }}</td>
+                        <td class="w-5/12 md:2/12 text-sm md:px-4 py-1 text-left"><a href="{{ route('comment_detail',['comment'=>$comment->id]) }}" class="w-20 h-8 text-indigo-500 ml-2 "  >{{(Str::limit($comment->comment,30)) }} </a></td>
 
                         {{-- <td class="w-2/12 md:2/12 text-sm md:px-4 py-1 text-center"><a href="{{ route('comment_show',['comment'=>$comment->id]) }}" class="w-20 h-8 text-indigo-500 ml-2 "  >詳細</a></td> --}}
                     </tr>
@@ -149,5 +167,14 @@
             ])->links()}} --}}
         </div>
     </div>
+
+    <script>
+        function deletePost(e) {
+        'use strict';
+        if (confirm('本当に削除してもいいですか?')) {
+        document.getElementById('delete_' + e.dataset.id).submit();
+        }
+        }
+    </script>
 
 </x-app-layout>

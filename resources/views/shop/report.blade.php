@@ -9,7 +9,7 @@
             <div class="ml-0 mt-2 md:mt-0 md:ml-8">
                 <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('shop_index') }}'" >shop一覧</button>
             </div>
-            <div class="ml-00 mt-2 md:ml-4 md:mt-0">
+            <div class="ml-00 mt-2 ml-4 md:mt-0">
                 <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('report_create2') }}'" >新規Report</button>
             </div>
 
@@ -62,12 +62,12 @@
             <table class="md:w-2/3 bg-white table-auto w-full text-center whitespace-no-wrap">
                <thead>
                     <tr>
-                        {{-- <th class="w-2/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">id</th> --}}
-                        <th class="w-3/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Date</th>
-                        <th class="w-2/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">エリア</th>
-                        <th class="w-4/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">社名</th>
-                        <th class="w-4/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">店名</th>
-                        <th class="w-2/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">詳細</th>
+                        <th class="w-1/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">id</th>
+                        <th class="w-3/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Date</th>
+                        <th class="w-2/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">エリア</th>
+                        <th class="w-3/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">社名</th>
+                        <th class="w-3/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">店名</th>
+                        <th class="w-2/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">ｺﾒﾝﾄ数</th>
 
                     </tr>
                 </thead>
@@ -75,12 +75,12 @@
                 <tbody>
                     @foreach ($reports as $report)
                     <tr>
-                        {{-- <td class="w-2/12 md:px-4 py-1 text-left">  {{ $report->id }} </td> --}}
-                        <td class="w-3/15 text-sm md:px-4 py-1 text-left"> {{\Carbon\Carbon::parse($report->created_at)->format("y/m/d H:i")}} </td>
-                        <td class="w-2/15 pr-2 text-sm md:px-4 py-1 text-left">  {{ Str::limit($report->area_name,8) }} </td>
-                        <td class="w-4/15 text-sm md:px-4 py-1 text-left">  {{ Str::limit($report->co_name,10) }} </td>
-                        <td class="w-4/15 pl-2 text-sm md:px-4 py-1 text-left">  {{ Str::limit($report->shop_name,12) }} </td>
-                        <td class="w-2/15 text-sm md:px-4 py-1 text-center"><a href="{{ route('report_detail',['report'=>$report->id]) }}" class="w-20 h-8 text-indigo-500 ml-2 "  >詳細</a></td>
+                        <td class="w-1/14 md:px-4 py-1 text-center">  {{ $report->id }} </td>
+                        <td class="w-3/14 text-sm md:px-4 py-1 text-center"> {{\Carbon\Carbon::parse($report->created_at)->format("y/m/d H:i")}} </td>
+                        <td class="w-2/14 pr-2 text-sm md:px-4 py-1 text-center">  {{ Str::limit($report->area_name,8) }} </td>
+                        <td class="w-3/14 text-sm md:px-4 py-1 text-center">  {{ Str::limit($report->co_name,10) }} </td>
+                        <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> <a href="{{ route('report_detail',['report'=>$report->id]) }}" class="w-20 h-8 text-indigo-500 ml-2 "  > {{ Str::limit($report->shop_name,12) }}</a> </td>
+                        <td class="w-2/14 text-sm md:px-4 py-1 text-center"> {{ $report->comment_count }}</td>
                     </tr>
                     @endforeach
 
