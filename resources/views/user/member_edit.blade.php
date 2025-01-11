@@ -10,9 +10,6 @@
         <div class="ml-2 mb-2 md:mb-0">
             <button type="button" onclick="location.href='{{ route('memberlist') }}'" class="w-32 text-center text-sm text-white bg-indigo-400 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-600 rounded ">Membert一覧</button>
         </div>
-
-
-
         </div>
 
     </x-slot>
@@ -53,7 +50,7 @@
                                 <input id="email" name="email" value=" {{ $user->email }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></input>
                             </div>
                             <div class="p-2 w-1/2 ">
-                                <label for="email" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">メール配信</label>
+                                <label for="mailService" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">メール配信</label>
                                 <div class="relative flex justify-around">
                                     <div><input type="radio" name="mailService" value="1" class="mr-2" @if($user->mailService == 1){ checked }@endif>配信可</div>
                                     <div><input type="radio" name="mailService" value="0" class="mr-2" @if($user->mailService == 0){ checked }@endif>配信不可</div>

@@ -84,24 +84,17 @@
                     </div>
                     </form>
 
-                    {{-- <form  method="POST" action="{{ route('user.shop.report_destroy',['report' => $report->id]) }}">
-                        @csrf
-                        <div class="md:px-4 py-3">
-                            <div class="p-2 w-full flex justify-around mt-10">
-                                <button type="submit" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded ">削除</button>
-                            </div>
-                        </div>
-                    </form> --}}
-
-                    {{-- <form id="delete_{{$report->id}}" method="POST" action="{{ route('report_destroy',['report' => $report->id]) }}">
+                    {{-- @if($login_user->id == $report->user_id)
+                    <form id="delete_{{$report->id}}" method="POST" action="{{ route('report_destroy',['report' => $report->id]) }}">
                         @csrf
                         @method('delete')
                         <div class="md:px-4 py-3">
                             <div class="p-2 w-full flex justify-around mt-0">
-                            <a href="#" data-id="{{ $report->id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded ">削除</a>
+                            <a href="#" data-id="{{ $report->id }}" onclick="deletePost(this)" class="w-32 text-center text-sm text-white bg-red-500 border-0 py-1 px-2 focus:outline-none hover:bg-red-700 rounded  ">削除</a>
                             </div>
                         </div>
-                    </form> --}}
+                    </form>
+                    @endif --}}
                 </div>
             </div>
         </div>

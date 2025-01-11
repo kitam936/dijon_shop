@@ -51,6 +51,8 @@ class AnalysisController extends Controller
         ->where('id','<',7000)->get();
 
         $shops = Shop::Where('company_id','LIKE','%'.$request->co_id.'%')
+        ->where('id','>',1000)
+        ->where('id','<',7000)
         ->get();
 
         $areas = DB::table('areas')
@@ -862,6 +864,8 @@ class AnalysisController extends Controller
         ->where('id','<',7000)->get();
 
         $shops = Shop::Where('company_id','LIKE','%'.$request->co_id.'%')
+        ->where('id','>',1000)
+        ->where('id','<',7000)
         ->get();
 
         $areas = DB::table('areas')
@@ -1093,6 +1097,9 @@ class AnalysisController extends Controller
         ->where('id','<',7000)->get();
 
         $shops = Shop::Where('company_id','LIKE','%'.$request->co_id.'%')
+        ->where('id','>',1000)
+        ->where('id','<',7000)
+        ->orWhere('id','=',106)
         ->get();
 
         $brands=DB::table('brands')

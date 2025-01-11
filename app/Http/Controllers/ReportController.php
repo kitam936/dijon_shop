@@ -25,19 +25,36 @@ class ReportController extends Controller
 
     public function report_list(Request $request)
     {
+        // $reports=DB::table('reports')
+        // ->join('shops','shops.id','=','reports.shop_id')
+        // ->join('companies','companies.id','=','shops.company_id')
+        // ->join('areas','areas.id','=','shops.area_id')
+        // ->select(['reports.id','shops.company_id','companies.co_name','reports.shop_id','shops.shop_name','areas.area_name','shops.shop_info','reports.report','reports.image1','reports.created_at','reports.updated_at'])
+        // ->where('shops.company_id','>','1000')
+        // ->where('shops.company_id','<','7000')
+        // ->where('shops.is_selling','=',1)
+        // ->where('shops.company_id','LIKE','%'.($request->co_id).'%')
+        // ->where('shops.area_id','LIKE','%'.($request->ar_id).'%')
+        // ->where('shops.shop_name','LIKE','%'.($request->sh_name).'%')
+        // ->orderBy('updated_at','desc')
+        // ->paginate(100);
+
         $reports=DB::table('reports')
         ->join('shops','shops.id','=','reports.shop_id')
         ->join('companies','companies.id','=','shops.company_id')
         ->join('areas','areas.id','=','shops.area_id')
-        ->select(['reports.id','shops.company_id','companies.co_name','reports.shop_id','shops.shop_name','areas.area_name','shops.shop_info','reports.report','reports.image1','reports.created_at','reports.updated_at'])
+        ->leftjoin('comments','comments.report_id','=','reports.id')
+        // ->select(['reports.id','shops.company_id','companies.co_name','reports.shop_id','shops.shop_name','areas.area_name','shops.shop_info','reports.report','reports.image1','reports.created_at','reports.updated_at'])
         ->where('shops.company_id','>','1000')
         ->where('shops.company_id','<','7000')
         ->where('shops.is_selling','=',1)
         ->where('shops.company_id','LIKE','%'.($request->co_id).'%')
         ->where('shops.area_id','LIKE','%'.($request->ar_id).'%')
         ->where('shops.shop_name','LIKE','%'.($request->sh_name).'%')
-        ->orderBy('updated_at','desc')
-        ->paginate(50);
+        ->groupBy('reports.id','shops.company_id','companies.co_name','reports.shop_id','shops.shop_name','areas.area_name','shops.shop_info','reports.report','reports.image1','reports.created_at','reports.updated_at')
+        ->selectRaw('reports.id,shops.company_id,companies.co_name,reports.shop_id,shops.shop_name,areas.area_name,shops.shop_info,reports.report,reports.image1,reports.created_at,reports.updated_at,count(comments.id) as comment_count')
+        ->orderBy('reports.updated_at','desc')
+        ->paginate(100);
 
 
 
@@ -60,8 +77,8 @@ class ReportController extends Controller
         ->where('shops.company_id','LIKE','%'.($request->co_id).'%')
         ->where('shops.area_id','LIKE','%'.($request->ar_id).'%')
         ->where('shops.shop_name','LIKE','%'.($request->sh_name).'%')
-        ->paginate(50);
-        // dd($shops,$reports,$companies,$areas);
+        ->paginate(100);
+        // dd($reports);
 
         return view('shop.report',compact('reports','areas','shops','companies'));
     }
@@ -77,6 +94,10 @@ class ReportController extends Controller
         ->where('reports.id',$id)
         ->first();
 
+        $comment_exist = DB::table('comments')
+        ->where('comments.report_id',$id)
+        ->exists();
+
         $images = DB::table('reports')
         ->where('reports.id',$id)
         ->orderBy('reports.updated_at', 'desc')
@@ -91,9 +112,9 @@ class ReportController extends Controller
         ->orderBy('updated_at','desc')
         ->get();
 
-        // dd($report,$images,$comments);
+        // dd($report,$images,$comments,$comment_exist);
 
-        return view('shop.report_detail',compact('report','images','login_user','comments'));
+        return view('shop.report_detail',compact('comment_exist','report','images','login_user','comments'));
     }
 
     public function report_create($id)
@@ -281,6 +302,7 @@ class ReportController extends Controller
 
     public function report_edit($id)
     {
+        $login_user = User::findOrFail(Auth::id());
         $report=DB::table('reports')
         ->join('shops','shops.id','=','reports.shop_id')
         ->join('companies','companies.id','=','shops.company_id')
@@ -288,7 +310,7 @@ class ReportController extends Controller
         ->where('reports.id',$id)
         ->first();
         // dd($report);
-        return view('shop.report_edit',compact('report'));
+        return view('shop.report_edit',compact('report','login_user'));
     }
 
 
