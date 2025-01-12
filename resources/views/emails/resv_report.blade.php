@@ -16,5 +16,5 @@
 
 
 
-Dijon_Web_Shop
+shop.dijon1988.net事務局
 

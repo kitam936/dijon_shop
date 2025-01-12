@@ -13,8 +13,8 @@
             <div class="md:flex">
             <div class="flex">
 
-                <div class="flex ml-2 mb-2 md:flex md:mb-4">
-                        <select class="w-32 h-8 ml-2 rounded text-sm pt-1 " id="role_id" name="role_id"  class="border">
+                <div class="flex ml-0 mb-2 md:flex md:mb-4">
+                        <select class="w-32 h-8 ml-0 rounded text-sm pt-1 " id="role_id" name="role_id"  class="border">
                         <option value="" @if(\Request::get('role_id') == '0') selected @endif >全て</option>
                         @foreach ($roles as $role)
                             <option value="{{ $role->id }}" @if(\Request::get('role_id') == $role->id) selected @endif >{{ $role->role_name }}</option>
@@ -27,7 +27,7 @@
                         <input class="w-44 h-8 ml-0 md:ml-4 rounded text-sm pt-1" id="user_name" placeholder="Name入力検索" name="user_name"  class="border">
 
                 <div class="ml-2 md:ml-4">
-                    <button type="button" class="w-32 h-8 text-sm bg-indigo-500 text-white ml-2 hover:bg-indigo-600 rounded" onclick="location.href='{{ route('role_list') }}'" >全表示</button>
+                    <button type="button" class="w-20 h-8 text-sm bg-blue-500 text-white ml-2 hover:bg-blue-600 rounded" onclick="location.href='{{ route('role_list') }}'" >全表示</button>
                 </div>
 
                 <div class="ml-2 md:ml-4">

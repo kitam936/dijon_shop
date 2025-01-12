@@ -80,9 +80,11 @@ class AnalysisController extends Controller
         $max_YMD=SalesData::max('YMD');
         $max_YW=SalesData::max('YW');
         $max_YM=SalesData::max('YM');
+        $max_Y=SalesData::max('Y');
         $min_YMD=SalesData::min('YMD');
         $min_YW=SalesData::min('YW');
         $min_YM=SalesData::min('YM');
+        $min_Y=SalesData::min('Y');
 
         // $subQuery = SalesData::where('YM','>=',($request->YM1 ?? $max_YM))
         // ->where('YM','<=',($request->YM2 ?? $max_YM));
@@ -151,7 +153,7 @@ class AnalysisController extends Controller
             ->selectRaw('sum(totalPerPurchase) as total')
             ->first();
 
-            // dd($total);
+            // dd($merged_data,$total);
             return view('analysis.sales_transition',
              compact('YMs','max_YM','companies','shops','areas',
                 'brands','datas','merged_data','total', 'seasons','pv_total','units','faces'
@@ -351,6 +353,87 @@ class AnalysisController extends Controller
             ->where('cr_data.total','>',0)
             ->orWhere('pv_data.prev_total','>',0)
             ->orderBy('yms.YM','desc')
+            ->get();
+
+
+            // dd($merged_data);
+
+            $total = DB::table($query)
+                ->selectRaw('sum(totalPerPurchase) as total')
+                ->first();
+
+            $pv_total = DB::table($query2)
+            ->selectRaw('sum(totalPerPurchase) as total')
+            ->first();
+
+            // dd($datas,$previousYearData);
+            // dd($merged_data);
+            // dd($date_table,$datas,$prev_datas);
+            return view('analysis.sales_transition',
+             compact('YMs','max_YM','companies','shops','areas',
+                'brands','datas','merged_data','total', 'seasons','pv_total','units','faces'
+            ));
+        }
+
+        if($request->type2 == 'y'){
+            $subQuery = SalesData::where('Y','>=', $min_Y)
+            ->where('Y','<=',$max_Y);
+
+            $prev_subQuery = SalesData::where('Y','>=', $min_Y-1)
+            ->where('Y','<=', $max_Y-1);
+
+            // dd($min_Y-100,$prev_subQuery);
+
+            $query = $subQuery
+            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('face','LIKE','%'.$request->face.'%')
+            ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
+            ->where('company_id', 'LIKE', '%' . $request->co_id . '%')
+            ->where('brand_id', 'LIKE', '%' . ($request->brand_code) . '%')
+            ->where('season_id', 'LIKE', '%' . ($request->season_code) . '%')
+            ->groupBy('shop_id', 'Y')
+            ->selectRaw('shop_id, sum(kingaku) as totalPerPurchase, Y as date');
+
+            $datas = DB::table($query)
+            // $datas = $query
+            ->groupBy('date')
+            ->selectRaw('date, sum(totalPerPurchase) as total');
+            // ->orderBy('date', 'desc')
+            // ->get();
+
+
+            $date_table = DB::table('sales')
+            ->groupBy('Y')
+            ->selectRaw('Y ,Y-1 as prev_date');
+            // ->orderBy('YM', 'desc')->get();
+
+            // 前年同月データを取得
+
+            $query2 = $prev_subQuery
+            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('face','LIKE','%'.$request->face.'%')
+            ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
+            ->where('company_id', 'LIKE', '%' . $request->co_id . '%')
+            ->where('brand_id', 'LIKE', '%' . ($request->brand_code) . '%')
+            ->where('season_id', 'LIKE', '%' . ($request->season_code) . '%')
+            ->groupBy('shop_id', 'Y')
+            ->selectRaw('shop_id, sum(kingaku) as totalPerPurchase, Y');
+
+            $prev_datas = DB::table($query2)
+            // $prev_datas = $query2
+            ->groupBy('Y')
+            ->selectRaw('Y as prev_date, sum(totalPerPurchase) as prev_total');
+            // ->orderBy('prev_date', 'desc')
+            // ->get();
+
+            $merged_data = DB::table('yys')
+            // ->where('yys.Y','<=',$max_YM)
+            ->leftjoinSub($datas, 'cr_data', 'yys.Y', '=', 'cr_data.date')
+            ->leftjoinSub($prev_datas, 'pv_data', 'yys.prev_Y', '=', 'pv_data.prev_date')
+            ->select('yys.Y as date','yys.prev_Y','cr_data.total','pv_data.prev_total')
+            ->where('cr_data.total','>',0)
+            ->orWhere('pv_data.prev_total','>',0)
+            ->orderBy('yys.Y','desc')
             ->get();
 
 

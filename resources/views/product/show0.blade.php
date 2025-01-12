@@ -18,7 +18,7 @@
         </div>
         </div>
 
-        <form method="get" action="{{ route('product_show',['hinban'=>$product->id]) }}" class="mt-2">
+        <form method="get" action="{{ route('product_show',['hinban'=>$product->id]) }}" class="mt-4">
              <div><input type="hidden" name="hin_id2" value="{{ $product->id }}" ></div>
         <div class="ml-10  ">
             <div class="flex">
@@ -85,12 +85,12 @@
                                     </div>
                                     </div>
                                     </div>
-                                    <div class="mx-auto mb-1">
-                                        <div class="relative">
-                                            <label for="hinban_info" class="ml-2 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">商品情報</label>
-                                            <div id="hinban_info" name="hinban_info" rows="10" class="ml-2 w-full bg-gray-100 bg-opacity-50 border rounded focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700  px-3 leading-8 transition-colors duration-200 ease-in-out">{!! nl2br(e($product->hinban_info)) !!}</div>
-                                        </div>
+
+                                    <div class="relative ml-2 mr-2">
+                                        <label for="hinban_info" class="mr-2 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">商品情報</label>
+                                        <div id="hinban_info" name="hinban_info" rows="10" class="mr-2 h-8 text-sm w-full bg-gray-100 bg-opacity-50 border rounded focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700  px-3 leading-8 transition-colors duration-200 ease-in-out">{!! nl2br(e($product->hinban_info)) !!}</div>
                                     </div>
+
 
 
                                 <div class="px-2 md:w-2/3 ">

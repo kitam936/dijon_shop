@@ -6,12 +6,12 @@
             店舗詳細
             {{-- <button type="button" onclick="location.href='{{ route('user.company.index') }}'" class="mb-2 ml-2 text-right text-black bg-indigo-300 border-0 py-0 px-2 focus:outline-none hover:bg-indigo-300 rounded ">戻る</button> --}}
         </h2>
-        <div class="ml-2 flex mb-4 md:ml-8">
+        <div class="ml-2 flex mb-4 md:ml-4">
         <div class="ml-0 mt-2 md:mt-0 md:ml-8">
             <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('shop_index') }}'" >shop一覧</button>
         </div>
 
-        <div class="ml-00 mt-2 md:ml-4 md:mt-0">
+        <div class="ml-4 mt-2 md:ml-4 md:mt-0">
             <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('report_create',['shop'=>$shop->id]) }}'" >新規Report</button>
         </div>
         </div>

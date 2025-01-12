@@ -131,8 +131,10 @@ class ReportController extends Controller
     public function report_create2(Request $request)
     {
         $shops = DB::table('shops')
+        ->join('areas','areas.id','=','shops.area_id')
         ->join('companies','companies.id','=','shops.company_id')
         ->where('shops.company_id','LIKE','%'.($request->co_id).'%')
+        ->where('shops.area_id','LIKE','%'.($request->area_id).'%')
         ->where('shops.company_id','>',1000)
         ->where('shops.company_id','<',7000)
         ->select(['shops.company_id','companies.co_name','shops.id','shops.shop_name'])
@@ -143,7 +145,11 @@ class ReportController extends Controller
         ->where('id','>',1000)
         ->where('id','<',7000)->get();
 
-        return view('shop.report_create2',compact('shops','companies'));
+        $areas = DB::table('areas')
+        ->select(['areas.id','areas.area_name'])
+        ->get();
+
+        return view('shop.report_create2',compact('shops','companies','areas'));
     }
 
     public function report_store_rs(UploadImageRequest $request)

@@ -45,7 +45,7 @@
                         <input class="w-52 h-8 ml-0 rounded text-sm md:ml-4" id="sh_name" placeholder="店名検索入力(一部でも)" name="sh_name" >
                     </div>
                     <div class="ml-2 md:ml-4">
-                        <button type="button" class="w-20 h-8 bg-indigo-500 text-white ml-2 hover:bg-indigo-600 rounded" onclick="location.href='{{ route('report_list') }}'" class="mb-2 ml-2 text-right text-black bg-indigo-300 border-0 py-0 px-2 focus:outline-none hover:bg-indigo-300 rounded ">全表示</button>
+                        <button type="button" class="w-20 h-8 bg-blue-500 text-white ml-2 hover:bg-blue-600 rounded" onclick="location.href='{{ route('report_list') }}'" >全表示</button>
                     </div>
 
                 </div>
@@ -76,10 +76,10 @@
                     @foreach ($reports as $report)
                     <tr>
                         <td class="w-1/14 md:px-4 py-1 text-center">  {{ $report->id }} </td>
-                        <td class="w-3/14 text-sm md:px-4 py-1 text-center"> {{\Carbon\Carbon::parse($report->created_at)->format("y/m/d H:i")}} </td>
+                        <td class="w-3/14 text-sm md:px-4 py-1 text-center"> <a href="{{ route('report_detail',['report'=>$report->id]) }}" class="w-20 h-8 text-indigo-500 ml-2 "  > {{\Carbon\Carbon::parse($report->created_at)->format("y/m/d H:i")}}</a> </td>
                         <td class="w-2/14 pr-2 text-sm md:px-4 py-1 text-center">  {{ Str::limit($report->area_name,8) }} </td>
                         <td class="w-3/14 text-sm md:px-4 py-1 text-center">  {{ Str::limit($report->co_name,10) }} </td>
-                        <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> <a href="{{ route('report_detail',['report'=>$report->id]) }}" class="w-20 h-8 text-indigo-500 ml-2 "  > {{ Str::limit($report->shop_name,12) }}</a> </td>
+                        <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ Str::limit($report->shop_name,12) }}</td>
                         <td class="w-2/14 text-sm md:px-4 py-1 text-center"> {{ $report->comment_count }}</td>
                     </tr>
                     @endforeach

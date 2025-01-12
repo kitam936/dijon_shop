@@ -62,7 +62,7 @@
 
                                 <div class="p-2 w-full mx-auto">
                                     <div class="relative">
-                                        <label for="date" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">date</label>
+                                        <label for="date" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">日付</label>
                                         <div  id="date" name="date" value="{{$report->created_at}}" class="h-8 text-sm w-full bg-gray-100 bg-opacity-50 border rounded focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 px-3 leading-8 transition-colors duration-200 ease-in-out">{{$report->created_at}}
                                     </div>
                                     <div class="relative">
@@ -130,15 +130,15 @@
 
 
     <div class="py-0 border">
-        <h1>Comment一覧</h1>
+        <h2>コメント一覧</h2>
         <div class=" mx-auto sm:px-4 lg:px-4 border ">
             <table class="md:w-full bg-white table-auto w-full text-center whitespace-no-wrap">
                <thead>
                     <tr>
                         <th class="w-1/12 md:1/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Id</th>
-                        <th class="w-3/12 md:1/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Date</th>
-                        <th class="w-3/12 md:2/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Name</th>
-                        <th class="w-5/12 md:5/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Comment</th>
+                        <th class="w-3/12 md:1/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">投稿日</th>
+                        <th class="w-3/12 md:2/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">投稿者</th>
+                        <th class="w-5/12 md:5/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">コメント</th>
                         {{-- <th class="w-2/12 md:2/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">件</th> --}}
 
                     </tr>

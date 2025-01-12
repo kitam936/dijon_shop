@@ -20,6 +20,15 @@
         <div class="md:ml-2 mb-2 md:mb-0">
             <button type="button" onclick="location.href='{{ route('comment_edit',['comment'=>$comment->id])}}'" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-700 rounded ">編集</button>
         </div>
+        <form id="delete_{{$comment->id}}" method="POST" action="{{ route('comment_destroy',['comment'=>$comment->id]) }}">
+            @csrf
+            @method('delete')
+            <div class="ml-0 mt-2 md:ml-4 md:mt-0">
+                <div class="w-32 text-center text-sm text-white bg-red-500 border-0 py-1 px-2 focus:outline-none hover:bg-red-700 rounded ">
+                <a href="#" data-id="{{ $comment->id }}" onclick="deletePost(this)" >削除</a>
+                </div>
+            </div>
+        </form>
         @endif
 
         </div>
@@ -61,4 +70,13 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function deletePost(e) {
+        'use strict';
+        if (confirm('本当に削除してもいいですか?')) {
+        document.getElementById('delete_' + e.dataset.id).submit();
+        }
+        }
+    </script>
 </x-app-layout>

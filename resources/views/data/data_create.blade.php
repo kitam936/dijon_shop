@@ -94,11 +94,39 @@
                             <button type="submit" class="w-36 text-sm text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded">Colデータ更新</button>
                         </form>
 
-                        <form method="POST" action="{{ route('admin.data.size_upsert') }}" class=" p-1" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.data.size_upsert') }}" class="ml-1 p-1" enctype="multipart/form-data">
                             @csrf
                             <label for="size_data" class="leading-7 text-sm text-gray-600">Sizeデータ</label>
                             <input type="file" id="size_data" name="size_data" accept=“.csv” class="w-1/3 ml-3 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                             <button type="submit" class="w-36 text-sm text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded">Sizeデータ更新</button>
+                        </form>
+
+                        <form method="POST" action="{{ route('admin.data.ym_upsert') }}" class="ml-2 p-1" enctype="multipart/form-data">
+                            @csrf
+                            <label for="ym_data" class="leading-7 text-sm text-gray-600">YMデータ</label>
+                            <input type="file" id="ym_data" name="ym_data" accept=“.csv” class="w-1/3 ml-3 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <button type="submit" class="w-36 text-sm text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded">YMデータ更新</button>
+                        </form>
+
+                        <form method="POST" action="{{ route('admin.data.yw_upsert') }}" class="ml-2 p-1" enctype="multipart/form-data">
+                            @csrf
+                            <label for="yw_data" class="leading-7 text-sm text-gray-600">YWデータ</label>
+                            <input type="file" id="yw_data" name="yw_data" accept=“.csv” class="w-1/3 ml-3 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <button type="submit" class="w-36 text-sm text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded">YWデータ更新</button>
+                        </form>
+
+                        <form method="POST" action="{{ route('admin.data.ymd_upsert') }}" class="p-1 " enctype="multipart/form-data">
+                            @csrf
+                            <label for="ymd_data" class="leading-7 text-sm text-gray-600">YMDデータ</label>
+                            <input type="file" id="ymd_data" name="ymd_data" accept=“.csv” class="w-1/3 ml-3 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <button type="submit" class="w-36 text-sm text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded">YMDデータ更新</button>
+                        </form>
+
+                        <form method="POST" action="{{ route('admin.data.y_upsert') }}" class="p-1 " enctype="multipart/form-data">
+                            @csrf
+                            <label for="y_data" class="leading-7 text-sm text-gray-600">Yデータ</label>
+                            <input type="file" id="y_data" name="y_data" accept=“.csv” class="w-1/3 ml-8 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <button type="submit" class="w-36 text-sm text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded">Yデータ更新</button>
                         </form>
 
                         </div>

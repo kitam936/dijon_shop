@@ -21,6 +21,10 @@ use App\Models\Hinban;
 use App\Models\Size;
 use App\Models\Sku;
 use App\Models\Unit;
+use App\Models\Ym;
+use App\Models\Yw;
+use App\Models\Ymd;
+use App\Models\Yy;
 
 class DataController extends Controller
 {
@@ -75,6 +79,34 @@ class DataController extends Controller
         $sizes=Size::All();
 
         return view('data.size_data',compact('sizes'));
+    }
+
+    public function Ym_index(Request $request)
+    {
+        $yms=Ym::All();
+
+        return view('data.Ym_data',compact('yms'));
+    }
+
+    public function Yw_index(Request $request)
+    {
+        $yws=Yw::All();
+
+        return view('data.Yw_data',compact('yws'));
+    }
+
+    public function Ymd_index(Request $request)
+    {
+        $ymds=Ymd::All();
+
+        return view('data.Ymd_data',compact('ymds'));
+    }
+
+    public function y_index(Request $request)
+    {
+        $ys=Yy::All();
+
+        return view('data.y_data',compact('ys'));
     }
 
     public function hinban_index(Request $request)
@@ -142,16 +174,16 @@ class DataController extends Controller
 
     public function delete_index()
     {
-        $YWs=DB::table('sales')
-        ->select(['YW','YM'])
-        ->groupBy(['YW','YM'])
-        ->orderBy('YM','desc')
-        ->orderBy('YW','desc')
+        $Yws=DB::table('sales')
+        ->select(['Yw','Ym'])
+        ->groupBy(['Yw','Ym'])
+        ->orderBy('Ym','desc')
+        ->orderBy('Yw','desc')
         ->get();
-        $max_YM=Sale::max('YM');
-        $max_YW=Sale::max('YW');
+        $max_Ym=Sale::max('Ym');
+        $max_Yw=Sale::max('Yw');
 
-        return view('data.delete_index',compact('max_YM','max_YW','YWs'));
+        return view('data.delete_index',compact('max_Ym','max_Yw','Yws'));
     }
 
     public function shop_edit($id)
@@ -180,8 +212,8 @@ class DataController extends Controller
     public function sales_destroy(Request $request)
     {
         DB::table('sales')
-        ->where('sales.YW','>=',($request->YW1))
-        ->where('sales.YW','<=',($request->YW2))
+        ->where('sales.Yw','>=',($request->Yw1))
+        ->where('sales.Yw','<=',($request->Yw2))
         ->delete();
 
         return to_route('admin.data.delete_index')->with(['message'=>'削除されました','status'=>'alert']);
@@ -354,11 +386,12 @@ class DataController extends Controller
 				$data_arr[$i]['pcs'] = $line[4];
                 $data_arr[$i]['tanka'] = $line[5];
                 $data_arr[$i]['kingaku'] = $line[6];
-                $data_arr[$i]['YM'] = $line[7];
-                $data_arr[$i]['YW'] = $line[8];
-                $data_arr[$i]['YMD'] = $line[9];
-				$data_arr[$i]['created_at'] = $line[10];
-				$data_arr[$i]['updated_at'] = $line[11];
+                $data_arr[$i]['Ym'] = $line[7];
+                $data_arr[$i]['Yw'] = $line[8];
+                $data_arr[$i]['Ymd'] = $line[9];
+                $data_arr[$i]['Y'] = $line[10];
+				$data_arr[$i]['created_at'] = $line[11];
+				$data_arr[$i]['updated_at'] = $line[12];
                 $count++;
 			}
 
@@ -930,6 +963,234 @@ class DataController extends Controller
 		}
     }
 
+    public function Ym_upsert(Request $request)
+    {
+        Ym::query()->delete();
+
+        setlocale(LC_ALL, 'ja_JP.UTF-8');
+        // dd($request);
+		$file = $request->file('ym_data');
+        // dd($file);
+
+        file_put_contents($file, mb_convert_encoding(file_get_contents($file), 'UTF-8', 'SJIS-win'));
+
+
+        DB::beginTransaction();
+
+        try{
+			//ファイルの読み込み
+			$csv_arr = new \SplFileObject($file);
+			$csv_arr->setFlags(\SplFileObject::READ_CSV | \SplFileObject::READ_AHEAD | \SplFileObject::SKIP_EMPTY);
+
+			//csvの値格納用配列
+			$data_arr = [];
+
+            $count = 0; // 登録件数確認用
+
+			foreach($csv_arr as $i=>$line){
+				if ($line === [null]) continue;
+				if($i == 0) continue;
+
+
+				//配列に格納
+				$data_arr[$i]['YM'] = $line[0];
+                $data_arr[$i]['prev_YM'] = $line[1];
+                $count++;
+			}
+
+                //保存
+
+			foreach(array_chunk($data_arr, 500) as $chunk){
+				DB::transaction(function() use ($chunk){
+					DB::table('yms')->upsert($chunk,['YM']);
+
+				});
+
+			}
+
+			DB::commit();
+
+            return view('data.result',compact('count'));
+
+		}catch(Throwable $e){
+			DB::rollback();
+            Log::error($e);
+            // throw $e;
+            return to_route('admin.data.create')->with(['message'=>'エラーにより処理を中断しました。csvデータを確認してください。','status'=>'alert']);
+		}
+    }
+
+    public function Yw_upsert(Request $request)
+    {
+        Yw::query()->delete();
+
+        setlocale(LC_ALL, 'ja_JP.UTF-8');
+        // dd($request);
+		$file = $request->file('yw_data');
+        // dd($file);
+
+        file_put_contents($file, mb_convert_encoding(file_get_contents($file), 'UTF-8', 'SJIS-win'));
+
+
+        DB::beginTransaction();
+
+        try{
+			//ファイルの読み込み
+			$csv_arr = new \SplFileObject($file);
+			$csv_arr->setFlags(\SplFileObject::READ_CSV | \SplFileObject::READ_AHEAD | \SplFileObject::SKIP_EMPTY);
+
+			//csvの値格納用配列
+			$data_arr = [];
+
+            $count = 0; // 登録件数確認用
+
+			foreach($csv_arr as $i=>$line){
+				if ($line === [null]) continue;
+				if($i == 0) continue;
+
+
+				//配列に格納
+				$data_arr[$i]['YW'] = $line[0];
+                $data_arr[$i]['prev_YW'] = $line[1];
+                $count++;
+			}
+
+                //保存
+
+			foreach(array_chunk($data_arr, 500) as $chunk){
+				DB::transaction(function() use ($chunk){
+					DB::table('yws')->upsert($chunk,['YW']);
+
+				});
+
+			}
+
+			DB::commit();
+
+            return view('data.result',compact('count'));
+
+		}catch(Throwable $e){
+			DB::rollback();
+            Log::error($e);
+            // throw $e;
+            return to_route('admin.data.create')->with(['message'=>'エラーにより処理を中断しました。csvデータを確認してください。','status'=>'alert']);
+		}
+    }
+
+    public function Ymd_upsert(Request $request)
+    {
+
+        Ymd::query()->delete();
+
+        setlocale(LC_ALL, 'ja_JP.UTF-8');
+        // dd($request);
+		$file = $request->file('ymd_data');
+        // dd($file);
+
+        file_put_contents($file, mb_convert_encoding(file_get_contents($file), 'UTF-8', 'SJIS-win'));
+
+
+        DB::beginTransaction();
+
+        try{
+			//ファイルの読み込み
+			$csv_arr = new \SplFileObject($file);
+			$csv_arr->setFlags(\SplFileObject::READ_CSV | \SplFileObject::READ_AHEAD | \SplFileObject::SKIP_EMPTY);
+
+			//csvの値格納用配列
+			$data_arr = [];
+
+            $count = 0; // 登録件数確認用
+
+			foreach($csv_arr as $i=>$line){
+				if ($line === [null]) continue;
+				if($i == 0) continue;
+
+
+				//配列に格納
+				$data_arr[$i]['YMD'] = $line[0];
+                $data_arr[$i]['prev_YMD'] = $line[1];
+                $count++;
+			}
+
+                //保存
+
+			foreach(array_chunk($data_arr, 500) as $chunk){
+				DB::transaction(function() use ($chunk){
+					DB::table('ymds')->upsert($chunk,['YMD']);
+
+				});
+
+			}
+
+			DB::commit();
+
+            return view('data.result',compact('count'));
+
+		}catch(Throwable $e){
+			DB::rollback();
+            Log::error($e);
+            // throw $e;
+            return to_route('admin.data.create')->with(['message'=>'エラーにより処理を中断しました。csvデータを確認してください。','status'=>'alert']);
+		}
+    }
+
+    public function Y_upsert(Request $request)
+    {
+        Yw::query()->delete();
+
+        setlocale(LC_ALL, 'ja_JP.UTF-8');
+        // dd($request);
+		$file = $request->file('y_data');
+        // dd($file);
+
+        file_put_contents($file, mb_convert_encoding(file_get_contents($file), 'UTF-8', 'SJIS-win'));
+
+
+        DB::beginTransaction();
+
+        try{
+			//ファイルの読み込み
+			$csv_arr = new \SplFileObject($file);
+			$csv_arr->setFlags(\SplFileObject::READ_CSV | \SplFileObject::READ_AHEAD | \SplFileObject::SKIP_EMPTY);
+
+			//csvの値格納用配列
+			$data_arr = [];
+
+            $count = 0; // 登録件数確認用
+
+			foreach($csv_arr as $i=>$line){
+				if ($line === [null]) continue;
+				if($i == 0) continue;
+
+
+				//配列に格納
+				$data_arr[$i]['Y'] = $line[0];
+                $data_arr[$i]['prev_Y'] = $line[1];
+                $count++;
+			}
+
+                //保存
+
+			foreach(array_chunk($data_arr, 500) as $chunk){
+				DB::transaction(function() use ($chunk){
+					DB::table('yys')->upsert($chunk,['Y']);
+
+				});
+
+			}
+
+			DB::commit();
+
+            return view('data.result',compact('count'));
+
+		}catch(Throwable $e){
+			DB::rollback();
+            Log::error($e);
+            // throw $e;
+            return to_route('admin.data.create')->with(['message'=>'エラーにより処理を中断しました。csvデータを確認してください。','status'=>'alert']);
+		}
+    }
 
 
 }

@@ -6,15 +6,15 @@
                 コメント編集
             </div>
             </h2>
-            <div class="md:flex">
-            <div class="md:ml-10 mb-2">
+            <div class="flex">
+            <div class="ml-10 mb-2">
                 <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('report_list') }}'" >Reportリスト</button>
             </div>
-            <div class="md:ml-4 mb-2">
+            <div class="ml-4 mb-2">
                 <button type="button" onclick="location.href='{{ route('comment_detail',['comment'=>$comment->id]) }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">コメント詳細</button>
             </div>
             <div>
-            <form id="delete_{{$comment->id}}" method="POST" action="{{ route('comment_destroy',['comment'=>$comment->id]) }}">
+            {{-- <form id="delete_{{$comment->id}}" method="POST" action="{{ route('comment_destroy',['comment'=>$comment->id]) }}">
                 @csrf
                 @method('delete')
                 <div class="ml-0 mt-2 md:ml-4 md:mt-0">
@@ -22,7 +22,7 @@
                     <a href="#" data-id="{{ $comment->id }}" onclick="deletePost(this)" >削除</a>
                     </div>
                 </div>
-            </form>
+            </form> --}}
 
             </div>
             </div>

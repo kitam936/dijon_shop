@@ -6,11 +6,11 @@
                 店舗Report編集
             </div>
             </h2>
-            <div class="md:flex">
+            <div class="flex">
             <div class="md:ml-20 mb-2 md:mb-0">
                 <button type="button" onclick="location.href='{{ route('report_list') }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">店舗Report一覧</button>
             </div>
-            <div class="md:ml-4 mb-2 md:mb-0">
+            <div class="ml-4 mb-2 md:mb-0">
                 <button type="button" onclick="location.href='{{ route('shop_index') }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">店舗一覧</button>
             </div>
             </div>
@@ -27,14 +27,17 @@
                     <div class="-m-2">
                         <div class="px-2 py-1 mx-auto">
                             <div class="relative flex">
-                              {{--  <label for="sh_id" class="p-2 w-28 leading-7 text-sm text-gray-600"></label>  --}}
+                            <div>
+                            <label for="sh_id" class="p-2 w-28 leading-7 text-sm text-gray-600">Shop</label>
+                            <div class="flex">
                               <div id="sh_id" name="sh_id" value="{{ $report->shop_id }}" required class="w-20 ml-2 bg-gray-100 bg-opacity-50 rounded border text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $report->shop_id }}</div>
                               {{--  <label for="sh_name" class="p-2 ml-3 w-16 leading-7 text-sm text-gray-600"></label>  --}}
                               <div id="sh_name" name="sh_name" value="{{ $report->shop_name }}" required class="w-80 ml-2 bg-gray-100 bg-opacity-50 rounded border text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $report->shop_name }}</div>
                             </div>
+                            </div>
                         </div>
-
-                        <div class="px-2 mx-auto">
+                        </div>
+                        <div class="px-2 mx-auto ml-2">
                             <div class="relative">
                               <label for="report" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Report</label>
                               <textarea id="report" name="report" rows="8" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $report->report }}</textarea>
