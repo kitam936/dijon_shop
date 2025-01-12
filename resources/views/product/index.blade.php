@@ -69,7 +69,7 @@
                     <button  type="button" class="w-20 h-8 ml-2 text-sm text-center text-gray-900 bg-gray-200 border-0 py-0 px-2 focus:outline-none hover:bg-gray-300 rounded">品番検索</button>
                     </div>
                     <div class="pl-2 mt-0 md:mt-0 md:ml-0 ml-2 ">
-                        <button type="button" class="w-20 h-8 bg-indigo-500 text-sm text-white ml-0 hover:bg-indigo-600 rounded lg:ml-2 " onclick="location.href='{{ route('product_index') }}'" >全表示</button>
+                        <button type="button" class="w-20 h-8 bg-blue-500 text-sm text-white ml-0 hover:bg-blue-600 rounded lg:ml-2 " onclick="location.href='{{ route('product_index') }}'" >全表示</button>
                     </div>
                 </div>
 
@@ -109,7 +109,7 @@
                         <td class="w-1/15 md:px-4 py-1"> {{ $product->face }}</td>
                         <td class="w-2/15 md:px-4 py-1"> <a href="{{ route('product_show',['hinban'=>$product->id]) }}" class="w-20 h-8 bg-indigo-500 text-white ml-2 hover:bg-indigo-600 rounded"  >{{ $product->hinabn_id }}</a></td>
                         <td class="w-4/15 md:px-4 py-1 text-left">{{ Str::limit($product->hinban_name,20) }}</td>
-                        <td class="w-1/15 md:px-4 py-1 text-right">{{ number_format($product->m_price )}}</td>
+                        <td class="w-1/15 md:px-4 py-1 md:pr-12 text-right">{{ number_format($product->m_price )}}</td>
                         {{-- <td class="w-1/15 md:px-4 py-1 text-right">{{ number_format($product->price )}}</td> --}}
                     </tr>
                     @endforeach
@@ -156,7 +156,7 @@
                         <td class="w-1/15 md:px-4 py-1"> {{ $product->face }}</td>
                         <td class="w-1/15 h-2 md:px-2 py-0"><a href="{{ route('product_show0',['hinban'=>$product->hinban_id]) }}" class=text-blue-500> {{ $product->hinban_id }}</a></td>
                         <td class="w-4/15 h-2 pl-2 text-sm md:px-2 py-0 text-left ">{{ Str::limit($product->hinban_name,20) }}</td>
-                        <td class="w-1/15 h-2 px-2 md:px-2 py-0 text-right">{{ number_format($product->m_price )}}</td>
+                        <td class="w-1/15 h-2 px-2 md:px-2 md:pr-16 text-right">{{ number_format($product->m_price )}}</td>
                         {{-- <td class="w-1/15 h-2 px-2 md:px-2 py-0 text-right">{{ number_format($product->price )}}</td> --}}
 
                     </tr>

@@ -28,7 +28,7 @@
                     @foreach ($areas as $area)
                         <option value="{{ $area->id }}" @if(\Request::get('area_id') == $area->id) selected @endif >{{ $area->area_name }}</option>
                     @endforeach
-                         </select>
+                    </select>
                 </div>
                 <div class="flex ml-2 mb-2 md:flex md:mb-4">
                     {{--  <label class="pr-1 items-center text-sm mt-2 md:ml-4 text-gray-800 dark:text-gray-200 leading-tight" >会  社　</label>  --}}
@@ -46,7 +46,7 @@
                         <input class="w-44 h-8 ml-0 md:ml-4 rounded text-sm pt-1" id="info" placeholder="店名入力検索" name="info"  class="border">
 
                 <div class="ml-2 md:ml-4">
-                    <button type="button" class="w-20 h-8 bg-indigo-500 text-white ml-2 hover:bg-indigo-600 rounded" onclick="location.href='{{ route('shop_index') }}'" class="mb-2 ml-2 text-right text-black bg-indigo-300 border-0 py-0 px-2 focus:outline-none hover:bg-indigo-300 rounded ">全表示</button>
+                    <button type="button" class="w-20 h-8 bg-blue-500 text-white ml-2 hover:bg-blue-600 rounded" onclick="location.href='{{ route('shop_index') }}'" >全表示</button>
                 </div>
             </div>
             </div>

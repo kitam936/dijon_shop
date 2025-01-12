@@ -9,7 +9,7 @@
                 <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('analysis_index') }}'" >DataMenu</button>
             </div>
             <div class="pl-2 mt-2  ml-20 ">
-                <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('sales_total_reset') }}'" >選択リセット</button>
+                <button type="button" class="w-32 text-center text-sm text-white bg-blue-500 border-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('sales_total_reset') }}'" >選択リセット</button>
             </div>
         </div>
 
@@ -35,6 +35,7 @@
                 <span class="items-center text-sm mt-2" >　</span>
             </div> --}}
             <div class="flex mb-2">
+                <div>
                 <label for="YW1" class="items-center text-sm mt-1 " >期間  (週) </label>
                 <select class="w-36 h-8 ml-6 rounded text-sm items-center pt-1" id="YW1" name="YW1" type="number" >
                     <option value="{{ $max_YW }}" @if(\Request::get('YW1') == '0') selected @endif >週選択(from)</option>
@@ -42,6 +43,8 @@
                         <option value="{{ $YW->YW }}" @if(\Request::get('YW1') == $YW->YW) selected @endif >{{ floor(($YW->YM)/100)%100 }}年{{ ($YW->YM)%100 }}月{{ ($YW->YW)%100 }}週</option>
                     @endforeach
                 </select>
+                </div>
+                <div>
                 <label for="YW2" class="items-center text-sm mt-2 ml-2 text-gray-800 dark:text-gray-200 leading-tight" >～</label>
                 <select class="w-36 h-8 ml-2 rounded text-sm items-center pt-1" id="YW2" name="YW2" type="number" class="border">
                     <option value="{{ $max_YW }}" @if(\Request::get('YW2') == '0') selected @endif >週選択(to)</option>
@@ -49,8 +52,10 @@
                         <option value="{{ $YW->YW }}" @if(\Request::get('YW2') == $YW->YW) selected @endif >{{ floor(($YW->YM)/100)%100 }}年{{ ($YW->YM)%100 }}月{{ ($YW->YW)%100 }}週</option>
                     @endforeach
                 </select>
+                </div>
             </div>
             <div class="flex">
+                <div>
                 <label for="type1" class="mr-6 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">社店種別</label>
                 <select id="type1" name="type1" class="w-28 h-8 rounded text-sm pt-1 border mr-2 mb-2" type="text">
                     <option value="sh" @if(\Request::get('type1') == '0' || \Request::get('type1') == "sh") selected @endif >店別 </option>
@@ -59,9 +64,12 @@
                     {{-- <option value="sh" @if(\Request::get('type1') == "sh") selected @endif>店別</option> --}}
                     {{-- <option value="wet">wet</option> --}}
                 </select>
+                </div>
             </div>
 
+            <div class="md:flex">
             <div class="flex">
+                <div >
                 <label for="brand_code" class="mr-4 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Brand指定</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-5 " id="brand_code" name="brand_code" type="number" >
                     <option value="" @if(\Request::get('brand_code') == '0') selected @endif >選択なし</option>
@@ -76,10 +84,12 @@
                         <option value="{{ $season->season_id }}" @if(\Request::get('season_code') == $season->season_id ) selected @endif >{{ $season->season_name  }}</option>
                     @endforeach
                 </select>
+                </div>
             </div>
 
 
-            <div class="flex">
+            <div class="flex md:ml-4">
+                <div>
                 <label for="unit_id" class="mr-3 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Unit指定　</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-5 " id="unit_id" name="unit_id" >
                 <option value="" @if(\Request::get('unit_id') == '0') selected @endif >選択なし</option>
@@ -87,8 +97,8 @@
                     <option value="{{ $unit->id }}" @if(\Request::get('unit_id') == $unit->id ) selected @endif >{{ $unit->id  }}</option>
                 @endforeach
                 </select>
-
-
+                </div>
+                <div class="ml-1">
                 <label for="face" class="mr-1 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Face指定　</label>
                 <select class="w-28 h-8 rounded border text-sm items-center pt-1" id="face" name="face" >
                     <option value="" @if(\Request::get('face') == '0') selected @endif >選択なし</option>
@@ -96,7 +106,8 @@
                     <option value="{{ $face->face }}" @if(\Request::get('face') == $face->face ) selected @endif >{{ $face->face  }}</option>
                     @endforeach
                 </select>
-
+                </div>
+            </div>
             </div>
 
 

@@ -22,7 +22,8 @@ class Sale extends Model
         'kingaku',
         'YM',
         'YW',
-        'YMD'
+        'YMD',
+        'Y'
     ];
 
 

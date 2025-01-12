@@ -68,7 +68,7 @@
 
                           <div class="p-2 w-full mt-4 flex justify-around">
 
-                            <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">登録</button>
+                            <button type="submit" class="w-32 h-8 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-700 rounded ">登録</button>
                           </div>
                         </div>
                     </div>

@@ -9,15 +9,16 @@
             <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('analysis_index') }}'" >DataMenu</button>
         </div>
         <div class="pl-2 mt-2  ml-20 ">
-            <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('stocks_product_reset') }}'" >選択リセット</button>
+            <button type="button" class="w-32 text-center text-sm text-white bg-blue-500 border-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('stocks_product_reset') }}'" >選択リセット</button>
         </div>
         </div>
         {{-- <span class="items-center text-sm mt-2 text-gray-800 dark:text-gray-200 leading-tight" >　※Brand・店舗を選択してください　　　</span> --}}
 
         <form method="get" action="{{ route('stocks_product')}}" class="mt-4">
 
-
+            <div class="md:flex">
             <div class="flex">
+                <div>
                 <label for="type3" class="mr-5 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">商品区分</label>
                 <select id="type3" name="type3" class="w-28 h-8 rounded text-sm pt-1 border mr-6 mb-2" type="text">
                     <option value="h" @if(\Request::get('type3') == '0' || \Request::get('type3') == "h") selected @endif >品番別</option>
@@ -26,7 +27,9 @@
                     <option value="f" @if(\Request::get('type3') == "f") selected @endif>Face別</option>
                     {{-- <option value="h" @if(\Request::get('type3') == "h") selected @endif>品番別</option> --}}
                 </select>
+                </div>
 
+                <div>
                 <label for="type1" class="mr-4 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">社店種別</label>
                 <select id="type1" name="type1" class="w-28 h-8 rounded text-sm pt-1 border mr-2 mb-2" type="text">
                     <option value="" @if(\Request::get('type1') == '0') selected @endif >全社店</option>
@@ -35,11 +38,12 @@
                     <option value="sh" @if(\Request::get('type1') == "sh") selected @endif>店別</option>
                     {{-- <option value="wet">wet</option> --}}
                 </select>
+                </div>
             </div>
 
-
-                <div class="flex">
+            <div class="flex md:ml-4">
                 @if(\Request::get('type1') == 'co' || \Request::get('type1') == 'sh')
+                <div>
                 <label for="co_id" class="mr-6 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">社を指定</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-6 " id="co_id" name="co_id" >
                 <option value="" @if(\Request::get('co_id') == '0') selected @endif >選択なし</option>
@@ -47,8 +51,10 @@
                     <option value="{{ $company->id }}" @if(\Request::get('co_id') == $company->id ) selected @endif >{{ $company->co_name  }}</option>
                 @endforeach
                 </select>
+                </div>
                 @endif
                 @if(\Request::get('type1') == 'sh')
+                <div>
                 <label for="sh_id" class="mr-5 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">店を指定</label>
                 <select class="w-32 h-8 rounded border text-sm items-center pt-1" id="sh_id" name="sh_id" >
                     <option value="" @if(\Request::get('sh_id') == '0') selected @endif >選択なし</option>
@@ -56,9 +62,13 @@
                     <option value="{{ $shop->id }}" @if(\Request::get('sh_id') == $shop->id ) selected @endif >{{ $shop->shop_name  }}</option>
                     @endforeach
                 </select>
-                @endif
                 </div>
+                @endif
+            </div>
+            </div>
+            <div class="md:flex">
             <div class="flex">
+                <div>
                 <label for="brand_code" class="mr-3 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Brand指定</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-6 " id="brand_code" name="brand_code" type="number" >
                     <option value="" @if(\Request::get('brand_code') == '0') selected @endif >選択なし</option>
@@ -66,6 +76,8 @@
                         <option value="{{ $brand->id }}" @if(\Request::get('brand_code') == $brand->id ) selected @endif >{{ $brand->brand_name  }}</option>
                     @endforeach
                 </select>
+                </div>
+                <div>
                 <label for="season_code" class="mr-4 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">季節指定</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-2 " id="season_code" name="season_code" type="number" >
                     <option value="" @if(\Request::get('season_code') == '0') selected @endif >選択なし</option>
@@ -73,9 +85,11 @@
                         <option value="{{ $season->season_id }}" @if(\Request::get('season_code') == $season->season_id ) selected @endif >{{ $season->season_name  }}</option>
                     @endforeach
                 </select>
+                </div>
             </div>
 
-            <div class="flex">
+            <div class="flex md:ml-4">
+                <div>
                 <label for="unit_id" class="mr-2 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Unit指定　</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-6 " id="unit_id" name="unit_id" >
                 <option value="" @if(\Request::get('unit_id') == '0') selected @endif >選択なし</option>
@@ -83,8 +97,9 @@
                     <option value="{{ $unit->id }}" @if(\Request::get('unit_id') == $unit->id ) selected @endif >{{ $unit->id  }}</option>
                 @endforeach
                 </select>
+                </div>
 
-
+                <div>
                 <label for="face" class="mr-0 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Face指定　</label>
                 <select class="w-28 h-8 rounded border text-sm items-center pt-1" id="face" name="face" >
                     <option value="" @if(\Request::get('face') == '0') selected @endif >選択なし</option>
@@ -92,11 +107,9 @@
                     <option value="{{ $face->face }}" @if(\Request::get('face') == $face->face ) selected @endif >{{ $face->face  }}</option>
                     @endforeach
                 </select>
-
+                </div>
             </div>
-
-
-
+            </div>
         </form>
 
 

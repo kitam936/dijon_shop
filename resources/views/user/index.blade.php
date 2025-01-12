@@ -8,34 +8,33 @@
 
         <form method="get" action="{{ route('memberlist')}}" class="mt-4">
             <x-flash-message status="session('status')"/>
-            <span class="items-center text-sm mt-2 text-gray-800 leading-tight" >※キーワードで検索できます　　　</span>
+            <span class="items-center text-sm ml-2 mt-2 text-gray-800 leading-tight" >※キーワードで検索できます　　　</span>
             <div class="md:flex">
-            <div class="flex" >
-
-                </div>
+                <div class="flex ml-2">
                 <div class="flex mb-2 md:flex md:mb-4">
                          {{-- <label class="items-center ml-2 mr-1 text-sm mt-2 text-gray-800 leading-tight" >検索</label> --}}
                         <input class="w-40 h-8 ml-0 md:ml-4 rounded text-sm pt-1" id="search" placeholder="ワード検索" name="search"  class="border">
-
-                <div class="ml-2 md:ml-4">
-                    <button type="button" class="w-20 h-8 text-sm  bg-indigo-500 text-white ml-0 hover:bg-indigo-600 rounded" onclick="location.href='{{ route('memberlist') }}'" class="mb-2 ml-2 text-right text-black bg-indigo-300 border-0 py-0 px-2 focus:outline-none hover:bg-indigo-300 rounded ">全表示</button>
                 </div>
-
-                @can('manager-higher')
                 <div class="ml-2 md:ml-4">
-                    <button type="button" class="w-32 h-8 text-sm  bg-indigo-500 text-white ml-0 hover:bg-indigo-600 rounded" onclick="location.href='{{ route('role_list') }}'" class="mb-2 ml-2 text-right text-black bg-indigo-300 border-0 py-0 px-2 focus:outline-none hover:bg-indigo-300 rounded ">権限</button>
+                    <button type="button" class="w-20 h-8 text-sm  bg-blue-500 text-white ml-0 hover:bg-blue-600 rounded" onclick="location.href='{{ route('memberlist') }}'" >全表示</button>
+                </div>
+                </div>
+            <div class="flex">
+                @can('manager-higher')
+                <div class="ml-2">
+                    <button type="button" class="w-32 h-8 text-sm  bg-indigo-500 text-white ml-0 hover:bg-indigo-600 rounded" onclick="location.href='{{ route('role_list') }}'" >権限</button>
                 </div>
                 @endcan
 
                 @can('admin')
                 <div class="ml-2 md:ml-4">
-                    <button type="button" class="w-32 h-8 text-sm  bg-green-500 text-white ml-0 hover:bg-green-600 rounded" onclick="location.href='{{ route('admin.user_create') }}'" class="mb-2 ml-2 text-right text-black bg-indigo-300 border-0 py-0 px-2 focus:outline-none hover:bg-indigo-300 rounded ">新規登録</button>
+                    <button type="button" class="w-32 h-8 text-sm  bg-green-500 text-white ml-0 hover:bg-green-600 rounded" onclick="location.href='{{ route('admin.user_create') }}'" >新規登録</button>
                 </div>
                 @endcan
-
-
             </div>
             </div>
+
+
         </form>
     </x-slot>
 

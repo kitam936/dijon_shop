@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('YM');
             $table->integer('YW');
             $table->integer('YMD');
+            $table->integer('Y');
             $table->timestamps();
         });
     }
