@@ -9,11 +9,11 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('analysis_index')" :active="request()->routeIs('analysis_index')">
                         Data分析
@@ -45,11 +45,11 @@
                     </x-nav-link>
                 </div>
 
-                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('report_list')" :active="request()->routeIs('report_list')">
-                        店舗Report
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('manual_download')" :active="request()->routeIs('manual_download')">
+                        マニュアルDL
                     </x-nav-link>
-                </div> --}}
+                </div>
 
                 @can('admin')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -108,11 +108,11 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
+        {{-- <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-        </div>
+        </div> --}}
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('analysis_index')" :active="request()->routeIs('analysis_index')">
                 Data分析
@@ -144,11 +144,11 @@
             </x-responsive-nav-link>
         </div>
 
-        {{-- <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('report_list')" :active="request()->routeIs('report_list')">
-                売上分析
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('manual_download')" :active="request()->routeIs('manual_download')">
+                マニュアルDL
             </x-responsive-nav-link>
-        </div> --}}
+        </div>
 
 
         @can('admin')

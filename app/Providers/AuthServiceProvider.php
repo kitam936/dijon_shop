@@ -24,7 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('admin',function($user){
-            return $user->role_id === 1;
+            return $user->role_id > 0 && $user->role_id <= 2;
         });
 
         Gate::define('cf_manager-higher',function($user){

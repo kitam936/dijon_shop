@@ -24,28 +24,63 @@
                     <div class="-m-2">
 
                         <div class="p-2">
-                            <span class="items-center mt-8 mr-20" >データ選択削除</span>
-                            <form method="POST" action="{{ route('admin.data.sales_destroy') }}" class=" p-1 mb-8" >
+                            <span class="items-center mt-2 mr-20" >データ選択削除</span>
+                            <div calss="flex">
+                            <form method="POST" action="{{ route('admin.data.sales_destroy') }}" class=" p-1 mb-2" >
                                 @csrf
                                 @method('delete')
+                                <div class="flex">
+                                <div>
                                 <select class="w-32 h-8 text-sm items-center pt-1" id="YW1" name="YW1" type="number" class="border">
-                                    <option value="" @if(\Request::get('YW1') == '0') selected @endif >{{ $max_YW }}</option>
-                                    @foreach ($YWs as $YW)
-                                        <option value="{{ $YW->YW }}" @if(\Request::get('YW1') == $YW->YW) selected @endif >{{ floor(($YW->YM)/100)%100 }}年{{ ($YW->YM)%100 }}月{{ ($YW->YW)%100 }}週</option>
+                                    <option value="" @if(\Request::get('YW1') == '0') selected @endif >{{ $max_Yw }}</option>
+                                    @foreach ($Yws as $Yw)
+                                        <option value="{{ $Yw->Yw }}" @if(\Request::get('YW1') == $Yw->Yw) selected @endif >{{ floor(($Yw->Ym)/100)%100 }}年{{ ($Yw->Ym)%100 }}月{{ ($Yw->Yw)%100 }}週</option>
                                     @endforeach
                                 </select>
                                 <span class="items-center text-sm mt-2" >　週　～</span>
                                 <select class="w-32 h-8 text-sm items-center pt-1" id="YW2" name="YW2" type="number" class="border">
-                                    <option value="" @if(\Request::get('YW2') == '0') selected @endif >{{ $max_YW }}</option>
-                                    @foreach ($YWs as $YW)
-                                        <option value="{{ $YW->YW }}" @if(\Request::get('YW2') == $YW->YW) selected @endif >{{ floor(($YW->YM)/100)%100 }}年{{ ($YW->YM)%100 }}月{{ ($YW->YW)%100 }}週</option>
+                                    <option value="" @if(\Request::get('YW2') == '0') selected @endif >{{ $max_Yw }}</option>
+                                    @foreach ($Yws as $Yw)
+                                        <option value="{{ $Yw->Yw }}" @if(\Request::get('YW2') == $Yw->Yw) selected @endif >{{ floor(($Yw->Ym)/100)%100 }}年{{ ($Yw->Ym)%100 }}月{{ ($Yw->Yw)%100 }}週</option>
                                     @endforeach
                                 </select>
                                 <span class="items-center text-sm mt-2" >　週　　</span><br>
-                                <button type="submit" class="text-sm ml-0 mt-4 text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded">売上データ削除</button>
+                                </div>
+                                <div>
+                                <button type="submit" class="text-sm ml-0 mt-0 text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded">売上データ削除</button>
+                                </div>
+                                </div>
                             </form>
+                            </div>
 
-                            <span class="items-center mt-8 mr-20" >データ全削除</span>
+                            <form method="POST" action="{{ route('admin.data.hinban_destroy') }}" class=" ml-0 p-1 items-right " >
+                                @csrf
+                                @method('delete')
+                                <div class="flex">
+                                    <div>
+                                <select class="w-32 h-8 text-sm items-center pt-1" id="year1" name="year1" type="number" class="border">
+                                    <option value="" @if(\Request::get('year1') == '0') selected @endif >{{ $min_year }}</option>
+                                    @foreach ($years as $year)
+                                        <option value="{{ $year->year_code }}" @if(\Request::get('year1') == $year->year_code) selected @endif >{{ $year->year_code }}年度</option>
+                                    @endforeach
+                                </select>
+                                <span class="items-center text-sm mt-2" >年度　～</span>
+                                <select class="w-32 h-8 text-sm items-center pt-1" id="year2" name="year2" type="number" class="border">
+                                    <option value="" @if(\Request::get('year2') == '0') selected @endif >{{ $min_year }}</option>
+                                    @foreach ($years as $year)
+                                        <option value="{{ $year->year_code }}" @if(\Request::get('year2') == $year->year_code) selected @endif >{{ $year->year_code }}年度</option>
+                                    @endforeach
+                                </select>
+                                <span class="items-center text-sm mt-2" >年度　　</span><br>
+                                    </div>
+                                    <div>
+                                <button type="submit" class="text-sm w-32 text-white bg-red-500 border-0 py-1 focus:outline-none hover:bg-red-600 rounded">品番データ削除</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="mt-8">
+                            <span class="items-center mt-12 mr-20" >データ全削除</span>
+                            </div>
 
                             <form method="POST" action="{{ route('admin.data.stock_destroy') }}" class=" ml-0 p-1 items-right " >
                                 @csrf
@@ -62,12 +97,7 @@
                                 <button type="submit" class="text-sm 0 w-32 text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded">SKUデータ削除</button>
                             </form>
 
-                            <form method="POST" action="{{ route('admin.data.hinban_destroy') }}" class=" ml-0 p-1 items-right " >
-                                @csrf
-                                @method('delete')
 
-                                <button type="submit" class="text-sm 0 w-32 text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded">品番データ削除</button>
-                            </form>
 
                             <form method="POST" action="{{ route('admin.data.col_destroy') }}" class=" ml-0 p-1 items-right " >
                                 @csrf
