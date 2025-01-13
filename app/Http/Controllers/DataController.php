@@ -183,7 +183,15 @@ class DataController extends Controller
         $max_Ym=Sale::max('Ym');
         $max_Yw=Sale::max('Yw');
 
-        return view('data.delete_index',compact('max_Ym','max_Yw','Yws'));
+        $years=DB::table('hinbans')
+        ->select(['year_code'])
+        ->groupBy(['year_code'])
+        ->orderBy('year_code','asc')
+        ->get();
+
+        $min_year=Hinban::min('year_code');
+
+        return view('data.delete_index',compact('max_Ym','max_Yw','Yws','years','min_year'));
     }
 
     public function shop_edit($id)
@@ -237,7 +245,11 @@ class DataController extends Controller
 
     public function hinban_destroy(Request $request)
     {
-        $Stocks=Hinban::query()->delete();
+        // $Stocks=Hinban::query()->delete();
+        DB::table('hinbans')
+        ->where('hinbans.year_code','>=',($request->year1))
+        ->where('hinbans.year_code','<=',($request->year2))
+        ->delete();
 
         return to_route('admin.data.delete_index')->with(['message'=>'削除されました','status'=>'alert']);
     }

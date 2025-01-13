@@ -19,6 +19,11 @@ class RoleSeeder extends Seeder
             'role_info' => '管理者権限',
         ],
         [
+            'id' => 2,
+            'role_name' => '管理者代行',
+            'role_info' => '管理者権限',
+        ],
+        [
             'id' => 3,
             'role_name' => 'チーフマネージャー',
             'role_info' => 'チーフマネージャー権限',

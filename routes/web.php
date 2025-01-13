@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DataDownloadController;
 use App\Http\Controllers\TestMailController;
 use App\Http\Controllers\OrderController;
 
@@ -169,6 +170,7 @@ Route::middleware('can:user-higher')
     Route::get('sales_product_reset', [AnalysisController::class, 'sales_product_reset'])->name('sales_product_reset');
     Route::get('stocks_product_reset', [AnalysisController::class, 'stocks_product_reset'])->name('stocks_product_reset');
     Route::get('order_index', [OrderController::class, 'order_index'])->name('order_index');
+    Route::get('manual_download',[DataDownloadController::class,'manual_download'])->name('manual_download');
 });
 
 require __DIR__.'/auth.php';

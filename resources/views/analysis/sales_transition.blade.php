@@ -166,7 +166,7 @@
                     <th class="w-3/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">年度・月・週・日</th>
                     <th class="w-3/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">当期売上(千)</th>
                     <th class="w-3/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">前期売上(千)</th>
-                    <th class="w-3/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">前期比(%)</th>
+                    <th class="w-3/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">前期比</th>
                 </tr>
                 </thead>
 
@@ -178,7 +178,7 @@
                     <td class="w-3/12 pr-8 md:px-4 py-1 text-sm text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(round($data->total)/1000)}}</span></td>
                     <td class="w-3/12 pr-8 md:px-4 py-1 text-sm text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(round($data->prev_total)/1000)}}</span></td>
                     @if($data->prev_total>0)
-                    <td class="w-3/12 pr-8 md:px-4 py-1 text-sm text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(($data->total/$data->prev_total)*100)}}</span></td>
+                    <td class="w-3/12 pr-8 md:px-4 py-1 text-sm text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(($data->total/$data->prev_total)*100)}} %</span></td>
                     @else
                     <td class="w-3/12 pr-8 md:px-4 py-1 text-sm text-right"><span style="font-variant-numeric:tabular-nums"> --</span></td>
                     @endif
@@ -241,9 +241,6 @@ const shop = document.getElementById('sh_id')
 shop.addEventListener('change', function(){
 this.form.submit()
 })
-
-
-
 
 </script>
 

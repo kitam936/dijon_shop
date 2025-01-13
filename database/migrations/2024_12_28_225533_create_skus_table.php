@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('skus', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('hinban_id')->constrained();
+            $table->foreignId('hinban_id')->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->foreignId('col_id')->constrained();
             $table->foreignId('size_id')->constrained();
             $table->timestamps();
