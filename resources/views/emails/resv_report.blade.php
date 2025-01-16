@@ -1,6 +1,6 @@
 <p class="mb-4">{{ $user['name']}}様</p>
 
-<p class="mb-4">Dijon_Web_Shop　のレポートが更新されました。</p>
+<p class="mb-4">shop.dijon1988.net　のレポートが更新されました。</p>
 
 店舗Report
 
@@ -13,6 +13,8 @@
 <br>
 
 アプリで確認をしてください。<br><br>
+
+https://shop.dijon1988.net
 
 
 
