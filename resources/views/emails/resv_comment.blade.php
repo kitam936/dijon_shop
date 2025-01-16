@@ -1,6 +1,6 @@
 <p class="mb-4">{{ $user['name']}}　様</p>
 
-<p class="mb-4">Dijon_Web_Shop のレポートにコメントが登録されました。</p>
+<p class="mb-4">dijon_shop のレポートにコメントが登録されました。</p>
 <br><br>
 
 
@@ -19,7 +19,10 @@ Reportのコメントが更新されました。<br><br>
 
 アプリで確認をしてください。<br><br>
 
+https://shop.dijon1988.net
 
 
-shop.dijon1988.net事務局
+
+
+dijon_shop事務局
 
