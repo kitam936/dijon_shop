@@ -104,6 +104,7 @@ class AnalysisController extends Controller
             ->where('unit_id','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
+            ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('company_id','LIKE','%'.$request->co_id.'%')
             ->where('brand_id','LIKE','%'.($request->brand_code).'%')
             ->where('season_id','LIKE','%'.($request->season_code).'%')
@@ -121,6 +122,7 @@ class AnalysisController extends Controller
             ->where('unit_id','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
+            ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('company_id', 'LIKE', '%' . $request->co_id . '%')
             ->where('brand_id', 'LIKE', '%' . ($request->brand_code) . '%')
             ->where('season_id', 'LIKE', '%' . ($request->season_code) . '%')
@@ -171,6 +173,7 @@ class AnalysisController extends Controller
             ->where('unit_id','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
+            ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('company_id','LIKE','%'.$request->co_id.'%')
             ->where('brand_id','LIKE','%'.($request->brand_code).'%')
             ->where('season_id','LIKE','%'.($request->season_code).'%')
@@ -188,6 +191,7 @@ class AnalysisController extends Controller
             ->where('unit_id','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
+            ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('company_id', 'LIKE', '%' . $request->co_id . '%')
             ->where('brand_id', 'LIKE', '%' . ($request->brand_code) . '%')
             ->where('season_id', 'LIKE', '%' . ($request->season_code) . '%')
@@ -239,6 +243,7 @@ class AnalysisController extends Controller
             ->where('unit_id','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
+            ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('company_id','LIKE','%'.$request->co_id.'%')
             ->where('brand_id','LIKE','%'.($request->brand_code).'%')
             ->where('season_id','LIKE','%'.($request->season_code).'%')
@@ -256,6 +261,7 @@ class AnalysisController extends Controller
             ->where('unit_id','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
+            ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('company_id', 'LIKE', '%' . $request->co_id . '%')
             ->where('brand_id', 'LIKE', '%' . ($request->brand_code) . '%')
             ->where('season_id', 'LIKE', '%' . ($request->season_code) . '%')
@@ -307,6 +313,7 @@ class AnalysisController extends Controller
             ->where('unit_id','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
+            ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('company_id', 'LIKE', '%' . $request->co_id . '%')
             ->where('brand_id', 'LIKE', '%' . ($request->brand_code) . '%')
             ->where('season_id', 'LIKE', '%' . ($request->season_code) . '%')
@@ -332,6 +339,7 @@ class AnalysisController extends Controller
             ->where('unit_id','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
+            ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('company_id', 'LIKE', '%' . $request->co_id . '%')
             ->where('brand_id', 'LIKE', '%' . ($request->brand_code) . '%')
             ->where('season_id', 'LIKE', '%' . ($request->season_code) . '%')
@@ -388,6 +396,7 @@ class AnalysisController extends Controller
             ->where('unit_id','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
+            ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('company_id', 'LIKE', '%' . $request->co_id . '%')
             ->where('brand_id', 'LIKE', '%' . ($request->brand_code) . '%')
             ->where('season_id', 'LIKE', '%' . ($request->season_code) . '%')
@@ -413,6 +422,7 @@ class AnalysisController extends Controller
             ->where('unit_id','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
+            ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('company_id', 'LIKE', '%' . $request->co_id . '%')
             ->where('brand_id', 'LIKE', '%' . ($request->brand_code) . '%')
             ->where('season_id', 'LIKE', '%' . ($request->season_code) . '%')
@@ -681,8 +691,10 @@ class AnalysisController extends Controller
             ->leftjoinSub($datas, 'cr_data', 'shops.id', '=', 'cr_data.shop_id')
             ->leftjoinSub($prev_datas, 'pv_data', 'shops.id', '=', 'pv_data.shop_id')
             ->select('shops.id','shops.shop_name as name','cr_data.total','pv_data.pv_total')
+            ->where('cr_data.total','>',0)
+            ->orWhere('pv_data.pv_total','>',0)
             ->orderBy('total','desc')
-            ->get();
+            ->paginate(100);
 
             // dd($YM,$datas,$prev_datas);
         // 比較データを作成
@@ -740,8 +752,10 @@ class AnalysisController extends Controller
             ->leftjoinSub($datas, 'cr_data', 'companies.id', '=', 'cr_data.company_id')
             ->leftjoinSub($prev_datas, 'pv_data', 'companies.id', '=', 'pv_data.company_id')
             ->select('companies.id','companies.co_name as name','cr_data.total','pv_data.pv_total')
+            ->where('cr_data.total','>',0)
+            ->orWhere('pv_data.pv_total','>',0)
             ->orderBy('total','desc')
-            ->get();
+            ->paginate(100);
 
             $total = DB::table($query)
             ->selectRaw('sum(totalPerPurchase) as total')
@@ -798,8 +812,10 @@ class AnalysisController extends Controller
             ->leftjoinSub($datas, 'cr_data', 'shops.id', '=', 'cr_data.shop_id')
             ->leftjoinSub($prev_datas, 'pv_data', 'shops.id', '=', 'pv_data.shop_id')
             ->select('shops.id','shops.shop_name as name','cr_data.total','pv_data.pv_total')
+            ->where('cr_data.total','>',0)
+            ->orWhere('pv_data.pv_total','>',0)
             ->orderBy('total','desc')
-            ->get();
+            ->paginate(100);
 
             // dd($YM,$datas,$prev_datas);
         // 比較データを作成
@@ -907,8 +923,10 @@ class AnalysisController extends Controller
         ->leftjoinSub($datas, 'cr_data', 'shops.id', '=', 'cr_data.shop_id')
         ->leftjoinSub($prev_datas, 'pv_data', 'shops.id', '=', 'pv_data.shop_id')
         ->select('shops.id','shops.shop_name as name','cr_data.total','pv_data.pv_total')
+        ->where('cr_data.total','>',0)
+            ->orWhere('pv_data.pv_total','>',0)
         ->orderBy('total','desc')
-        ->get();
+        ->paginate(100);
 
         // dd($YM,$datas,$prev_datas);
     // 比較データを作成
@@ -999,7 +1017,7 @@ class AnalysisController extends Controller
             ->groupBy('hinban_id','hinban_name','m_price')
             ->selectRaw('hinban_id, hinban_id as code,hinban_name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total')
             ->orderBy('pcs_total','desc')
-            ->get();
+            ->paginate(100);
 
             $total = DB::table($query)
             ->selectRaw('sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total')
@@ -1032,7 +1050,7 @@ class AnalysisController extends Controller
             ->selectRaw('hinban_id, hinban_id as code,hinban_name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total')
             ->orderBy('pcs_total','desc')
             ->orderBy('total','desc')
-            ->get();
+            ->paginate(100);
 
             $total = DB::table($query)
             ->selectRaw('sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total')
@@ -1067,7 +1085,7 @@ class AnalysisController extends Controller
             ->selectRaw('sku_id,hinban_id, CONCAT(hinban_id, "-", col_id, "-", size_id) as code,hinban_name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total')
             ->orderBy('pcs_total','desc')
             ->orderBy('total','desc')
-            ->get();
+            ->paginate(100);
 
             // ->selectRaw("CONCAT(first_name, ' ', last_name) AS full_name")
 
@@ -1146,7 +1164,7 @@ class AnalysisController extends Controller
         ->groupBy('hinban_id','hinban_name','m_price')
         ->selectRaw('hinban_id, hinban_id as code,hinban_name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total')
         ->orderBy('pcs_total','desc')
-        ->get();
+        ->paginate(100);
 
         $total = DB::table($query)
         ->selectRaw('sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total')
@@ -1217,7 +1235,7 @@ class AnalysisController extends Controller
             ->groupBy('hinban_id','hinban_name','m_price')
             ->selectRaw('hinban_id, hinban_id as code,hinban_name as name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerZaiko) as total')
             ->orderBy('pcs_total','desc')
-            ->get();
+            ->paginate(100);
 
             $total = DB::table($query)
             ->selectRaw('sum(subtotal_pcs) as pcs_total,sum(totalPerZaiko) as total')
@@ -1250,7 +1268,7 @@ class AnalysisController extends Controller
             ->selectRaw('hinban_id, hinban_id as code,hinban_name as name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerZaiko) as total')
             ->orderBy('pcs_total','desc')
             ->orderBy('total','desc')
-            ->get();
+            ->paginate(100);
 
             $total = DB::table($query)
             ->selectRaw('sum(subtotal_pcs) as pcs_total,sum(totalPerZaiko) as total')
@@ -1283,7 +1301,7 @@ class AnalysisController extends Controller
             ->selectRaw('season_id, season_id as code,season_name as name, sum(subtotal_pcs) as pcs_total,sum(totalPerZaiko) as total')
             ->orderBy('pcs_total','desc')
             ->orderBy('total','desc')
-            ->get();
+            ->paginate(100);
 
             $total = DB::table($query)
             ->selectRaw('sum(subtotal_pcs) as pcs_total,sum(totalPerZaiko) as total')
@@ -1316,7 +1334,7 @@ class AnalysisController extends Controller
             ->selectRaw('unit_id, unit_id as code,season_name as name, sum(subtotal_pcs) as pcs_total,sum(totalPerZaiko) as total')
             ->orderBy('pcs_total','desc')
             ->orderBy('total','desc')
-            ->get();
+            ->paginate(100);
 
             $total = DB::table($query)
             ->selectRaw('sum(subtotal_pcs) as pcs_total,sum(totalPerZaiko) as total')
@@ -1349,7 +1367,7 @@ class AnalysisController extends Controller
             ->selectRaw('face, face as code,face as name, sum(subtotal_pcs) as pcs_total,sum(totalPerZaiko) as total')
             ->orderBy('pcs_total','desc')
             ->orderBy('total','desc')
-            ->get();
+            ->paginate(100);
 
             $total = DB::table($query)
             ->selectRaw('sum(subtotal_pcs) as pcs_total,sum(totalPerZaiko) as total')
@@ -1409,7 +1427,7 @@ class AnalysisController extends Controller
         ->groupBy('hinban_id','hinban_name','m_price')
         ->selectRaw('hinban_id, hinban_id as code,hinban_name as name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerZaiko) as total')
         ->orderBy('pcs_total','desc')
-        ->get();
+        ->paginate(100);
 
         $total = DB::table($query)
         ->selectRaw('sum(subtotal_pcs) as pcs_total,sum(totalPerZaiko) as total')

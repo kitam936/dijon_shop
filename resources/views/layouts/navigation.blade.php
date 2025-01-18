@@ -16,7 +16,7 @@
                 </div> --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('analysis_index')" :active="request()->routeIs('analysis_index')">
-                        Data分析
+                        Menu
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -115,7 +115,7 @@
         </div> --}}
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('analysis_index')" :active="request()->routeIs('analysis_index')">
-                Data分析
+                Menu
             </x-responsive-nav-link>
         </div>
         <div class="pt-2 pb-3 space-y-1">

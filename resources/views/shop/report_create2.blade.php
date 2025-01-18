@@ -7,52 +7,52 @@
             </div>
             </h2>
             <div class="flex">
-            <div class="ml-10 mb-2">
-                <button type="button" onclick="location.href='{{ route('report_list') }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">店舗Report一覧</button>
-            </div>
-            <div class="ml-4 mb-2">
-                <button type="button" onclick="location.href='{{ route('shop_index') }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">店舗一覧</button>
-            </div>
-            </div>
-
-            <form method="get" action="{{ route('report_create2')}}" class="mt-4">
-                <div class="ml-4">
-                    <span class="items-center text-sm mt-2 text-gray-800 dark:text-gray-200 leading-tight" >※社・エリアで店舗を絞り込めます　　　</span>
+                <div class="ml-10 mb-2">
+                    <button type="button" onclick="location.href='{{ route('report_list') }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">店舗Report一覧</button>
                 </div>
-                <div class="md:flex">
+                <div class="ml-4 mb-2">
+                    <button type="button" onclick="location.href='{{ route('shop_index') }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">店舗一覧</button>
+                </div>
+                </div>
 
-                <div class="flex">
+                <form method="get" action="{{ route('report_create2')}}" class="mt-4">
+                    <div class="ml-0">
+                        <span class="items-center text-sm mt-2 text-gray-800 leading-tight" >※社・エリアで店舗を絞り込めます　　　</span>
+                    </div>
+                    <div class="md:flex">
 
-                    <div class="ml-2 mb-2 md:flex md:mb-4">
-                        <div>
-                        {{-- <label for="sh_id" class="mr-5 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">社指定</label> --}}
+                    <div class="flex">
+
+                        <div class="ml-0 mb-2 md:flex md:mb-4">
+                            <div>
+                            {{-- <label for="sh_id" class="mr-5 leading-7 text-sm  text-gray-800 ">社指定</label> --}}
+                            </div>
+                            <div>
+                            <select class="w-28 h-8 ml-0 rounded text-sm pt-1 " id="co_id" name="co_id"  class="border">
+                            <option value="" @if(\Request::get('co_id') == '0') selected @endif >社選択</option>
+                            @foreach ($companies as $company)
+                                <option value="{{ $company->id }}" @if(\Request::get('co_id') == $company->id) selected @endif >{{ $company->co_name }}</option>
+                            @endforeach
+                            </select><br>
+                            </div>
                         </div>
-                        <div>
-                        <select class="w-32 h-8 ml-2 rounded text-sm pt-1 " id="co_id" name="co_id"  class="border">
-                        <option value="" @if(\Request::get('co_id') == '0') selected @endif >社選択</option>
-                        @foreach ($companies as $company)
-                            <option value="{{ $company->id }}" @if(\Request::get('co_id') == $company->id) selected @endif >{{ $company->co_name }}</option>
-                        @endforeach
-                        </select><br>
+                        <div class="mb-2 ml-2 md:flex md:mb-4">
+                            {{-- <label for="sh_id" class="mr-5 leading-7 text-sm  text-gray-800 ">エリア指定</label> --}}
+                            <select class="w-28s h-8 rounded text-sm pt-1" id="area_id" name="area_id"  class="border">
+                            <option value="" @if(\Request::get('area_id') == '0') selected @endif >エリア選択</option>
+                            @foreach ($areas as $area)
+                                <option value="{{ $area->id }}" @if(\Request::get('area_id') == $area->id) selected @endif >{{ $area->area_name }}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                        <div class="pl-2 ml-0 ">
+                            <button type="button" class="w-24 h-8 text-center text-sm text-white bg-blue-500 border-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('report_create2')}}'" >選択リセット</button>
                         </div>
                     </div>
-                    <div class="mb-2 ml-2 md:flex md:mb-4">
-                        {{-- <label for="sh_id" class="mr-5 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">エリア指定</label> --}}
-                        <select class="w-32 h-8 rounded text-sm pt-1" id="area_id" name="area_id"  class="border">
-                        <option value="" @if(\Request::get('area_id') == '0') selected @endif >エリア選択</option>
-                        @foreach ($areas as $area)
-                            <option value="{{ $area->id }}" @if(\Request::get('area_id') == $area->id) selected @endif >{{ $area->area_name }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                    <div class="pl-2 ml-2 ">
-                        <button type="button" class="w-24 h-8 text-center text-sm text-white bg-blue-500 border-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('report_create2')}}'" >選択リセット</button>
-                    </div>
-                </div>
 
 
-                </div>
-            </form>
+                    </div>
+                </form>
 
         </div>
 

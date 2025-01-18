@@ -1,15 +1,18 @@
 
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold mb-2 text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold mb-2 text-xl text-gray-800 leading-tight">
             Member権限リスト
-
         </h2>
+
+         <div class="ml-2 md:ml-4">
+                    <button type="button" class="w-32 h-8 text-sm bg-indigo-500 text-white ml-2 hover:bg-indigo-600 rounded"  onclick="location.href='{{ route('memberlist') }}'" >Memberリスト</button>
+        </div>
 
 
         <form method="get" action="{{ route('role_list')}}" class="mt-4">
             <x-flash-message status="session('status')"/>
-            <span class="items-center text-sm mt-2 text-gray-800 dark:text-gray-200 leading-tight" >※権限を選択してください　　　</span>
+            <span class="items-center text-sm mt-2 text-gray-800 leading-tight" >※権限を選択してください　　　</span>
             <div class="md:flex">
             <div class="flex">
 
@@ -23,20 +26,19 @@
                 </div>
                 </div>
                 <div class="flex mb-2 md:flex md:mb-4">
-                        {{--  <label class="items-center ml-2 mr-1 text-sm mt-2 text-gray-800 dark:text-gray-200 leading-tight" >検索</label>  --}}
+                        {{--  <label class="items-center ml-2 mr-1 text-sm mt-2 text-gray-800 leading-tight" >検索</label>  --}}
                         <input class="w-44 h-8 ml-0 md:ml-4 rounded text-sm pt-1" id="user_name" placeholder="Name入力検索" name="user_name"  class="border">
 
                 <div class="ml-2 md:ml-4">
                     <button type="button" class="w-20 h-8 text-sm bg-blue-500 text-white ml-2 hover:bg-blue-600 rounded" onclick="location.href='{{ route('role_list') }}'" >全表示</button>
                 </div>
 
-                <div class="ml-2 md:ml-4">
-                    <button type="button" class="w-32 h-8 text-sm bg-indigo-500 text-white ml-2 hover:bg-indigo-600 rounded"  onclick="location.href='{{ route('memberlist') }}'" >Memberリスト</button>
-                </div>
+
             </div>
 
             </div>
         </form>
+
     </x-slot>
 
     <div class="py-0 border">

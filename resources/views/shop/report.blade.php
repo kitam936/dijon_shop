@@ -5,14 +5,13 @@
         店舗Report一覧
 
         </h2>
-        <div class="ml-2 flex md:ml-8">
-            <div class="ml-0 mt-2 md:mt-0 md:ml-8">
-                <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('shop_index') }}'" >shop一覧</button>
+        <div class="flex">
+            <div class="pl-2 mt-2 ml-4 ">
+                <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('analysis_index') }}'" >Menu</button>
             </div>
-            <div class="ml-00 mt-2 ml-4 md:mt-0">
+            <div class="pl-2 mt-2 ml-4 md:ml-8 ">
                 <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('report_create2') }}'" >新規Report</button>
             </div>
-
         </div>
         <x-flash-message status="session('status')"/>
 

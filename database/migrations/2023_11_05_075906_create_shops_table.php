@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('shop_name');
             $table->text('shop_info')->nullable();
             $table->boolean('is_selling') ;
+            $table->integer('rate');
             $table->timestamps();
         });
     }

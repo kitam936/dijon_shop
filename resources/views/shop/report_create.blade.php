@@ -7,7 +7,7 @@
             </div>
             </h2>
             <div class="flex">
-            <div class="ml-10 mb-2">
+            <div class="ml-4 mb-2">
                 <button type="button" onclick="location.href='{{ route('report_list') }}'" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded ">店舗Report一覧</button>
             </div>
             <div class="ml-4 mb-2">

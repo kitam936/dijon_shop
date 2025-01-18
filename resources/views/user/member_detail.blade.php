@@ -1,42 +1,44 @@
 <x-app-layout>
     <x-slot name="header">
 
-        <h2 class="font-semibold text-xl mb-4 text-gray-800 dark:text-gray-200 leading-tight">
-        <div>
-            Member詳細
-        </div>
-        </h2>
-        <div class="md:flex ml-2 ">
-        <div class="ml-2 mb-2 md:mb-0">
-            <button type="button" onclick="location.href='{{ route('memberlist') }}'" class="w-32 h-8 text-center text-sm text-white bg-indigo-400 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-600 rounded ">Memberリスト</button>
-        </div>
-
-
-        {{-- @foreach ($users as $user) --}}
-        @can('admin')
-
-        <div class="flex md:ml-32">
-            <div class="ml-2 mb-0 md:mb-0">
-                <button type="button" onclick="location.href='{{ route('admin.user_edit',['user'=>$user->id])}}'" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-600 rounded ">編集</button>
+        <h2 class="font-semibold text-xl mb-4 text-gray-800 leading-tight">
+            <div>
+                Member詳細
             </div>
-            <div class="ml-2 mb-0 md:mb-0">
-                <button type="button" onclick="location.href='{{ route('pw_change_admin',['user'=>$user->id])}}'" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-600 rounded ">パスワード変更</button>
+            </h2>
+            <div class="md:flex ml-2 ">
+            <div class="ml-2 mb-2 md:mb-0">
+                <button type="button" onclick="location.href='{{ route('memberlist') }}'" class="w-32 h-8 text-center text-sm text-white bg-indigo-400 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-600 rounded ">Memberリスト</button>
             </div>
 
-        <form id="delete_{{$user->id}}" method="POST" action="{{ route('admin.user_destroy',['user'=>$user->id]) }}">
-            @csrf
-            @method('delete')
-            <div class="ml-2 mt-0 md:ml-4 md:mt-0">
-                <div  class="w-32 text-center text-sm text-white bg-red-500 border-0 py-1 px-2 focus:outline-none hover:bg-red-600 rounded ">
-                <a href="#" data-id="{{ $user->id }}" onclick="deletePost(this)" >メンバー削除</a>
+
+            {{-- @foreach ($users as $user) --}}
+            @can('admin')
+
+            <div class="flex mb-2 md:ml-32">
+                <div class="ml-2 mb-0 md:mb-0">
+                    <button type="button" onclick="location.href='{{ route('admin.user_edit',['user'=>$user->id])}}'" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-600 rounded ">編集</button>
+                </div>
+                <div class="ml-2 mb-0 md:mb-0">
+                    <button type="button" onclick="location.href='{{ route('pw_change_admin',['user'=>$user->id])}}'" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-600 rounded ">パスワード変更</button>
                 </div>
             </div>
-        </form>
-        </div>
-        @endcan
+
+            <form id="delete_{{$user->id}}" method="POST" action="{{ route('admin.user_destroy',['user'=>$user->id]) }}">
+                @csrf
+                @method('delete')
+                <div class="ml-2 mt-0 md:ml-4 md:mt-0">
+                    <div  class="w-32 text-center text-sm text-white bg-red-500 border-0 py-1 px-2 focus:outline-none hover:bg-red-600 rounded ">
+                    <a href="#" data-id="{{ $user->id }}" onclick="deletePost(this)" >メンバー削除</a>
+                    </div>
+                </div>
+            </form>
+
+            @endcan
 
 
-        </div>
+            </div>
+
 
     </x-slot>
 

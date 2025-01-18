@@ -24,6 +24,7 @@ class Shop extends Model
         'shop_info',
         'area_id',
         'is_selling',
+        'rate',
     ];
 
     public function company()
