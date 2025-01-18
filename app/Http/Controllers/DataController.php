@@ -535,8 +535,9 @@ class DataController extends Controller
 				$data_arr[$i]['shop_name'] = $line[3];
 				$data_arr[$i]['shop_info'] = $line[4];
                 $data_arr[$i]['is_selling'] = $line[5];
-				$data_arr[$i]['created_at'] = $line[6];
-				$data_arr[$i]['updated_at'] = $line[7];
+                $data_arr[$i]['rate'] = $line[6];
+				$data_arr[$i]['created_at'] = $line[7];
+				$data_arr[$i]['updated_at'] = $line[8];
                 $count++;
 			}
 

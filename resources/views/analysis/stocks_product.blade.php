@@ -5,12 +5,12 @@
             社店商品在庫<br>
         </h2>
         <div class="flex">
-        <div class="pl-2 mt-2 ml-12 ">
-            <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('analysis_index') }}'" >DataMenu</button>
-        </div>
-        <div class="pl-2 mt-2  ml-20 ">
-            <button type="button" class="w-32 text-center text-sm text-white bg-blue-500 border-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('stocks_product_reset') }}'" >選択リセット</button>
-        </div>
+            <div class="pl-2 mt-2 ml-4 ">
+                <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('analysis_index') }}'" >Menu</button>
+            </div>
+            <div class="pl-2 mt-2  ml-8 ">
+                <button type="button" class="w-32 text-center text-sm text-white bg-blue-500 border-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('stocks_product_reset') }}'" >選択リセット</button>
+            </div>
         </div>
         {{-- <span class="items-center text-sm mt-2 text-gray-800 dark:text-gray-200 leading-tight" >　※Brand・店舗を選択してください　　　</span> --}}
 
@@ -19,7 +19,7 @@
             <div class="md:flex">
             <div class="flex">
                 <div>
-                <label for="type3" class="mr-5 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">商品区分</label>
+                <label for="type3" class="mr-5 leading-7 text-sm  text-gray-800 ">商品区分</label>
                 <select id="type3" name="type3" class="w-28 h-8 rounded text-sm pt-1 border mr-6 mb-2" type="text">
                     <option value="h" @if(\Request::get('type3') == '0' || \Request::get('type3') == "h") selected @endif >品番別</option>
                     <option value="s" @if(\Request::get('type3') == "s") selected @endif>シーズン別</option>
@@ -30,7 +30,7 @@
                 </div>
 
                 <div>
-                <label for="type1" class="mr-4 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">社店種別</label>
+                <label for="type1" class="mr-4 leading-7 text-sm  text-gray-800 ">社店種別</label>
                 <select id="type1" name="type1" class="w-28 h-8 rounded text-sm pt-1 border mr-2 mb-2" type="text">
                     <option value="" @if(\Request::get('type1') == '0') selected @endif >全社店</option>
                     {{-- <option value="dry">dry</option> --}}
@@ -44,7 +44,7 @@
             <div class="flex md:ml-4">
                 @if(\Request::get('type1') == 'co' || \Request::get('type1') == 'sh')
                 <div>
-                <label for="co_id" class="mr-6 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">社を指定</label>
+                <label for="co_id" class="mr-6 leading-7 text-sm  text-gray-800 ">社を指定</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-6 " id="co_id" name="co_id" >
                 <option value="" @if(\Request::get('co_id') == '0') selected @endif >選択なし</option>
                 @foreach ($companies as $company)
@@ -55,7 +55,7 @@
                 @endif
                 @if(\Request::get('type1') == 'sh')
                 <div>
-                <label for="sh_id" class="mr-5 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">店を指定</label>
+                <label for="sh_id" class="mr-5 leading-7 text-sm  text-gray-800 ">店を指定</label>
                 <select class="w-32 h-8 rounded border text-sm items-center pt-1" id="sh_id" name="sh_id" >
                     <option value="" @if(\Request::get('sh_id') == '0') selected @endif >選択なし</option>
                     @foreach ($shops as $shop)
@@ -69,7 +69,7 @@
             <div class="md:flex">
             <div class="flex">
                 <div>
-                <label for="brand_code" class="mr-3 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Brand指定</label>
+                <label for="brand_code" class="mr-3 leading-7 text-sm  text-gray-800 ">Brand指定</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-6 " id="brand_code" name="brand_code" type="number" >
                     <option value="" @if(\Request::get('brand_code') == '0') selected @endif >選択なし</option>
                     @foreach ($brands as $brand)
@@ -78,7 +78,7 @@
                 </select>
                 </div>
                 <div>
-                <label for="season_code" class="mr-4 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">季節指定</label>
+                <label for="season_code" class="mr-4 leading-7 text-sm  text-gray-800 ">季節指定</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-2 " id="season_code" name="season_code" type="number" >
                     <option value="" @if(\Request::get('season_code') == '0') selected @endif >選択なし</option>
                     @foreach ($seasons as $season)
@@ -90,7 +90,7 @@
 
             <div class="flex md:ml-4">
                 <div>
-                <label for="unit_id" class="mr-2 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Unit指定　</label>
+                <label for="unit_id" class="mr-2 leading-7 text-sm  text-gray-800 ">Unit指定　</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-6 " id="unit_id" name="unit_id" >
                 <option value="" @if(\Request::get('unit_id') == '0') selected @endif >選択なし</option>
                 @foreach ($units as $unit)
@@ -100,7 +100,7 @@
                 </div>
 
                 <div>
-                <label for="face" class="mr-0 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Face指定　</label>
+                <label for="face" class="mr-0 leading-7 text-sm  text-gray-800 ">Face指定　</label>
                 <select class="w-28 h-8 rounded border text-sm items-center pt-1" id="face" name="face" >
                     <option value="" @if(\Request::get('face') == '0') selected @endif >選択なし</option>
                     @foreach ($faces as $face)
@@ -113,12 +113,13 @@
         </form>
 
 
-        <div class="ml-0 mt-3 py-0 md:w-1/2 border">
-            <div class=" w-full  sm:px-0 lg:px-0 border mt-0 ml-0">
-                <div class='pl-2 border bg-gray-100 h-6 text-sm'>
-
+        <div class="ml-0 mt-3 py-0 md:w-2/3 border">
+            <div class="md:flex w-full  sm:px-0 lg:px-0 border mt-0 ml-0 items-center">
+                <div class='md:w-2/3 pl-0 border bg-gray-100 h-6 text-sm items-center'>
                     在庫数：{{ number_format(($total->pcs_total))}}枚　
                     在庫額：{{ number_format(round($total->total)/1000) }}千円　
+                </div>
+                <div class='md:w-2/3 pl-0 border bg-gray-100 h-6 text-sm items-center'>
                     @if($total->pcs_total>0)
                     平均単価：{{ number_format(($total->total/($total->pcs_total))) }}円　
                     @endif
@@ -129,7 +130,7 @@
     </x-slot>
 
         <div class="py-6 border">
-        <div class="md:w-1/2 sm:px-4 lg:px-4 border">
+        <div class="md:w-2/3 sm:px-4 lg:px-4 border">
             <table class="mx-auto table-auto bg-white w-full text-center whitespace-no-wrap">
                 <thead >
                 <tr>
@@ -160,6 +161,16 @@
                 @endforeach
                 </tbody>
             </table>
+            {{  $datas->appends([
+                'type1'=>\Request::get('type1'),
+                'type3'=>\Request::get('type3'),
+                'co_id'=>\Request::get('co_id'),
+                'sh_id'=>\Request::get('sh_id'),
+                'brand_code'=>\Request::get('brand_code'),
+                'season_code_id'=>\Request::get('season_code_id'),
+                'unit_id'=>\Request::get('unit_id'),
+                'face'=>\Request::get('face'),
+            ])->links()}}
         </div>
         </div>
 
