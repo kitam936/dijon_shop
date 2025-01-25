@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            社店商品在庫<br>
+            　自店商品在庫<br>
         </h2>
         <div class="flex">
             <div class="pl-2 mt-2 ml-4 ">
@@ -14,7 +14,7 @@
         </div>
         {{-- <span class="items-center text-sm mt-2 text-gray-800 dark:text-gray-200 leading-tight" >　※Brand・店舗を選択してください　　　</span> --}}
 
-        <form method="get" action="{{ route('stocks_product')}}" class="mt-4">
+        <form method="get" action="{{ route('my_stocks_product')}}" class="mt-4">
 
             <div class="md:flex">
             <div class="flex">
@@ -29,43 +29,9 @@
                 </select>
                 </div>
 
-                <div>
-                <label for="type1" class="mr-4 leading-7 text-sm  text-gray-800 ">社店種別</label>
-                <select id="type1" name="type1" class="w-28 h-8 rounded text-sm pt-1 border mr-2 mb-2" type="text">
-                    <option value="" @if(\Request::get('type1') == '0') selected @endif >全社店</option>
-                    {{-- <option value="dry">dry</option> --}}
-                    <option value="co" @if(\Request::get('type1') == "co") selected @endif>社別</option>
-                    <option value="sh" @if(\Request::get('type1') == "sh") selected @endif>店別</option>
-                    {{-- <option value="wet">wet</option> --}}
-                </select>
-                </div>
+            </div>
             </div>
 
-            <div class="flex md:ml-4">
-                {{-- @if(\Request::get('type1') == 'co' || \Request::get('type1') == 'sh') --}}
-                <div>
-                <label for="co_id" class="mr-6 leading-7 text-sm  text-gray-800 ">社指定</label>
-                <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-6 " id="co_id" name="co_id" >
-                <option value="" @if(\Request::get('co_id') == '0') selected @endif >選択なし</option>
-                @foreach ($companies as $company)
-                    <option value="{{ $company->id }}" @if(\Request::get('co_id') == $company->id ) selected @endif >{{ $company->co_name  }}</option>
-                @endforeach
-                </select>
-                </div>
-                {{-- @endif --}}
-                {{-- @if(\Request::get('type1') == 'sh') --}}
-                <div>
-                <label for="sh_id" class="mr-5 leading-7 text-sm  text-gray-800 ">店指定</label>
-                <select class="w-32 h-8 rounded border text-sm items-center pt-1" id="sh_id" name="sh_id" >
-                    <option value="" @if(\Request::get('sh_id') == '0') selected @endif >選択なし</option>
-                    @foreach ($shops as $shop)
-                    <option value="{{ $shop->id }}" @if(\Request::get('sh_id') == $shop->id ) selected @endif >{{ $shop->shop_name  }}</option>
-                    @endforeach
-                </select>
-                </div>
-                {{-- @endif --}}
-            </div>
-            </div>
             <div class="md:flex">
             <div class="flex">
                 <div>
@@ -162,10 +128,7 @@
                 </tbody>
             </table>
             {{  $datas->appends([
-                'type1'=>\Request::get('type1'),
                 'type3'=>\Request::get('type3'),
-                'co_id'=>\Request::get('co_id'),
-                'sh_id'=>\Request::get('sh_id'),
                 'brand_code'=>\Request::get('brand_code'),
                 'season_code_id'=>\Request::get('season_code_id'),
                 'unit_id'=>\Request::get('unit_id'),
@@ -182,10 +145,6 @@ type3.addEventListener('change', function(){
 this.form.submit()
     })
 
-const type1 = document.getElementById('type1')
-type1.addEventListener('change', function(){
-this.form.submit()
-    })
 
 const brand = document.getElementById('brand_code')
 brand.addEventListener('change', function(){
@@ -204,16 +163,6 @@ this.form.submit()
 
 const face = document.getElementById('face')
 face.addEventListener('change', function(){
-this.form.submit()
-})
-
-const company = document.getElementById('co_id')
-company.addEventListener('change', function(){
-this.form.submit()
-})
-
-const shop = document.getElementById('sh_id')
-shop.addEventListener('change', function(){
 this.form.submit()
 })
 

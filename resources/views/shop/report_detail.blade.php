@@ -83,7 +83,7 @@
 
 
                                 <div class="px-2 md:w-2/3 mx-auto">
-                                <div class="flex">
+                                <div class="">
                                     <div class="w-full mb-1">
                                         @if(!empty($report->image1))
                                         <a href="{{ route('report_image1',['report'=>$report->id]) }}">

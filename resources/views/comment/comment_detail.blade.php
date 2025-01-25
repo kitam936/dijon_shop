@@ -57,7 +57,7 @@
 
                                     <div class="mb-2">
                                         <x-label for="comment" value="コメント" />
-                                        <div  row="5" class="pl-2 w-full text-sm items-center bg-gray-100 border rounded" name="comment" > {!! nl2br(e($comment->comment)) !!}</div>
+                                        <div  rows="5" class="pl-2 w-full text-sm items-center bg-gray-100 border rounded" name="comment" > {!! nl2br(e($comment->comment)) !!}</div>
                                     </div>
 
 

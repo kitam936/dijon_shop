@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\AnalysisController;
+use App\Http\Controllers\MyAnalysisController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DataDownloadController;
 use App\Http\Controllers\TestMailController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -171,6 +173,26 @@ Route::middleware('can:user-higher')
     Route::get('stocks_product_reset', [AnalysisController::class, 'stocks_product_reset'])->name('stocks_product_reset');
     Route::get('order_index', [OrderController::class, 'order_index'])->name('order_index');
     Route::get('manual_download',[DataDownloadController::class,'manual_download'])->name('manual_download');
+    Route::get('my_sales_transition', [MyAnalysisController::class, 'sales_transition'])->name('my_sales_transition');
+    Route::get('my_sales_product', [MyAnalysisController::class, 'sales_product'])->name('my_sales_product');
+    Route::get('my_stocks_product', [MyAnalysisController::class, 'stocks_product'])->name('my_stocks_product');
+    Route::get('my_sales_transition_reset', [MyAnalysisController::class, 'sales_transition_reset'])->name('my_sales_transition_reset');
+    Route::get('my_sales_product_reset', [MyAnalysisController::class, 'sales_product_reset'])->name('my_sales_product_reset');
+    Route::get('my_stocks_product_reset', [MyAnalysisController::class, 'stocks_product_reset'])->name('my_stocks_product_reset');
+    Route::get('cart_index', [CartController::class, 'index'])->name('cart_index');
+    Route::get('cart_create', [CartController::class, 'create'])->name('cart_create');
+    Route::post('cart_add', [CartController::class, 'add'])->name('cart_add');
+    Route::get('cart_edit', [CartController::class, 'edit'])->name('cart_edit');
+    Route::put('cart_update/{cart}', [CartController::class, 'update'])->name('cart_update');
+    Route::delete('cart_destroy/{cart}', [CartController::class, 'destroy'])->name('cart_destroy');
+    Route::post('order_confirm', [OrderController::class, 'confirm'])->name('order_confirm');
+    Route::get('order_index', [OrderController::class, 'order_index'])->name('order_index');
+    Route::get('order_detail/{order}', [OrderController::class, 'order_detail'])->name('order_detail');
+    Route::get('order_edit/{order}', [OrderController::class, 'order_edit'])->name('order_edit');
+    Route::post('order_update/{order}', [OrderController::class, 'order_update'])->name('order_update');
+    Route::get('order_csv', [DataDownloadController::class, 'orderCSV_download'])->name('order_csv');
+
+
 });
 
 require __DIR__.'/auth.php';

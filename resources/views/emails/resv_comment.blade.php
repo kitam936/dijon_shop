@@ -1,6 +1,6 @@
 <p class="mb-4">{{ $user['name']}}　様</p>
 
-<p class="mb-4">dijon_shop のレポートにコメントが登録されました。</p>
+<p class="mb-4">dijon_shop のレポートにコメントが投稿されました。</p>
 <br><br>
 
 
@@ -9,20 +9,22 @@
 
 <ul class="mb-4">
     {{-- <li>投稿日：{{ \Carbon\Carbon::parse($comment_info['updated_at'])->format("y/m/d H:i")}}</li> --}}
-    <li>ReportId：{{ $comment_info['id'] }}</li>
+    <li>Report_Id：{{ $comment_info['id'] }}</li>
     <li>店舗名：{{ $comment_info['shop_name'] }}</li>
 </ul>
 
 <br>
 
-Reportのコメントが更新されました。<br><br>
+{{-- Reportのコメントが更新されました。<br><br> --}}
 
 アプリで確認をしてください。<br><br>
 
 https://shop.dijon1988.net
 
+<br><br>
 
 
 
-dijon_shop事務局
+
+***** dijon_shop *****
 

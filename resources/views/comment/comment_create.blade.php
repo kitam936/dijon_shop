@@ -44,7 +44,7 @@
                         <div class="p-2 mx-auto">
                             <div>
                                 <x-label for="comment" value="コメント　※必須" />
-                                <x-textarea row="5" id="comment" class="block mt-1 w-full" type="text" name="comment" required>{{ old('comment')  }}</x-textarea>
+                                <x-textarea rows="5" id="comment" class="block mt-1 w-full" type="text" name="comment" required>{{ old('comment')  }}</x-textarea>
                             </div>
                         </div>
 

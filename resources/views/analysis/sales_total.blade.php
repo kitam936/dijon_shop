@@ -132,12 +132,12 @@
         <div class="ml-0 mt-3 py-0 md:w-2/3 border">
             <div class="md:flex w-full  sm:px-0 lg:px-0 border mt-0 ml-0 items-center">
                 <div class='md:w-2/3 pl-0 border bg-gray-100 h-6 text-sm items-center'>
-                    当期累計：{{ number_format(round($total->total)/1000) }}千　
+                    　当期累計：{{ number_format(round($total->total)/1000) }}千　
                     前期累計：{{ number_format(round($pv_total->total)/1000)}}千　
                 </div>
                 <div class='md:w-2/3 pl-0 border bg-gray-100 h-6 text-sm items-center'>
                     @if($pv_total->total>0)
-                    前期比：{{ number_format(($total->total/$pv_total->total)*100)}}％
+                    　前期比　：{{ number_format(($total->total/$pv_total->total)*100)}}％
                     @endif
                 </div>
             </div>
@@ -205,6 +205,10 @@ YW2.addEventListener('change', function(){
 this.form.submit()
 })
 
+const area = document.getElementById('area_id')
+area.addEventListener('change', function(){
+this.form.submit()
+})
 
 const brand = document.getElementById('brand_code')
 brand.addEventListener('change', function(){

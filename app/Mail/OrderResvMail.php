@@ -9,17 +9,20 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CommentMail extends Mailable
+class OrderResvMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
-    public $comment_info;
-    public function __construct($comment_info, $user)
+    public $order_info;
+
+    /**
+     * Create a new message instance.
+     */
+    public function __construct($order_info,$user)
     {
-        $this->comment_info = $comment_info;
+        $this->order_info = $order_info;
         $this->user = $user;
-        // $this->comment_info = $comment_info;
     }
 
     /**
@@ -28,7 +31,7 @@ class CommentMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '店舗Reportにコメントが投稿されました',
+            subject: '追加発注があります',
         );
     }
 
@@ -38,7 +41,7 @@ class CommentMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.resv_comment',
+            view: 'emails.resv_order',
         );
     }
 
