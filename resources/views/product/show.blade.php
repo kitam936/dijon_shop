@@ -93,15 +93,13 @@
 
 
 
-                                <div class="px-2 md:w-2/3 ">
+                                <div class="px-2 md:w-full ">
 
                                     <div class="w-full mb-1">
-                                        @if(!empty($product->hinba_image))
-                                        <img src="{{ asset('storage/products/'.$product->hinban_image) }}">
-                                        {{-- @else
-                                        <div class="w-40">
-                                        <img src="/images/no_image.jpg">
-                                        </div> --}}
+                                        @if(!empty($product->filename))
+                                        <a href="{{ route('image_show',['hinban'=>$product->id]) }}">
+                                        <img src="{{ asset('storage/images/'.$product->filename) }}">
+                                        </a>
                                         @endif
                                         {{-- <img src="{{ asset('storage/products/'.$product->image1) }}"> --}}
                                     </div>

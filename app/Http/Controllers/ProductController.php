@@ -118,9 +118,10 @@ class ProductController extends Controller
     public function show0($id)
     {
         $product = DB::table('hinbans')
+        ->leftJoin('images','images.hinban_id','hinbans.id')
         ->join('units','units.id','=','hinbans.unit_id')
         ->where('hinbans.id',$id)
-        ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id','hinbans.hinban_name','hinbans.hinban_info','hinbans.shohin_gun','hinbans.m_price','hinbans.price'])
+        ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id','hinbans.hinban_name','hinbans.hinban_info','hinbans.shohin_gun','hinbans.m_price','hinbans.price','images.filename'])
         ->first();
 
         $sku_stocks = DB::table('stocks')
@@ -149,10 +150,11 @@ class ProductController extends Controller
 
         if($request->type == 'sku'){
             $product = DB::table('hinbans')
+            ->leftJoin('images','images.hinban_id','hinbans.id')
             ->join('units','units.id','=','hinbans.unit_id')
             // ->where('hinbans.id',$id)
             ->where('hinbans.id',$request->hin_id2)
-            ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id','hinbans.hinban_name','hinbans.hinban_info','hinbans.shohin_gun','hinbans.m_price','hinbans.price'])
+            ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id','hinbans.hinban_name','hinbans.hinban_info','hinbans.shohin_gun','hinbans.m_price','hinbans.price','images.filename'])
             ->first();
 
             $sku_stocks = DB::table('stocks')
@@ -186,9 +188,10 @@ class ProductController extends Controller
 
         if($request->type == '' ){
             $product = DB::table('hinbans')
+            ->leftJoin('images','images.hinban_id','hinbans.id')
             ->join('units','units.id','=','hinbans.unit_id')
             ->where('hinbans.id',$id)
-            ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id','hinbans.hinban_name','hinbans.hinban_info','hinbans.shohin_gun','hinbans.m_price','hinbans.price'])
+            ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id','hinbans.hinban_name','hinbans.hinban_info','hinbans.shohin_gun','hinbans.m_price','hinbans.price','images.filename'])
             ->first();
 
             $sku_stocks = DB::table('stocks')
@@ -217,9 +220,10 @@ class ProductController extends Controller
 
         if($request->type == 'sh_total'){
             $product = DB::table('hinbans')
+            ->leftJoin('images','images.hinban_id','hinbans.id')
             ->join('units','units.id','=','hinbans.unit_id')
             ->where('hinbans.id',$id)
-            ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id','hinbans.hinban_name','hinbans.hinban_info','hinbans.shohin_gun','hinbans.m_price','hinbans.price'])
+            ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id','hinbans.hinban_name','hinbans.hinban_info','hinbans.shohin_gun','hinbans.m_price','hinbans.price','images.filename'])
             ->first();
 
             $sku_stocks = DB::table('stocks')
@@ -254,9 +258,10 @@ class ProductController extends Controller
 
         if($request->type == 'co_total'){
             $product = DB::table('hinbans')
+            ->leftJoin('images','images.hinban_id','hinbans.id')
             ->join('units','units.id','=','hinbans.unit_id')
             ->where('hinbans.id',$id)
-            ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id','hinbans.hinban_name','hinbans.hinban_info','hinbans.shohin_gun','hinbans.m_price','hinbans.price'])
+            ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id','hinbans.hinban_name','hinbans.hinban_info','hinbans.shohin_gun','hinbans.m_price','hinbans.price','images.filename'])
             ->first();
 
             $sku_stocks = DB::table('stocks')
@@ -292,9 +297,10 @@ class ProductController extends Controller
 
         if($request->type == 'h_trans'){
             $product = DB::table('hinbans')
+            ->leftJoin('images','images.hinban_id','hinbans.id')
             ->join('units','units.id','=','hinbans.unit_id')
             ->where('hinbans.id',$id)
-            ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id','hinbans.hinban_name','hinbans.hinban_info','hinbans.shohin_gun','hinbans.m_price','hinbans.price'])
+            ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id','hinbans.hinban_name','hinbans.hinban_info','hinbans.shohin_gun','hinbans.m_price','hinbans.price','images.filename'])
             ->first();
 
             $sku_stocks = DB::table('stocks')
