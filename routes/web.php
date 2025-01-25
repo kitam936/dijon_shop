@@ -15,6 +15,7 @@ use App\Http\Controllers\DataDownloadController;
 use App\Http\Controllers\TestMailController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,7 +111,10 @@ Route::prefix('admin')
     Route::POST('user_store', [UserController::class, 'store'])->name('admin.user_store');
     Route::get('user_edit/{user}', [UserController::class, 'edit'])->name('admin.user_edit');
     Route::delete('user_destroy/{user}', [UserController::class, 'user_destroy'])->name('admin.user_destroy');
-
+    Route::get('image_create', [ImageController::class, 'image_create'])->name('admin.image_create');
+    Route::get('image_adit/{hinban}', [ImageController::class, 'image_edit'])->name('admin.image_edit');
+    Route::POST('image_store', [ImageController::class, 'store'])->name('admin.image_store');
+    Route::delete('image_destroy/{hinban}', [ImageController::class, 'image_destroy'])->name('admin.image_destroy');
 });
 
 Route::prefix('manager')
@@ -191,7 +195,8 @@ Route::middleware('can:user-higher')
     Route::get('order_edit/{order}', [OrderController::class, 'order_edit'])->name('order_edit');
     Route::post('order_update/{order}', [OrderController::class, 'order_update'])->name('order_update');
     Route::get('order_csv', [DataDownloadController::class, 'orderCSV_download'])->name('order_csv');
-
+    Route::get('image_index', [ImageController::class, 'image_index'])->name('image_index');
+    Route::get('image_show/{hinban}', [ImageController::class, 'image_show'])->name('image_show');
 
 });
 

@@ -52,4 +52,23 @@ class ImageService
         Storage::put('public/'. $folderName . '/' . $fileNameToStore4, $imageFile4 );
         return $fileNameToStore1;
     }
+
+    public static function image_upload($imageFile)
+    {
+       if(is_array($imageFile))
+        {
+            $file = $imageFile['image'];
+        }else{
+            $file = $imageFile;
+        }
+        $originalName = $file->getClientOriginalName();
+        $basename = pathinfo($originalName, PATHINFO_FILENAME);
+        $fileNameToStore = 'images/'.$originalName;
+        $file = $imageFile;
+        $resizedImage = InterventionImage::make($file)->resize(1920, 1080)->encode();
+        Storage::put('public/'. 'images' . '/' . $fileNameToStore, $resizedImage );
+        return $fileNameToStore;
+    }
+
+
 }
