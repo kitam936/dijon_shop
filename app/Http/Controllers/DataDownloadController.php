@@ -84,5 +84,95 @@ class DataDownloadController extends Controller
     }
 
 
+    // 成功したコード
+    public function orderCSV_download(Request $request)
+    {
+        $orders = DB::table('orders')
+        ->join('order_items','order_items.order_id','=','orders.id')
+        ->join('shops','shops.id','=','orders.shop_id')
+        ->join('skus','skus.id','=','order_items.sku_id')
+        ->join('hinbans','hinbans.id','=','skus.hinban_id')
+        ->where('orders.id',$request->id2)
+        ->selectRaw('orders.shop_id ,skus.hinban_id,skus.col_id,skus.size_id,hinbans.m_price,(hinbans.m_price * shops.rate /1000) as gedai')
+        ->distinct()
+        // ->groupBy('my_karts.maker_id')
+        // ->orderBy('order_items.sku_id')
+        ->get();
+
+        // dd($request->order,$orders[0]);
+        $csvHeader = [
+            'shop_id' ,'hinban_id','col_id','size_id','m_price','gedai'];
+
+        $csvData = $orders->toArray();
+
+        // dd($request,$orders,$csvHeader,$csvData);
+
+        $response = new StreamedResponse(function () use ($csvHeader, $csvData) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, $csvHeader);
+
+            foreach ($csvData as $row) {
+                $row = (array)$row; // 必要に応じてオブジェクトを配列に変換
+                mb_convert_variables('sjis-win', 'utf-8', $row);
+                fputcsv($handle, $row);
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="orders.csv"');
+
+        return $response;
+
+
+    }
+
+    // エラーがでたコード
+    public function orderCSV_download2(Request $request)
+    {
+        $orders = DB::table('orders')
+        ->join('order_items','order_items.order_id','=','orders.id')
+        ->join('shops','shops.id','=','orders.shop_id')
+        ->join('skus','skus.id','=','order_items.sku_id')
+        ->join('hinbans','hinbans.id','=','skus.hinban_id')
+        ->where('orders.id',$request->id2)
+        ->selectRaw('orders.shop_id ,skus.hinban_id,skus.col_id,skus.size_id,hinbans.m_price,(hinbans.m_price * shops.rate /1000) as gedai')
+        ->distinct()
+        // ->groupBy('my_karts.maker_id')
+        // ->orderBy('order_items.sku_id')
+        ->get();
+
+        // dd($request->order,$orders[0]);
+        $csvHeader = [
+            'shop_id' ,'hinban_id','col_id','size_id','m_price','gedai'];
+
+        $csvData = $orders->toArray();
+
+        dd($request,$orders,$csvHeader,$csvData);
+
+        $response = new StreamedResponse(function () use ($csvHeader, $csvData) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, $csvHeader);
+
+            foreach ($csvData as $row) {
+                mb_convert_variables('sjis-win','utf-8',$row);
+                fputcsv($handle, $row);
+            }
+
+            fclose($handle);
+        }, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="orders.csv"',
+        ]);
+
+        return $response;
+
+    }
+
+
+
+
+
 
 }

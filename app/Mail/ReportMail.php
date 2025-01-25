@@ -31,7 +31,7 @@ class ReportMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '店舗Reportが更新されました',
+            subject: '店舗Reportが投稿されました',
         );
     }
 

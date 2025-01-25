@@ -1,13 +1,14 @@
 <p class="mb-4">{{ $user['name']}}様</p>
 
-<p class="mb-4">shop.dijon1988.net　にレポートが投稿されました。</p>
+<p class="mb-4">dijon_shop　に追加発注がありました。</p>
 
-店舗Report
+追加発注リスト
 
 <ul class="mb-4">
     {{-- <li>更新日：{{ \Carbon\Carbon::parse($report_info['updated_at'])->format("y/m/d H:i") }}</li> --}}
-    <li>店舗：{{ $report_info['shop_name'] }}</li>
-    <li>投稿者名：{{ $user['name'] }}</li>
+    <li>Order_Id：{{ $order_info['order_id'] }}</li>
+    <li>店舗：{{ $order_info['shop_name'] }}</li>
+    <li>発注者名：{{ $order_info['name'] }}</li>
 </ul>
 
 <br>
