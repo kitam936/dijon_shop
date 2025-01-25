@@ -11,7 +11,7 @@ use App\Models\Image;
 use App\Models\Hinban;
 use Illuminate\Support\Facades\Storage;
 
-class ImageController extends Controller
+class ImageController_copy extends Controller
 {
 
 
@@ -71,24 +71,13 @@ class ImageController extends Controller
                 $fileNameToStore = $originalName;
                 // $file = $imageFile;
                 $resizedImage = InterventionImage::make($file)->resize(1920, 1080)->encode();
-
-                $isExist = Image::where('filename',$fileNameToStore)
-                    ->exists();
-                    // dd($fileNameToStore,$isExist);
-                if($isExist)
-                {
-                    continue;
-                }
-                if(!$isExist)
-                {
-                    Storage::put('public/'. 'images' . '/' . $fileNameToStore, $resizedImage );
+                Storage::put('public/'. 'images' . '/' . $fileNameToStore, $resizedImage );
 
                 // dd($originalName,$basename,$fileNameToStore);
-                    Image::create([
-                        'hinban_id'=>$basename,
-                        'filename'=>$fileNameToStore,
-                    ]);
-                }
+                Image::create([
+                    'hinban_id'=>$basename,
+                    'filename'=>$fileNameToStore,
+            ]);
             }
         }
 
