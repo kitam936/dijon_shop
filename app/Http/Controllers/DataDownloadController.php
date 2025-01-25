@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use App\Jobs\SendOrderResponseMail;
 use App\Models\Report;
 use App\Models\User;
+use App\Models\Order;
 
 class DataDownloadController extends Controller
 {
@@ -123,7 +125,41 @@ class DataDownloadController extends Controller
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', 'attachment; filename="orders.csv"');
 
+        // Status変更
+        $order=Order::findOrFail($request->id2);
+        $order->status = 3;
+        $order->save();
+
+        // Status変更Mail
+
+        $users = Order::Where('orders.id',$request->id2)
+        ->join('users','users.id','orders.user_id')
+        ->where('mailService','=',1)
+        ->select('orders.user_id','users.name','users.email')
+        ->get()
+        ->toArray();
+
+
+        $order_info = Order::Where('orders.id',$request->id2)
+        ->join('shops','shops.id','orders.shop_id')
+        ->join('users','users.id','orders.user_id')
+        ->select('orders.id as order_id','users.name','users.email','orders.shop_id','shops.shop_name')
+        ->first()
+        ->toArray();
+
+        // dd($users,$order_info);
+
+        foreach($users as $user){
+
+            // dd($request,$user,$order_info);
+            SendOrderResponseMail::dispatch($order_info,$user);
+        }
+
         return $response;
+
+
+
+
 
 
     }

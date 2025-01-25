@@ -18,16 +18,16 @@
         </div>
         </div>
         <div class="flex">
-        <div class="ml-2 mb-2 md:mb-0">
+        {{-- <div class="ml-2 mb-2 md:mb-0">
             <button type="button" onclick="location.href=''" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-700 rounded ">ダウンロード</button>
-        </div>
+        </div> --}}
 
         {{--  @foreach ($order_hss as $order_hs)  --}}
         @if($user->shop_id > 1000)
 
-        <div class="ml-2 mb-0 md:mb-0">
+        {{-- <div class="ml-2 mb-0 md:mb-0">
             <button type="button" onclick="location.href='{{ route('order_edit',['order'=>$order_hs->id])}}'" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-600 rounded ">編集</button>
-        </div>
+        </div> --}}
         </div>
 
         {{-- <div>
