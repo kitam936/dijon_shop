@@ -214,7 +214,15 @@ class ReportController extends Controller
         $users = User::Where('mailService','=',1)
         ->get()->toArray();
 
-        $report_info = Shop::findOrFail($request->sh_id2)
+        // $report_info = Shop::findOrFail($request->sh_id2)
+        // ->toArray();
+
+        $report_info = Report::Where('reports.shop_id',$request->sh_id2)
+        ->join('shops','shops.id','reports.shop_id')
+        ->join('users','users.id','reports.user_id')
+        ->where('reports.user_id',Auth::id())
+        ->select('reports.id as report_id','users.name','users.email','reports.shop_id','shops.shop_name')
+        ->first()
         ->toArray();
 
         // dd($users,$report_info);
@@ -289,7 +297,15 @@ class ReportController extends Controller
         $users = User::Where('mailService','=',1)
         ->get()->toArray();
 
-        $report_info = Shop::findOrFail($request->sh_id)
+        // $report_info = Shop::findOrFail($request->sh_id)
+        // ->toArray();
+
+        $report_info = Report::Where('reports.shop_id',$request->sh_id)
+        ->join('shops','shops.id','reports.shop_id')
+        ->join('users','users.id','reports.user_id')
+        ->where('reports.user_id',Auth::id())
+        ->select('reports.id as report_id','users.name','users.email','reports.shop_id','shops.shop_name')
+        ->first()
         ->toArray();
 
         // dd($users,$report_info);

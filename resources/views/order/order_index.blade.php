@@ -12,13 +12,15 @@
             <div class="pl-2 mt-2 ml-4 ">
                 <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('analysis_index') }}'" >Menu</button>
             </div>
+            @if($user->shop_id >1000)
             <div class="pl-2 mt-2 ml-4 ">
                 <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('cart_index') }}'" >カートを見る</button>
             </div>
             </div>
-        <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2">
-            <button type="button" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-700 rounded " onclick="location.href='{{ route('cart_create') }}'" >オーダー</button>
-        </div>
+            <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2">
+                <button type="button" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-700 rounded " onclick="location.href='{{ route('cart_create') }}'" >オーダー</button>
+            </div>
+            @endif
     </div>
     </x-slot>
 

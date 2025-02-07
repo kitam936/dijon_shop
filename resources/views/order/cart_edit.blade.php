@@ -33,40 +33,37 @@
             <div class="px-2 w-full md:ml-10 mt-4 mb-4 flex ">
                 <button type="submit" class="w-32 h-7 text-center text-sm text-white bg-pink-500 border-0 py-1 px-2 focus:outline-none hover:bg-pink-700 rounded ">発注確定</button>
             </div>
-        <div class="md:flex">
-
-            <div class="flex">
-                <div class="pl-0 mt-0">
-                    <label for="user_id" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">User_ID</label>
-                    <div class="pl-2 ml-0 md:ml-2 w-16 h-6 text-sm items-center bg-gray-100 border rounded" name="user_id"  value="">{{ $user->id }}</div>
+            <div class="md:flex">
+                <div class="flex">
+                    <div class="flex">
+                        <div class="pl-0 mt-0">
+                            <label for="user_id" class="leading-7 text-sm  text-gray-800 ">User_ID</label>
+                            <div class="pl-2 ml-0 md:ml-2 w-16 h-6 text-sm items-center bg-gray-100 border rounded" name="user_id"  value="">{{ $user->id }}</div>
+                        </div>
+                        <div class="pl-2 mt-0">
+                            <label for="user_name" class="leading-7 text-sm  text-gray-800 ">発注者</label>
+                            <div class="pl-2 w-36 h-6 text-sm items-center bg-gray-100 border rounded" name="user_name" value="">{{ $user->name }}</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="pl-2 mt-0">
-                    <label for="user_name" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">発注者</label>
-                    <div class="pl-2 w-36 h-6 text-sm items-center bg-gray-100 border rounded" name="user_name" value="">{{ $user->name }}</div>
-                </div>
-                <div class="pl-2 mt-0 md:mt-0 ">
-                    <label for="shop_id" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">店コード</label>
-                    <div class="pl-2 w-16 h-6 text-sm items-center bg-gray-100 border rounded" name="shop_id" value="">{{ $user->shop_id }}</div>
-                </div>
-                <div class="pl-2 mt-0 md:mt-0 ">
-                    <label for="shop_name" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">店名</label>
-                    <div class="pl-2 w-40 h-6 text-sm items-center bg-gray-100 border rounded" name="shop_name" value="">{{ $user->shop_name }}</div>
-                </div>
+                <div class="flex">
+                    <div class="pl-0 mt-0 md:pl-2 md:mt-0 ">
+                        <label for="shop_id" class="leading-7 text-sm  text-gray-800 ">店コード</label>
+                        <div class="pl-2 w-16 h-6 text-sm items-center bg-gray-100 border rounded" name="shop_id" value="">{{ $user->shop_id }}</div>
+                    </div>
+                    <div class="pl-2 mt-0 md:mt-0 ">
+                        <label for="shop_name" class="leading-7 text-sm  text-gray-800 ">店名</label>
+                        <div class="pl-2 w-40 h-6 text-sm items-center bg-gray-100 border rounded" name="shop_name" value="">{{ $user->shop_name }}</div>
+                    </div>
                 </div>
                 <div class="flex">
                     <div class="md:pl-2 mt-0">
-                        <label for="total_pcs" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">合計数</label>
+                        <label for="total_pcs" class="leading-7 text-sm  text-gray-800 ">合計数</label>
                         <div disable class="pl-2 w-24 h-6 text-sm items-center bg-gray-100 border rounded" name="total_pcs" value=""> {{ $cart_total->total_pcs ?? 0}} 枚</div>
                     </div>
-
                 </div>
-
-        </div>
-
+            </div>
         </form>
-
-
-
 
     </x-slot>
 
@@ -100,6 +97,7 @@
                                 <form method="POST" action="{{ route('cart_update',['cart'=>$cart->id]) }}">
                                     @csrf
                                     @method('PUT')
+                                    <div class="flex">
                                     <input type="hidden" name="sku_id" value="{{ $cart->sku_id }}">
                                     <input type="hidden" name="user_id" value="{{ $cart->user_id }}">
                                     <input type="hidden" name="shop_id" value="{{ $cart->shop_id }}">
@@ -109,7 +107,8 @@
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
                                     </select>
-                                    <button type="submit" class="w-12 h-8 bg-blue-500 text-sm text-white ml-0 hover:bg-blue-600 rounded lg:ml-2 ">更新</button>
+                                    <button type="submit" class="w-12 h-9 mt-1 bg-blue-500 text-sm text-white ml-1 hover:bg-blue-600 rounded lg:ml-2 ">更新</button>
+                                    </div>
                                 </form>
                             </td>
                             <td class="w-1/15 md:px-0 py-1">
@@ -117,7 +116,7 @@
                                 <form method="POST" action="{{ route('cart_destroy', ['cart'=>$cart->id]) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="w-12 h-8 bg-red-500 text-sm text-white ml-0 hover:bg-red-600 rounded lg:ml-2 ">削除</button>
+                                    <button type="submit" class="w-12 h-9 mt-1 bg-red-500 text-sm text-white ml-0 hover:bg-red-600 rounded lg:ml-2 ">削除</button>
                                 </form>
                             </td>
                         </tr>

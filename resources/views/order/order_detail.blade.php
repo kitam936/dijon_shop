@@ -17,18 +17,18 @@
             <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('order_index') }}'" >追加発注リスト</button>
         </div>
         </div>
+
+        @if($user->shop_id < 1000)
         <div class="flex">
         <div class="ml-2 mb-2 md:mb-0">
             <form method="get" action="{{ route('order_csv') }}">
                 <input type="hidden" name="id2" value="{{ $order_hs->id }}">
                 <button type="submit" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-700 rounded">
-                    ダウンロード
+                    CSVダウンロード
                 </button>
             </form>
         </div>
 
-        {{--  @foreach ($order_hss as $order_hs)  --}}
-        @if($user->shop_id > 1000)
 
         <div class="ml-2 mb-0 md:mb-0">
             <button type="button" onclick="location.href='{{ route('order_edit',['order'=>$order_hs->id])}}'" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-600 rounded ">編集</button>
@@ -48,7 +48,7 @@
         </form>
         </div> --}}
         @endif
-        {{-- @endif --}}
+
 
         </div>
 

@@ -44,6 +44,7 @@ class OrderController extends Controller
         ->join('statuses','statuses.id','orders.status')
         ->groupBy('orders.id','orders.order_date','orders.user_id','users.name','statuses.status','shops.shop_name')
         ->selectRaw('orders.id,orders.order_date,orders.user_id,users.name,statuses.status,shops.shop_name,sum(order_items.pcs) as pcs')
+        ->orderBy('orders.id','desc')
         ->get();
         // $order_fs = DB::table('orders')
         // ->join('order_items','orders.id','order_items.order_id')

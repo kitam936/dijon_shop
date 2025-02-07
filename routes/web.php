@@ -115,6 +115,9 @@ Route::prefix('admin')
     Route::get('image_adit/{hinban}', [ImageController::class, 'image_edit'])->name('admin.image_edit');
     Route::POST('image_store', [ImageController::class, 'store'])->name('admin.image_store');
     Route::delete('image_destroy/{hinban}', [ImageController::class, 'image_destroy'])->name('admin.image_destroy');
+    Route::get('sku_image_adit/{sku}', [ImageController::class, 'sku_image_edit'])->name('admin.sku_image_edit');
+    Route::POST('sku_image_store', [ImageController::class, 'sku_store'])->name('admin.sku_image_store');
+    Route::delete('sku_image_destroy/{sku}', [ImageController::class, 'sku_image_destroy'])->name('admin.sku_image_destroy');
 });
 
 Route::prefix('manager')
@@ -197,6 +200,8 @@ Route::middleware('can:user-higher')
     Route::get('order_csv', [DataDownloadController::class, 'orderCSV_download'])->name('order_csv');
     Route::get('image_index', [ImageController::class, 'image_index'])->name('image_index');
     Route::get('image_show/{hinban}', [ImageController::class, 'image_show'])->name('image_show');
+    Route::get('sku_image_index', [ImageController::class, 'sku_image_index'])->name('sku_image_index');
+    Route::get('sku_image_show/{sku}', [ImageController::class, 'sku_image_show'])->name('sku_image_show');
 
 });
 

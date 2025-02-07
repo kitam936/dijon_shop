@@ -12,6 +12,10 @@
                 <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('analysis_index') }}'" >Menu</button>
             </div>
 
+            <div class="pl-2 mt-2 ml-4 ">
+                <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('image_index') }}'" >画像リスト</button>
+            </div>
+
         </div>
         <form method="get" action="{{ route('product_index')}}" class="mt-4">
 

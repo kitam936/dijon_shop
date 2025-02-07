@@ -1028,6 +1028,7 @@ class AnalysisController extends Controller
             ->where('brand_id','LIKE','%'.($request->brand_code).'%')
             ->where('season_id','LIKE','%'.($request->season_code).'%')
             ->groupBy('hinban_id')
+            ->where('vendor_id','<>',8200)
             ->selectRaw('hinban_id, sum(kingaku) as totalPerPurchase,hinban_name,m_price,sum(pcs) as subtotal_pcs');
         // dd($query);
             $datas = DB::table($query)
@@ -1175,6 +1176,7 @@ class AnalysisController extends Controller
 
         $query = $subQuery
         ->groupBy('hinban_id')
+        ->where('vendor_id','<>',8200)
         ->selectRaw('hinban_id, sum(kingaku) as totalPerPurchase,hinban_name,m_price,sum(pcs) as subtotal_pcs');
     // dd($query);
         $datas = DB::table($query)

@@ -89,12 +89,12 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">SKU</th>
+                        <th class="w-3/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">SKU</th>
                         {{-- <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Col</th> --}}
                         {{-- <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Size</th> --}}
-                        <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">商品名</th>
-                        <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売価</th>
-                        <th class="w-1/15 md:pr-16 pr-16 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数量</th>
+                        <th class="w-5/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">商品名</th>
+                        <th class="w-2/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売価</th>
+                        <th class="w-4/15 md:pr-16 pr-16 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数量</th>
                         <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"></th>
                     </tr>
                 </thead>
@@ -104,9 +104,9 @@
                             <td class="w-3/15 md:px-4 py-1">{{ $cart->hinban_id }}-{{ $cart->col_id }}-{{ $cart->size_id }}</td>
                             {{-- <td class="w-1/15 md:px-4 py-1">{{ $cart->col_id }}</td> --}}
                             {{-- <td class="w-1/15 md:px-4 py-1">{{ $cart->size_id }}</td> --}}
-                            <td class="w-1/15 md:px-4 py-1">{{ Str::limit($cart->hinban_name,16) }}</td>
-                            <td class="w-1/15 md:px-4 py-1">{{ $cart->m_price }}</td>
-                            <td class="w-1/15 md:px-4 py-1">
+                            <td class="w-5/15 md:px-4 py-1">{{ Str::limit($cart->hinban_name,16) }}</td>
+                            <td class="w-2/15 md:px-4 py-1">{{ $cart->m_price }}</td>
+                            <td class="w-4/15 md:px-4 py-1">
                                 <form method="POST" action="{{ route('cart_add') }}">
                                     @csrf
                                     <input type="hidden" name="sku_id" value="{{ $product->id }}">
@@ -116,7 +116,7 @@
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
                                     </select>
-                                    <button type="submit"  class="w-16 h-8 bg-blue-500 text-sm text-white ml-0 hover:bg-blue-600 rounded lg:ml-2 " >カートに追加</button>
+                                    <button type="submit"  class="w-12 h-10 bg-blue-500 text-sm text-white ml-0 hover:bg-blue-600 rounded lg:ml-2 " >追加</button>
                                 </form>
                             </td>
                         </tr>
@@ -140,12 +140,12 @@
         <table>
             <thead>
                 <tr>
-                    <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">SKU</th>
+                    <th class="w-3/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">SKU</th>
                     {{-- <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Col_ID</th> --}}
                     {{-- <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Size_ID</th> --}}
-                    <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">商品名</th>
-                    <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売価</th>
-                    <th class="w-1/15 md:pr-16 pr-16 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数量</th>
+                    <th class="w-5/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">商品名</th>
+                    <th class="w-2/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売価</th>
+                    <th class="w-4/15 md:pr-16 pr-16 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数量</th>
                     <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"></th>
                 </tr>
             </thead>
@@ -155,11 +155,13 @@
                         <td class="w-3/15 md:px-4 py-1">{{ $product->hinban_id }}-{{ $product->col_id }}-{{ $product->size_id }}</td>
                         {{-- <td class="w-1/15 md:px-4 py-1">{{ $product->col_id }}</td> --}}
                         {{-- <td class="w-1/15 md:px-4 py-1">{{ $product->size_id }}</td> --}}
-                        <td class="w-1/15 md:px-4 py-1">{{ Str::limit($product->hinban_name,16) }}</td>
-                        <td class="w-1/15 md:px-4 py-1">{{ $product->m_price }}</td>
-                        <td class="w-1/15 md:px-4 py-1">
+                        <td class="w-5/15 md:px-4 py-1">{{ Str::limit($product->hinban_name,24) }}</td>
+                        <td class="w-2/15 md:px-4 py-1">{{ $product->m_price }}</td>
+                        <td class="w-4/15 md:px-4 py-1">
+
                             <form method="POST" action="{{ route('cart_add') }}">
                                 @csrf
+                                 <div class="flex">
                                 <input type="hidden" name="sku_id" value="{{ $product->id }}">
                                 <select name="pcs" class="rounded">
                                     <option value="{{ $product->pcs }}">{{ $product->pcs ?? 0}}</option>
@@ -167,8 +169,10 @@
                                         <option value="{{ $i }}">{{ $i }}</option>
                                     @endfor
                                 </select>
-                                <button type="submit" class="bg-indigo-500 text-white rounded text-sm h-8 w-20">カートに追加</button>
+                                <button type="submit" class="bg-indigo-500 text-white rounded text-sm ml-1 mt-1 h-9 w-12">追加</button>
+                             </div>
                             </form>
+
                         </td>
                     </tr>
                 @endforeach

@@ -787,6 +787,14 @@ class MyAnalysisController extends Controller
         ->select('users.shop_id','shops.shop_name')
         ->first();
 
+        $companies = Company::Where('id','>',1000)
+        ->where('id','<',7000)->get();
+
+        $shops = Shop::Where('company_id','LIKE','%'.$request->co_id.'%')
+        ->where('id','>',1000)
+        ->where('id','<',7000)
+        ->get();
+
         $faces=DB::table('hinbans')
         ->whereNotNull('face')
         ->select(['face'])

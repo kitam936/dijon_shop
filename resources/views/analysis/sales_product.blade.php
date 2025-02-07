@@ -45,11 +45,11 @@
             <div class="md:flex">
             <div class="flex">
                 <div>
-                <label for="type3" class="mr-5 leading-7 text-sm  text-gray-800 ">商品区分</label>
+                <label for="type3" class="mr-5 leading-7 text-sm  text-gray-800 ">集計区分切替</label>
                 <select id="type3" name="type3" class="w-28 h-8 rounded text-sm pt-1 border mr-6 mb-2" type="text">
-                    <option value="" @if(\Request::get('type3') == '0') selected @endif >品番(統合込)</option>
-                    <option value="h" @if(\Request::get('type3') == "h") selected @endif>品番別</option>
-                    {{-- <option value="s" @if(\Request::get('type3') == "s") selected @endif>SKU別</option> --}}
+                    {{-- <option value="" @if(\Request::get('type3') == '0') selected @endif >品番(統合込)</option> --}}
+                    <option value="h" @if(\Request::get('type3') == "h" || \Request::get('type3') == '0') selected @endif>品番別</option>
+                    <option value="s" @if(\Request::get('type3') == "s") selected @endif>SKU別</option>
                 </select>
                 </div>
                 <div>
@@ -67,7 +67,7 @@
             <div class="flex md:ml-4">
                 {{--  @if(\Request::get('type1') == 'co' || \Request::get('type1') == 'sh')  --}}
                 <div>
-                <label for="co_id" class="mr-6 leading-7 text-sm  text-gray-800 ">社を指定</label>
+                <label for="co_id" class="mr-6 leading-7 text-sm  text-gray-800 ">社指定</label>
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-6 " id="co_id" name="co_id" >
                 <option value="" @if(\Request::get('co_id') == '0') selected @endif >選択なし</option>
                 @foreach ($companies as $company)
@@ -78,7 +78,7 @@
                 {{--  @endif  --}}
                 {{--  @if(\Request::get('type1') == 'sh')  --}}
                 <div>
-                <label for="sh_id" class="mr-5 leading-7 text-sm  text-gray-800 ">店を指定</label>
+                <label for="sh_id" class="mr-5 leading-7 text-sm  text-gray-800 ">店指定</label>
                 <select class="w-32 h-8 rounded border text-sm items-center pt-1" id="sh_id" name="sh_id" >
                     <option value="" @if(\Request::get('sh_id') == '0') selected @endif >選択なし</option>
                     @foreach ($shops as $shop)
