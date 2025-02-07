@@ -65,7 +65,7 @@ class DataDownloadController extends Controller
         $user_role = User::findOrFail(Auth::id())->role_id;
         // dd($user_role);
         if($user_role > 3){
-            $dl_filename1='メンバーマニュアル.pdf';
+            $dl_filename1='マニュアル.pdf';
             $file_path1 = 'public/manual/'.$dl_filename1;
             $mimeType1 = Storage::mimeType($file_path1);
             $headers1 = [['Content-Type' =>$mimeType1]];

@@ -7,7 +7,7 @@
 <ul class="mb-4">
     {{-- <li>更新日：{{ \Carbon\Carbon::parse($report_info['updated_at'])->format("y/m/d H:i") }}</li> --}}
     <li>店舗：{{ $report_info['shop_name'] }}</li>
-    <li>投稿者名：{{ $user['name'] }}</li>
+    <li>投稿者名：{{ $report_info['name'] }}</li>
 </ul>
 
 <br>

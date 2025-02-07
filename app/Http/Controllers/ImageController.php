@@ -9,29 +9,68 @@ use InterventionImage;
 use App\Models\User;
 use App\Models\Image;
 use App\Models\Hinban;
+use App\Models\SkuImage;
 use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
 
 
-    public function image_index(Request $request, $id)
+    public function image_index(Request $request)
     {
-        $hinban = DB::table('hinbans')
+        $login_user = DB::table('users')
+        ->where('users.id',Auth::id())->first();
+        $products = Hinban::with('unit')->paginate(50);
+
+        $images = DB::table('hinbans')
+        ->join('units','units.id','=','hinbans.unit_id')
         ->leftjoin('images','hinbans.id','=','images.hinban_id')
-        ->where('hinbans.id',($id))
-        ->select('hinbans.id as hinban_id','hinbans.hinban_name','images.filename')
-        ->first();
-        $images = DB::table('images')
-        ->join('hinbans','hinbans.id','=','iamges.hinban_id')
-        ->where('images.hinban_id',($id))
-        ->select('images.hinban_id' ,'images.filename')
-        ->orderBy('images.hinban_id', 'asc')
+        ->where('hinbans.vendor_id','<>',8200)
+        ->where('hinbans.year_code','LIKE','%'.($request->year_code).'%')
+        ->where('units.season_id','LIKE','%'.($request->season_code).'%')
+        ->where('hinbans.unit_id','LIKE','%'.($request->unit_code).'%')
+        ->where('hinbans.face','LIKE','%'.($request->face).'%')
+        ->where('hinbans.brand_id','LIKE','%'.($request->brand_code).'%')
+        ->where('hinbans.id','LIKE','%'.($request->hinban_code).'%')
+        ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id as hinban_id','hinbans.hinban_name','hinbans.m_price','hinbans.price','hinbans.face','images.filename'])
+        ->orderBy('hinbans.year_code','desc')
+        ->orderBy('hinbans.brand_id','asc')
+        ->orderBy('hinban_id','asc')
         ->paginate(20);
-        // $resv_id = $request->resv_id;
-        // dd($resv_id);
-        return view('product.image_index',compact('images','hinban'));
+        // ->get();
+        $years=DB::table('hinbans')
+        ->select(['year_code'])
+        ->groupBy(['year_code'])
+        ->orderBy('year_code','desc')
+        ->get();
+        $faces=DB::table('hinbans')
+        ->whereNotNull('face')
+        ->select(['face'])
+        ->groupBy(['face'])
+        ->orderBy('face','asc')
+        ->get();
+        $seasons=DB::table('units')
+        ->select(['season_id','season_name'])
+        ->groupBy(['season_id','season_name'])
+        ->orderBy('season_id','asc')
+        ->get();
+        $units=DB::table('units')
+        ->where('units.season_id','LIKE','%'.$request->season_code.'%')
+        ->select(['id'])
+        ->groupBy(['id'])
+        ->orderBy('id','asc')
+        ->get();
+        $brands=DB::table('brands')
+        ->select(['id'])
+        ->groupBy(['id'])
+        ->orderBy('id','asc')
+        ->get();
+
+
+        return view('product.image_index',compact('images','login_user','products','seasons','units','years','brands','faces'));
     }
+
+
 
 
     public function create()
@@ -70,7 +109,8 @@ class ImageController extends Controller
                 $basename = pathinfo($originalName, PATHINFO_FILENAME);
                 $fileNameToStore = $originalName;
                 // $file = $imageFile;
-                $resizedImage = InterventionImage::make($file)->resize(1920, 1080)->encode();
+                // $resizedImage = InterventionImage::make($file)->resize(1920, 1080)->encode();
+                $resizedImage = InterventionImage::make($file)->resize(600, 600,function($constraint){$constraint->aspectRatio();})->encode();
 
                 $isExist = Image::where('filename',$fileNameToStore)
                     ->exists();
@@ -92,8 +132,54 @@ class ImageController extends Controller
             }
         }
 
-        return to_route('admin.image_create',)->with(['message'=>'画像情報を登録しました','status'=>'info']);
+        return to_route('admin.image_create',)->with(['message'=>'品番画像情報を登録しました','status'=>'info']);
     }
+
+    public function sku_store(Request $request)
+    {
+
+        $imageFiles = $request->file('files');
+
+
+        if(!is_null($imageFiles))
+        {
+            foreach($imageFiles as $imageFile){
+                if(is_array($imageFile))
+                {
+                    $file = $imageFile['image'];
+                }else{
+                    $file = $imageFile;
+                }
+                $originalName = $file->getClientOriginalName();
+                $basename = pathinfo($originalName, PATHINFO_FILENAME);
+                $fileNameToStore = $originalName;
+                // $file = $imageFile;
+                // $resizedImage = InterventionImage::make($file)->resize(1920, 1080)->encode();
+                $resizedImage = InterventionImage::make($file)->resize(600, 600,function($constraint){$constraint->aspectRatio();})->encode();
+
+                $isExist = SkuImage::where('filename',$fileNameToStore)
+                    ->exists();
+                    // dd($fileNameToStore,$isExist);
+                if($isExist)
+                {
+                    continue;
+                }
+                if(!$isExist)
+                {
+                    Storage::put('public/'. 'sku_images' . '/' . $fileNameToStore, $resizedImage );
+
+                // dd($originalName,$basename,$fileNameToStore);
+                    SkuImage::create([
+                        'sku_id'=>$basename,
+                        'filename'=>$fileNameToStore,
+                    ]);
+                }
+            }
+        }
+
+        return to_route('admin.image_create',)->with(['message'=>'SKU画像情報を登録しました','status'=>'info']);
+    }
+
 
 
 
@@ -110,11 +196,17 @@ class ImageController extends Controller
         $image = DB::table('images')
         ->join('hinbans','hinbans.id','images.hinban_id')
         ->where('images.hinban_id',($id))
-        ->select('images.hinban_id','images.filename')
+        ->select('images.hinban_id','hinbans.hinban_name','images.filename')
         ->first();
+        $sku_images = DB::table('sku_images')
+        ->join('skus','skus.id','sku_images.sku_id')
+        ->join('hinbans','hinbans.id','skus.hinban_id')
+        ->where('skus.hinban_id',($id))
+        ->select('sku_images.sku_id','skus.col_id','sku_images.filename')
+        ->get();
 
-        // dd($login_user,$image);
-        return view('product.image_show',compact('image','login_user'));
+        // dd($login_user,$image,$sku_images);
+        return view('product.image_show',compact('image','sku_images','login_user'));
     }
 
     /**
@@ -135,6 +227,8 @@ class ImageController extends Controller
     {
         //
     }
+
+
 
 
     public function image_destroy($id)

@@ -9,11 +9,11 @@
         <div class="">
             <input type="hidden" class="pl-0  ml-0 md:ml-2 w-32 h-6 items-center bg-gray-100 border rounded" name="hinban_id2"  value="{{ $image->hinban_id }}"/>
             <div class="p-2 w-full ml-12 flex mt-0">
-                <button type="button" onclick="location.href='{{ route('product_show',['hinban'=> $image->hinban_id])}}'" class="w-32 h-8 text-white text-sm bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded ">戻る</button>
+                <button type="button" onclick="location.href='{{ route('image_index')}}'" class="w-32 h-8 mt-2 md:mt-0 text-white text-sm bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded ">戻る</button>
             </div>
         </div>
 
-        <div class="p-2 w-full ml-12 flex mt-0">
+        <div class="p-2 w-2/3 ml-12 flex mt-0">
             @if($login_user->role_id <= 2 )
             <form id="delete_{{$image->hinban_id}}" method="POST" action="{{ route('admin.image_destroy',['hinban'=>$image->hinban_id]) }}">
                 @csrf
@@ -34,14 +34,26 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-2 bg-white border-b border-gray-200">
-                    {{-- <x-auth-validation-errors class="mb-4" :errors="$errors" /> --}}
+                    {{$image->hinban_id}}　：　{{$image->hinban_name}}
                         <img class="w-full mx-auto" src="{{ asset('storage/images/'.$image->filename) }}">
-
-
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="flex flex-wrap">
+        @foreach ($sku_images as $image )
+        <div class="w-1/3 md:w-1/4 p-2 md:p-4">
+        {{-- <a href="{{ route('image.edit',['image'=>$image->id]) }}"> --}}
+
+            <div class="text-gray-700"> Col:　{{ $image->col_id  }}</div>
+            <x-sku_image-thumbnail :filename="$image->filename"  />
+        {{-- </a> --}}
+        </div>
+        @endforeach
+    </div>
+
+
 
 
 

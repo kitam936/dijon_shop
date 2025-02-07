@@ -16,6 +16,7 @@ use App\Models\SalesData;
 class ProductController extends Controller
 {
 
+
     public function index(Request $request)
     {
         if($request->type == "h"){
