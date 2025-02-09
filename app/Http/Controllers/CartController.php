@@ -90,6 +90,7 @@ class CartController extends Controller
         // ->get();
 
         $products = DB::table('skus')
+        ->leftjoin('sku_images','sku_images.sku_id','=','skus.id')
         ->join('hinbans','hinbans.id','=','skus.hinban_id')
         ->join('units','units.id','=','hinbans.unit_id')
         ->leftjoinSub($carts, 'carts', 'carts.sku_id', '=', 'skus.id')
@@ -97,18 +98,20 @@ class CartController extends Controller
         ->where('skus.col_id','<>',99)
         ->where('hinbans.year_code','LIKE','%'.($request->year_code).'%')
         ->where('units.season_id','LIKE','%'.($request->season_code).'%')
-        ->where('hinbans.unit_id','LIKE','%'.($request->unit_code).'%')
+        ->where('units.unit_code','LIKE','%'.($request->unit_code).'%')
         ->where('hinbans.face','LIKE','%'.($request->face).'%')
         ->where('hinbans.brand_id','LIKE','%'.($request->brand_code).'%')
         ->where('hinbans.id','LIKE','%'.($request->hinban_code).'%')
-        ->select(['skus.id','skus.col_id','size_id','hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id as hinban_id','hinbans.hinban_name','hinbans.m_price','hinbans.price','hinbans.face','carts.pcs'])
+        ->select(['skus.id','skus.col_id','size_id','hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_id','units.season_name','hinbans.id as hinban_id','hinbans.hinban_name','hinbans.m_price','hinbans.price','hinbans.face','carts.pcs','sku_images.filename'])
         ->orderBy('hinbans.year_code','desc')
         ->orderBy('hinbans.brand_id','asc')
-        ->orderBy('hinban_id','desc')
+        ->orderBy('units.season_id','desc')
+        ->orderBy('hinban_id','asc')
         ->paginate(50);
         // ->get();
         $years=DB::table('hinbans')
         ->select(['year_code'])
+        ->where('year_code','<',50)
         ->groupBy(['year_code'])
         ->orderBy('year_code','desc')
         ->get();
@@ -125,8 +128,8 @@ class CartController extends Controller
         ->get();
         $units=DB::table('units')
         ->where('units.season_id','LIKE','%'.$request->season_code.'%')
-        ->select(['id'])
-        ->groupBy(['id'])
+        ->select(['id','unit_code'])
+        ->groupBy(['id','unit_code'])
         ->orderBy('id','asc')
         ->get();
         $brands=DB::table('brands')

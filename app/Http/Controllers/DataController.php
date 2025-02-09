@@ -711,10 +711,11 @@ class DataController extends Controller
 
 				//配列に格納
 				$data_arr[$i]['id'] = $line[0];
-                $data_arr[$i]['season_id'] = $line[1];
-				$data_arr[$i]['season_name'] = $line[2];
-				$data_arr[$i]['created_at'] = $line[3];
-				$data_arr[$i]['updated_at'] = $line[4];
+                $data_arr[$i]['unit_code'] = $line[1];
+                $data_arr[$i]['season_id'] = $line[2];
+				$data_arr[$i]['season_name'] = $line[3];
+				$data_arr[$i]['created_at'] = $line[4];
+				$data_arr[$i]['updated_at'] = $line[5];
                 $count++;
 			}
 

@@ -23,10 +23,12 @@ class Subtotal implements Scope
         ->join('units','units.id','=','hinbans.unit_id')
         ->join('cols','cols.id','=','skus.col_id')
         ->join('sizes','sizes.id','=','skus.size_id')
+        ->leftjoin('images','images.hinban_id','=','hinbans.id')
+        ->leftjoin('sku_images','sku_images.sku_id','=','sales.sku_id')
         ->select('shops.company_id','companies.co_name','sales.shop_id','shops.shop_name','shops.area_id',
          'sales.YM','sales.YW','sales.YMD','sales.Y','sales.sku_id','skus.hinban_id','hinbans.hinban_name','hinbans.price','hinbans.m_price',
-         'hinbans.brand_id','brands.brand_name','sales.pcs','sales.kingaku','hinbans.unit_id','units.season_id','units.season_name','hinbans.face',
-         'col_id','col_name','size_id','size_name','hinbans.vendor_id')
+         'hinbans.brand_id','brands.brand_name','sales.pcs','sales.kingaku','hinbans.unit_id','units.unit_code','units.season_id','units.season_name','hinbans.face',
+         'col_id','col_name','size_id','size_name','hinbans.vendor_id','images.filename as hinban_image','sku_images.filename as sku_image')
         ;
 
         $builder->fromSub($sql,'salesdata_subtotal');

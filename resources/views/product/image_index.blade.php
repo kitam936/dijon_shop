@@ -44,7 +44,7 @@
                     <select class="w-24 h-8 rounded text-sm pt-1 mr-4 mb-2 border " id="unit_code" name="unit_code" type="number" >
                     <option value="" @if(\Request::get('unit_code') == '0') selected @endif >指定なし</option>
                     @foreach ($units as $unit)
-                        <option value="{{ $unit->id }}" @if(\Request::get('unit_code') == $unit->id ) selected @endif >{{ $unit->id  }}</option>
+                        <option value="{{ $unit->unit_code }}" @if(\Request::get('unit_code') == $unit->unit_code ) selected @endif >{{ $unit->id  }}</option>
                     @endforeach
                     </select>
                 </div>

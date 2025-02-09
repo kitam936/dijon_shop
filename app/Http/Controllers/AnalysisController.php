@@ -53,8 +53,8 @@ class AnalysisController extends Controller
 
         $units=DB::table('units')
         ->where('units.season_id','LIKE','%'.$request->season_code.'%')
-        ->select(['id'])
-        ->groupBy(['id'])
+        ->select(['id','unit_code'])
+        ->groupBy(['id','unit_code'])
         ->orderBy('id','asc')
         ->get();
 
@@ -112,7 +112,7 @@ class AnalysisController extends Controller
             ->where('YM','<=', $max_YM-100);
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
@@ -130,7 +130,7 @@ class AnalysisController extends Controller
             // ->get();
 
             $query2 = $prev_subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
@@ -181,7 +181,7 @@ class AnalysisController extends Controller
             ->where('YM','<=',($request->YM2-100 ?? $max_YM-100));
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
@@ -199,7 +199,7 @@ class AnalysisController extends Controller
             // ->get();
 
             $query2 = $prev_subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
@@ -251,7 +251,7 @@ class AnalysisController extends Controller
             ->where('YM','<=',($request->YM2-100 ?? $max_YM-100));
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
@@ -269,7 +269,7 @@ class AnalysisController extends Controller
             // ->get();
 
             $query2 = $prev_subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
@@ -321,7 +321,7 @@ class AnalysisController extends Controller
             ->where('YM','<=',($request->YM2-100 ?? $max_YM-100));
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
@@ -347,7 +347,7 @@ class AnalysisController extends Controller
             // 前年同月データを取得
 
             $query2 = $prev_subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
@@ -404,7 +404,7 @@ class AnalysisController extends Controller
             // dd($min_Y-100,$prev_subQuery);
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
@@ -430,7 +430,7 @@ class AnalysisController extends Controller
             // 前年同月データを取得
 
             $query2 = $prev_subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id', 'LIKE', '%' . $request->sh_id . '%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
@@ -494,8 +494,8 @@ class AnalysisController extends Controller
 
 
         $units=DB::table('units')
-        ->select(['id'])
-        ->groupBy(['id'])
+        ->select(['id','unit_code'])
+        ->groupBy(['id','unit_code'])
         ->orderBy('id','asc')
         ->get();
 
@@ -617,8 +617,8 @@ class AnalysisController extends Controller
 
         $units=DB::table('units')
         ->where('units.season_id','LIKE','%'.$request->season_code.'%')
-        ->select(['id'])
-        ->groupBy(['id'])
+        ->select(['id','unit_code'])
+        ->groupBy(['id','unit_code'])
         ->orderBy('id','asc')
         ->get();
 
@@ -667,7 +667,7 @@ class AnalysisController extends Controller
             ->where('YW','<=', $max_YW-100);
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('brand_id','LIKE','%'.($request->brand_code).'%')
@@ -685,7 +685,7 @@ class AnalysisController extends Controller
             // 前年同月データを取得
 
             $query2 = $prev_subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('brand_id','LIKE','%'.($request->brand_code).'%')
@@ -733,7 +733,7 @@ class AnalysisController extends Controller
             ->where('YW','<=',($request->YW2-100 ?? $max_YW-100));
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('brand_id','LIKE','%'.($request->brand_code).'%')
@@ -748,7 +748,7 @@ class AnalysisController extends Controller
             // ->get();
 
             $query2 = $prev_subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('brand_id','LIKE','%'.($request->brand_code).'%')
@@ -793,7 +793,7 @@ class AnalysisController extends Controller
             ->where('YW','<=',($request->YW2-100 ?? $max_YW-100));
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('brand_id','LIKE','%'.($request->brand_code).'%')
@@ -810,7 +810,7 @@ class AnalysisController extends Controller
             // 前年同月データを取得
 
             $query2 = $prev_subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('brand_id','LIKE','%'.($request->brand_code).'%')
@@ -871,8 +871,8 @@ class AnalysisController extends Controller
         ->get();
 
         $units=DB::table('units')
-        ->select(['id'])
-        ->groupBy(['id'])
+        ->select(['id','unit_code'])
+        ->groupBy(['id','unit_code'])
         ->orderBy('id','asc')
         ->get();
 
@@ -973,8 +973,8 @@ class AnalysisController extends Controller
 
         $units=DB::table('units')
         ->where('units.season_id','LIKE','%'.$request->season_code.'%')
-        ->select(['id'])
-        ->groupBy(['id'])
+        ->select(['id','unit_code'])
+        ->groupBy(['id','unit_code'])
         ->orderBy('id','asc')
         ->get();
 
@@ -1021,7 +1021,7 @@ class AnalysisController extends Controller
             ->where('YM','<=', $max_YM);
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
             ->where('company_id','LIKE','%'.$request->co_id.'%')
@@ -1029,11 +1029,11 @@ class AnalysisController extends Controller
             ->where('season_id','LIKE','%'.($request->season_code).'%')
             ->groupBy('hinban_id')
             ->where('vendor_id','<>',8200)
-            ->selectRaw('hinban_id, sum(kingaku) as totalPerPurchase,hinban_name,m_price,sum(pcs) as subtotal_pcs');
+            ->selectRaw('hinban_id, sum(kingaku) as totalPerPurchase,hinban_name,m_price,sum(pcs) as subtotal_pcs,hinban_image');
         // dd($query);
             $datas = DB::table($query)
-            ->groupBy('hinban_id','hinban_name','m_price')
-            ->selectRaw('hinban_id, hinban_id as code,hinban_name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total')
+            ->groupBy('hinban_id','hinban_name','m_price','hinban_image')
+            ->selectRaw('hinban_id, hinban_id as code,hinban_name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total,hinban_image as filename')
             ->orderBy('pcs_total','desc')
             ->paginate(100);
 
@@ -1053,7 +1053,7 @@ class AnalysisController extends Controller
             ->where('YM','<=',($request->YM2 ?? $max_YM));
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
             ->where('company_id','LIKE','%'.$request->co_id.'%')
@@ -1061,13 +1061,12 @@ class AnalysisController extends Controller
             ->where('season_id','LIKE','%'.($request->season_code).'%')
             ->where('vendor_id','<>',8200)
             ->groupBy('hinban_id')
-            ->selectRaw('hinban_id, sum(kingaku) as totalPerPurchase,hinban_name,m_price,sum(pcs) as subtotal_pcs');
+            ->selectRaw('hinban_id, sum(kingaku) as totalPerPurchase,hinban_name,m_price,sum(pcs) as subtotal_pcs,hinban_image');
         // dd($query);
             $datas = DB::table($query)
-            ->groupBy('hinban_id','hinban_name','m_price')
-            ->selectRaw('hinban_id, hinban_id as code,hinban_name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total')
+            ->groupBy('hinban_id','hinban_name','m_price','hinban_image')
+            ->selectRaw('hinban_id, hinban_id as code,hinban_name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total,hinban_image as filename')
             ->orderBy('pcs_total','desc')
-            ->orderBy('total','desc')
             ->paginate(100);
 
             $total = DB::table($query)
@@ -1087,7 +1086,7 @@ class AnalysisController extends Controller
             ->where('YM','<=',($request->YM2 ?? $max_YM));
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
             ->where('company_id','LIKE','%'.$request->co_id.'%')
@@ -1095,12 +1094,12 @@ class AnalysisController extends Controller
             ->where('season_id','LIKE','%'.($request->season_code).'%')
             ->where('vendor_id','<>',8200)
             ->groupBy('sku_id','hinban_id','col_id','size_id')
-            ->selectRaw('sku_id, hinban_id ,col_id,size_id,sum(kingaku) as totalPerPurchase,hinban_name,m_price,sum(pcs) as subtotal_pcs');
+            ->selectRaw('sku_id,col_id,size_id,hinban_id, sum(kingaku) as totalPerPurchase,hinban_name,m_price,sum(pcs) as subtotal_pcs,hinban_image,sku_image');
         // dd($query);
             $datas = DB::table($query)
-            ->groupBy('sku_id','hinban_id','hinban_name','m_price','col_id','size_id')
+            ->groupBy('sku_id','hinban_id','hinban_name','m_price','col_id','size_id','sku_image')
             // ->selectRaw('hinban_id, sku_id as code,hinban_name, price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total')
-            ->selectRaw('sku_id,hinban_id, CONCAT(hinban_id, "-", col_id, "-", size_id) as code,hinban_name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total')
+            ->selectRaw('sku_id,hinban_id, CONCAT(hinban_id, "-", col_id, "-", size_id) as code,hinban_name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total,sku_image as filename')
             ->orderBy('pcs_total','desc')
             ->orderBy('total','desc')
             ->paginate(100);
@@ -1129,8 +1128,8 @@ class AnalysisController extends Controller
         ->get();
 
         $units=DB::table('units')
-        ->select(['id'])
-        ->groupBy(['id'])
+        ->select(['id','unit_code'])
+        ->groupBy(['id','unit_code'])
         ->orderBy('id','asc')
         ->get();
 
@@ -1177,11 +1176,11 @@ class AnalysisController extends Controller
         $query = $subQuery
         ->groupBy('hinban_id')
         ->where('vendor_id','<>',8200)
-        ->selectRaw('hinban_id, sum(kingaku) as totalPerPurchase,hinban_name,m_price,sum(pcs) as subtotal_pcs');
+        ->selectRaw('hinban_id, sum(kingaku) as totalPerPurchase,hinban_name,m_price,sum(pcs) as subtotal_pcs,hinban_image');
     // dd($query);
         $datas = DB::table($query)
-        ->groupBy('hinban_id','hinban_name','m_price')
-        ->selectRaw('hinban_id, hinban_id as code,hinban_name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total')
+        ->groupBy('hinban_id','hinban_name','m_price','hinban_image')
+        ->selectRaw('hinban_id, hinban_id as code,hinban_name, m_price,sum(subtotal_pcs) as pcs_total,sum(totalPerPurchase) as total,hinban_image as filename')
         ->orderBy('pcs_total','desc')
         ->paginate(100);
 
@@ -1208,8 +1207,8 @@ class AnalysisController extends Controller
 
         $units=DB::table('units')
         ->where('units.season_id','LIKE','%'.$request->season_code.'%')
-        ->select(['id'])
-        ->groupBy(['id'])
+        ->select(['id','unit_code'])
+        ->groupBy(['id','unit_code'])
         ->orderBy('id','asc')
         ->get();
 
@@ -1241,7 +1240,7 @@ class AnalysisController extends Controller
             ->where('company_id','<', 7000);
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
             ->where('company_id','LIKE','%'.$request->co_id.'%')
@@ -1272,7 +1271,7 @@ class AnalysisController extends Controller
             ->where('company_id','<', 7000);
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
             ->where('company_id','LIKE','%'.$request->co_id.'%')
@@ -1305,7 +1304,7 @@ class AnalysisController extends Controller
             ->where('company_id','<', 7000);
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
             ->where('company_id','LIKE','%'.$request->co_id.'%')
@@ -1338,7 +1337,7 @@ class AnalysisController extends Controller
             ->where('company_id','<', 7000);
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
             ->where('company_id','LIKE','%'.$request->co_id.'%')
@@ -1371,7 +1370,7 @@ class AnalysisController extends Controller
             ->where('company_id','<', 7000);
 
             $query = $subQuery
-            ->where('unit_id','LIKE','%'.$request->unit_id.'%')
+            ->where('unit_code','LIKE','%'.$request->unit_id.'%')
             ->where('face','LIKE','%'.$request->face.'%')
             ->where('shop_id','LIKE','%'.$request->sh_id.'%')
             ->where('company_id','LIKE','%'.$request->co_id.'%')
@@ -1409,8 +1408,8 @@ class AnalysisController extends Controller
         ->get();
 
         $units=DB::table('units')
-        ->select(['id'])
-        ->groupBy(['id'])
+        ->select(['id','unit_code'])
+        ->groupBy(['id','unit_code'])
         ->orderBy('id','asc')
         ->get();
 

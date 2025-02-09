@@ -28,13 +28,14 @@ class ImageController extends Controller
         ->where('hinbans.vendor_id','<>',8200)
         ->where('hinbans.year_code','LIKE','%'.($request->year_code).'%')
         ->where('units.season_id','LIKE','%'.($request->season_code).'%')
-        ->where('hinbans.unit_id','LIKE','%'.($request->unit_code).'%')
+        ->where('units.unit_code','LIKE','%'.($request->unit_code).'%')
         ->where('hinbans.face','LIKE','%'.($request->face).'%')
         ->where('hinbans.brand_id','LIKE','%'.($request->brand_code).'%')
         ->where('hinbans.id','LIKE','%'.($request->hinban_code).'%')
-        ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_name','hinbans.id as hinban_id','hinbans.hinban_name','hinbans.m_price','hinbans.price','hinbans.face','images.filename'])
+        ->select(['hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_id','units.season_name','hinbans.id as hinban_id','hinbans.hinban_name','hinbans.m_price','hinbans.price','hinbans.face','images.filename'])
         ->orderBy('hinbans.year_code','desc')
         ->orderBy('hinbans.brand_id','asc')
+        ->orderBy('units.season_id','desc')
         ->orderBy('hinban_id','asc')
         ->paginate(20);
         // ->get();
@@ -56,8 +57,8 @@ class ImageController extends Controller
         ->get();
         $units=DB::table('units')
         ->where('units.season_id','LIKE','%'.$request->season_code.'%')
-        ->select(['id'])
-        ->groupBy(['id'])
+        ->select(['id','unit_code'])
+        ->groupBy(['id','unit_code'])
         ->orderBy('id','asc')
         ->get();
         $brands=DB::table('brands')
@@ -112,12 +113,16 @@ class ImageController extends Controller
                 // $resizedImage = InterventionImage::make($file)->resize(1920, 1080)->encode();
                 $resizedImage = InterventionImage::make($file)->resize(600, 600,function($constraint){$constraint->aspectRatio();})->encode();
 
+                $filePath=('public/'. 'images' . '/' . $fileNameToStore);
                 $isExist = Image::where('filename',$fileNameToStore)
                     ->exists();
                     // dd($fileNameToStore,$isExist);
                 if($isExist)
                 {
-                    continue;
+                    // continue;
+
+                    Storage::delete($filePath);
+                    Storage::put('public/'. 'images' . '/' . $fileNameToStore, $resizedImage );
                 }
                 if(!$isExist)
                 {
@@ -196,7 +201,8 @@ class ImageController extends Controller
         $image = DB::table('images')
         ->join('hinbans','hinbans.id','images.hinban_id')
         ->where('images.hinban_id',($id))
-        ->select('images.hinban_id','hinbans.hinban_name','images.filename')
+        ->select('images.hinban_id','hinbans.hinban_name','images.filename','hinbans.m_price',
+        'hinbans.hinban_info','hinbans.price')
         ->first();
         $sku_images = DB::table('sku_images')
         ->join('skus','skus.id','sku_images.sku_id')
@@ -207,6 +213,28 @@ class ImageController extends Controller
 
         // dd($login_user,$image,$sku_images);
         return view('product.image_show',compact('image','sku_images','login_user'));
+    }
+
+    public function sku_image_show($id)
+    {
+        $login_user =  DB::table('users')
+        ->where('users.id',Auth::id())
+        ->first();
+        $image = DB::table('sku_images')
+        ->join('skus','skus.id','sku_images.sku_id')
+        ->join('hinbans','hinbans.id','skus.hinban_id')
+        ->where('sku_images.sku_id',($id))
+        ->select('sku_images.sku_id','skus.hinban_id','skus.col_id','skus.size_id','hinbans.hinban_name','sku_images.filename')
+        ->first();
+        $sku_images = DB::table('sku_images')
+        ->join('skus','skus.id','sku_images.sku_id')
+        ->join('hinbans','hinbans.id','skus.hinban_id')
+        ->where('skus.hinban_id',($id))
+        ->select('sku_images.sku_id','skus.col_id','sku_images.filename')
+        ->get();
+
+        // dd($login_user,$image,$sku_images);
+        return view('product.sku_image_show',compact('image','sku_images','login_user'));
     }
 
     /**
