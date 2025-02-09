@@ -51,7 +51,7 @@
                     <select class="w-24 h-8 rounded text-sm pt-1 mr-4 mb-2 border " id="unit_code" name="unit_code" type="number" >
                     <option value="" @if(\Request::get('unit_code') == '0') selected @endif >指定なし</option>
                     @foreach ($units as $unit)
-                        <option value="{{ $unit->id }}" @if(\Request::get('unit_code') == $unit->id ) selected @endif >{{ $unit->id  }}</option>
+                        <option value="{{ $unit->unit_code }}" @if(\Request::get('unit_code') == $unit->unit_code ) selected @endif >{{ $unit->id  }}</option>
                     @endforeach
                     </select>
                 </div>
@@ -89,13 +89,14 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="w-3/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">SKU</th>
+                        <th class="w-3/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">SKU</th>
                         {{-- <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Col</th> --}}
                         {{-- <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Size</th> --}}
-                        <th class="w-5/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">商品名</th>
-                        <th class="w-2/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売価</th>
-                        <th class="w-4/15 md:pr-16 pr-16 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数量</th>
-                        <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"></th>
+                        <th class="w-5/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">商品名</th>
+                        <th class="w-2/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売価</th>
+                        {{-- <th class="w-1/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">画像</th> --}}
+                        {{-- <th class="w-4/16 md:pr-4 pr-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数量</th> --}}
+                        {{-- <th class="w-1/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"></th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -105,19 +106,33 @@
                             {{-- <td class="w-1/15 md:px-4 py-1">{{ $cart->col_id }}</td> --}}
                             {{-- <td class="w-1/15 md:px-4 py-1">{{ $cart->size_id }}</td> --}}
                             <td class="w-5/15 md:px-4 py-1">{{ Str::limit($cart->hinban_name,16) }}</td>
+
                             <td class="w-2/15 md:px-4 py-1">{{ $cart->m_price }}</td>
                             <td class="w-4/15 md:px-4 py-1">
                                 <form method="POST" action="{{ route('cart_add') }}">
-                                    @csrf
-                                    <input type="hidden" name="sku_id" value="{{ $product->id }}">
-                                    <select name="pcs" class="rounded">
-                                        <option value="{{ $product->pcs }}">{{ $product->pcs }}</option>
-                                        @for ($i = 0; $i <= 9; $i++)
-                                            <option value="{{ $i }}">{{ $i }}</option>
-                                        @endfor
-                                    </select>
-                                    <button type="submit"  class="w-12 h-10 bg-blue-500 text-sm text-white ml-0 hover:bg-blue-600 rounded lg:ml-2 " >追加</button>
-                                </form>
+                                @csrf
+                            <div class="flex">
+                                <input type="hidden" name="sku_id" value="{{ $product->id }}">
+
+                                <div class="w-full ">
+                                <x-sku2_image-thumbnail :filename="$product->filename"  />
+                                </div>
+
+                                <div class="mt-1">
+                                <div class="mt-1 md:mt-16">
+                                <select name="pcs" class="rounded h-12">
+                                    <option value="{{ $product->pcs }}">{{ $product->pcs ?? 0}}</option>
+                                    @for ($i = 1; $i <= 9; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
+                                </select>
+                                </div>
+                                <div class="mt-0 md:mt-16 h-12">
+                                <button type="submit" class="bg-indigo-500 text-white rounded text-sm ml-0 mt-1 h-9 w-16">追加</button>
+                                </div>
+                                </div>
+                            </div>
+                            </form>
                             </td>
                         </tr>
                     @endforeach
@@ -140,13 +155,14 @@
         <table>
             <thead>
                 <tr>
-                    <th class="w-3/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">SKU</th>
+                    <th class="w-3/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">SKU</th>
                     {{-- <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Col_ID</th> --}}
                     {{-- <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Size_ID</th> --}}
-                    <th class="w-5/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">商品名</th>
-                    <th class="w-2/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売価</th>
-                    <th class="w-4/15 md:pr-16 pr-16 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数量</th>
-                    <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"></th>
+                    <th class="w-5/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">商品名</th>
+                    <th class="w-2/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売価</th>
+                    {{-- <th class="w-1/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">画像</th> --}}
+                    {{-- <th class="w-4/16 md:pr-4 pr-0 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数量</th> --}}
+                    {{-- <th class="w-1/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"></th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -157,20 +173,30 @@
                         {{-- <td class="w-1/15 md:px-4 py-1">{{ $product->size_id }}</td> --}}
                         <td class="w-5/15 md:px-4 py-1">{{ Str::limit($product->hinban_name,24) }}</td>
                         <td class="w-2/15 md:px-4 py-1">{{ $product->m_price }}</td>
-                        <td class="w-4/15 md:px-4 py-1">
-
+                        <td class="w-4/15 md:px-4 py-0">
                             <form method="POST" action="{{ route('cart_add') }}">
                                 @csrf
-                                 <div class="flex">
+                            <div class="flex">
                                 <input type="hidden" name="sku_id" value="{{ $product->id }}">
-                                <select name="pcs" class="rounded">
+
+                                <div class="w-full ">
+                                <x-sku2_image-thumbnail :filename="$product->filename"  />
+                                </div>
+
+                                <div class="mt-1">
+                                <div class="mt-1 md:mt-16">
+                                <select name="pcs" class="rounded h-12">
                                     <option value="{{ $product->pcs }}">{{ $product->pcs ?? 0}}</option>
                                     @for ($i = 1; $i <= 9; $i++)
                                         <option value="{{ $i }}">{{ $i }}</option>
                                     @endfor
                                 </select>
-                                <button type="submit" class="bg-indigo-500 text-white rounded text-sm ml-1 mt-1 h-9 w-12">追加</button>
-                             </div>
+                                </div>
+                                <div class="mt-0 md:mt-16 h-12">
+                                <button type="submit" class="bg-indigo-500 text-white rounded text-sm ml-0 mt-1 h-9 w-16">追加</button>
+                                </div>
+                                </div>
+                            </div>
                             </form>
 
                         </td>

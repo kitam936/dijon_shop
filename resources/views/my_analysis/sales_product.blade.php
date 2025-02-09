@@ -49,7 +49,7 @@
                 <select id="type3" name="type3" class="w-28 h-8 rounded text-sm pt-1 border mr-6 mb-2" type="text">
                     <option value="" @if(\Request::get('type3') == '0') selected @endif >品番(統合込)</option>
                     <option value="h" @if(\Request::get('type3') == "h") selected @endif>品番別</option>
-                    {{-- <option value="s" @if(\Request::get('type3') == "s") selected @endif>SKU別</option> --}}
+                    <option value="s" @if(\Request::get('type3') == "s") selected @endif>SKU別</option>
                 </select>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 <select class="w-28 h-8 rounded text-sm pt-1 border mb-2 mr-6 " id="unit_id" name="unit_id" >
                 <option value="" @if(\Request::get('unit_id') == '0') selected @endif >選択なし</option>
                 @foreach ($units as $unit)
-                    <option value="{{ $unit->id }}" @if(\Request::get('unit_id') == $unit->id ) selected @endif >{{ $unit->id  }}</option>
+                    <option value="{{ $unit->unit_code }}" @if(\Request::get('unit_id') == $unit->unit_code ) selected @endif >{{ $unit->id  }}</option>
                 @endforeach
                 </select>
                 </div>
@@ -123,29 +123,42 @@
             <table class="mx-auto table-auto bg-white w-full text-center whitespace-no-wrap">
                 <thead >
                 <tr>
-                    <th class="w-3/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">品番/SKU</th>
+                    <th class="w-30 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">品番/SKU</th>
                     {{-- <th class="w-3/12 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">品番</th> --}}
-                    <th class="w-4/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">品名</th>
-                    <th class="w-3/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売価</th>
-                    <th class="w-2/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数</th>
-                    <th class="w-3/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売上(千)</th>
+                    <th class="w-60 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">品名</th>
+                    <th class="w-30 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売価</th>
+                    <th class="w-10 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数</th>
+                    <th class="w-30 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">商品画像</th>
                 </tr>
                 </thead>
 
                 <tbody>
                     @foreach ($datas as $data)
                 <tr>
-                    <td class="w-3/15 md:px-4 py-1 text-sm  text-indigo-700"><a href="{{ route('product_show',['hinban'=>$data->hinban_id]) }}" >{{ $data->code }}</a></td>
+                    <td class="w-30 md:px-4 py-1 text-sm  text-indigo-700"><a href="{{ route('product_show',['hinban'=>$data->hinban_id]) }}" >{{ $data->code }}</a></td>
                     {{-- <td class="w-3/12 md:px-4 py-1 text-sm">{{ $data->hinban_id }}</td> --}}
-                    <td class="w-4/15 md:px-4 py-1 text-sm">{{ Str::limit($data->hinban_name, 20, '...')}}</td>
-                    <td class="w-3/15 pr-2 md:px-4 text-sm py-1 text-center"><span style="font-variant-numeric:tabular-nums"> {{ number_format(round($data->m_price))}}</span></td>
-                    <td class="w-2/15 pr-1 md:px-4 text-sm py-1 text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(round($data->pcs_total))}}</span></td>
-                    <td class="w-3/15 pr-2 md:px-4 text-sm py-1 text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(($data->total)/1000)}}</span></td>
-
+                    <td class="w-60 md:px-4 py-1 text-sm">{{ Str::limit($data->hinban_name, 20, '...')}}</td>
+                    <td class="w-30 pr-2 md:px-4 text-sm py-1 text-center"><span style="font-variant-numeric:tabular-nums"> {{ number_format(round($data->m_price))}}</span></td>
+                    <td class="w-10 pr-1 md:px-4 text-sm py-1 text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(round($data->pcs_total))}}</span></td>
+                    {{-- <td class="w-3/15 pr-2 md:px-4 text-sm py-1 text-right"><span style="font-variant-numeric:tabular-nums"> {{ number_format(($data->total)/1000)}}</span></td> --}}
+                    <td class="w-30 md:px-4 py-0">
+                        <div class="ml-2 md:ml-12 items-right w-full md:w-2/3 ">
+                        @if(\Request::get('type3') == "h" )
+                        <x-image-thumbnail :filename="$data->filename"  />
+                        @endif
+                        @if(\Request::get('type3') == '0')
+                        <x-image-thumbnail :filename="$data->filename"  />
+                        @endif
+                        @if(\Request::get('type3') == "s")
+                        <x-sku_image-thumbnail :filename="$data->filename"  />
+                        @endif
+                        </div>
+                    </td>
                 </tr>
                 @endforeach
                 </tbody>
             </table>
+
             {{  $datas->appends([
                 'YW1'=>\Request::get('YM1'),
                 'YW2'=>\Request::get('YM2'),

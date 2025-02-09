@@ -25,7 +25,7 @@ class Stock_subtotal implements Scope
         ->join('sizes','sizes.id','=','skus.size_id')
         ->select('shops.company_id','companies.co_name','stocks.shop_id','shops.shop_name',
          'stocks.sku_id','skus.hinban_id','hinbans.hinban_name','hinbans.price','hinbans.m_price',
-         'hinbans.brand_id','brands.brand_name','stocks.pcs','stocks.zaikogaku','hinbans.unit_id','units.season_id','units.season_name','hinbans.face',
+         'hinbans.brand_id','brands.brand_name','stocks.pcs','stocks.zaikogaku','hinbans.unit_id','units.unit_code','units.season_id','units.season_name','hinbans.face',
          'col_id','col_name','size_id','size_name','hinbans.vendor_id')
         ;
 
