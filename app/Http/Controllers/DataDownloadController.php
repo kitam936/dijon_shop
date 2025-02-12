@@ -95,7 +95,7 @@ class DataDownloadController extends Controller
         ->join('skus','skus.id','=','order_items.sku_id')
         ->join('hinbans','hinbans.id','=','skus.hinban_id')
         ->where('orders.id',$request->id2)
-        ->selectRaw('orders.shop_id ,skus.hinban_id,skus.col_id,skus.size_id,hinbans.m_price,(hinbans.m_price * shops.rate /1000) as gedai')
+        ->selectRaw('orders.shop_id ,skus.hinban_id,skus.col_id,skus.size_id,hinbans.m_price,FLOOR(hinbans.m_price * shops.rate /1000) as gedai')
         ->distinct()
         // ->groupBy('my_karts.maker_id')
         // ->orderBy('order_items.sku_id')
