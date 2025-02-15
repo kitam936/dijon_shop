@@ -16,6 +16,8 @@ use App\Http\Controllers\TestMailController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\MyBudgetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,11 +71,13 @@ Route::prefix('admin')
     Route::get('data/sales_index', [DataController::class, 'sales_index'])->name('admin.data.sales_index');
     Route::get('data/deliv_index', [DataController::class, 'delivery_index'])->name('admin.data.deliv_index');
     Route::get('data/stock_index', [DataController::class, 'stock_index'])->name('admin.data.stock_index');
+    Route::get('data/yosan_index', [DataController::class, 'yosan_index'])->name('admin.data.yosan_index');
     Route::get('data/ym_index', [DataController::class, 'ym_index'])->name('admin.data.ym_index');
     Route::get('data/yw_index', [DataController::class, 'yw_index'])->name('admin.data.yw_index');
     Route::get('data/ymd_index', [DataController::class, 'ymd_index'])->name('admin.data.ymd_index');
     Route::get('data/y_index', [DataController::class, 'y_index'])->name('admin.data.y_index');
     Route::POST('data/stock_upload', [DataController::class, 'stock_upload'])->name('admin.data.stock_upload');
+    Route::POST('data/yosan_upload', [DataController::class, 'yosan_upload'])->name('admin.data.yosan_upload');
     Route::POST('data/shop_upsert', [DataController::class, 'shop_upsert'])->name('admin.data.shop_upsert');
     Route::POST('data/sales_upload', [DataController::class, 'sales_upload'])->name('admin.data.sales_upload');
     Route::POST('data/deliv_upload', [DataController::class, 'delivery_upload'])->name('admin.data.deliv_upload');
@@ -97,6 +101,7 @@ Route::prefix('admin')
     Route::delete('sales_destroy', [DataController::class, 'sales_destroy'])->name('admin.data.sales_destroy');
     Route::delete('deliv_destroy', [DataController::class, 'deliv_destroy'])->name('admin.data.deliv_destroy');
     Route::delete('stock_destroy', [DataController::class, 'stock_destroy'])->name('admin.data.stock_destroy');
+    Route::delete('yosan_destroy', [DataController::class, 'yosan_destroy'])->name('admin.data.yosan_destroy');
     Route::delete('sku_destroy', [DataController::class, 'sku_destroy'])->name('admin.data.sku_destroy');
     Route::delete('hinban_destroy', [DataController::class, 'hinban_destroy'])->name('admin.data.hinban_destroy');
     Route::delete('shop_destroy', [DataController::class, 'shop_destroy'])->name('admin.data.shop_destroy');
@@ -202,7 +207,12 @@ Route::middleware('can:user-higher')
     Route::get('image_show/{hinban}', [ImageController::class, 'image_show'])->name('image_show');
     Route::get('sku_image_index', [ImageController::class, 'sku_image_index'])->name('sku_image_index');
     Route::get('sku_image_show/{sku}', [ImageController::class, 'sku_image_show'])->name('sku_image_show');
-
+    Route::get('partner_index', [ShopController::class, 'partner_index'])->name('partner_index');
+    Route::get('budget_progress', [BudgetController::class, 'budget_progress'])->name('budget_progress');
+    Route::get('budget_progress_reset', [BudgetController::class, 'budget_progress_reset'])->name('budget_progress_reset');
+    Route::get('my_budget_progress', [MyBudgetController::class, 'budget_progress'])->name('my_budget_progress');
+    Route::get('my_budget_progress_reset', [MyBudgetController::class, 'budget_progress_reset'])->name('my_budget_progress_reset');
 });
+
 
 require __DIR__.'/auth.php';

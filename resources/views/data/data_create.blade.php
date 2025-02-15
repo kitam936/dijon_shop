@@ -68,6 +68,12 @@
                             <input type="file" id="co_data" name="co_data" accept=“.csv” class="w-1/3 ml-3 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                             <button type="submit" class="w-36 text-sm text-white bg-blue-500 border-0 py-1 px-4 focus:outline-none hover:bg-blue-600 rounded">会社データ更新</button>
                         </form>
+                        <form method="POST" action="{{ route('admin.data.yosan_upload') }}" class=" p-1" enctype="multipart/form-data">
+                            @csrf
+                            <label for="yosan_data" class="leading-7 text-sm text-gray-600">予算データ</label>
+                            <input type="file" id="yosan_data" name="yosan_data" accept=“.csv” class="w-1/3 ml-3 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <button type="submit" class="w-36 text-sm text-white bg-blue-500 border-0 py-1 px-4 focus:outline-none hover:bg-blue-600 rounded">予算データ更新</button>
+                        </form>
                         <form method="POST" action="{{ route('admin.data.area_upsert') }}" class=" p-1" enctype="multipart/form-data">
                             @csrf
                             <label for="ar_data" class="leading-7 text-sm text-gray-600">エリアデータ</label>
