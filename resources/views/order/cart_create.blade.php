@@ -65,7 +65,7 @@
                     @endforeach
                     </select>
                 </div>
-
+                @if($logIn_user->role_id <10)
                 <div>
                     <label for="type1" class="mr-1 leading-7 text-sm  text-gray-800 ">表示：</label>
                     <select id="type1" name="type1" class="w-28 h-8 rounded text-sm pt-1 border mr-6 mb-2" type="text">
@@ -73,7 +73,7 @@
                         <option value="s" @if(\Request::get('type1') == "s") selected @endif>売上品番</option>
                     </select>
                 </div>
-
+                @endif
                 </div>
                 </div>
                 <div class="flex">
@@ -115,7 +115,6 @@
                             {{-- <td class="w-1/15 md:px-4 py-1">{{ $cart->col_id }}</td> --}}
                             {{-- <td class="w-1/15 md:px-4 py-1">{{ $cart->size_id }}</td> --}}
                             <td class="w-5/15 md:px-4 py-1">{{ Str::limit($product->hinban_name,16) }}</td>
-
                             <td class="w-2/15 md:px-4 py-1">{{ $product->m_price }}</td>
                             <td class="w-2/15 md:px-4 py-1">{{ $product->sales_pcs }}</td>
                             <td class="w-4/15 md:px-4 py-1">
@@ -155,6 +154,7 @@
             'season_code'=>\Request::get('season_code'),
             'unit_code'=>\Request::get('unit_code'),
             'face'=>\Request::get('face'),
+            'hinban_code'=>\Request::get('hinban_code'),
             'type1'=>\Request::get('type1'),
             ])->links()}}
         </div>

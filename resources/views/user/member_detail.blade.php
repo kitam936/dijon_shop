@@ -78,8 +78,8 @@
 
                                     @if($login_user->id == $user->id)
                                     <div class="relative">
-                                        <label for="email" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Mail　※本人のみ表示・公開されません</label>
-                                        <div  id="email" name="email" value="{{$user->email}}" class="pl-2 w-60 h-6 text-sm items-center bg-gray-100 border rounded">{{$user->email}}
+                                        <label for="email" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Mail　</label>
+                                        <div  id="email" name="email" value="{{$user->email}}" class="pl-2 w-60 h-6 text-sm text-indigo-600 items-center bg-gray-100 border rounded"><a href="mailto:{{ $user->email }}">{{$user->email}}</a>
                                         </div>
                                     </div>
                                     @endif

@@ -50,7 +50,11 @@
                         <td class="w-2/14 pr-2 text-sm md:px-4 py-1 text-center">  {{ Str::limit($order_h->shop_name,10) }} </td>
                         <td class="w-3/14 text-sm md:px-4 py-1 text-center">  {{ Str::limit($order_h->name,10) }} </td>
                         <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $order_h->pcs }}</td>
+                        @if($order_h->status_id <7)
+                        <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-red-600 text-center"> {{ $order_h->status }}</td>
+                        @else
                         <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $order_h->status }}</td>
+                        @endif
                     </tr>
                     @endforeach
 
@@ -94,7 +98,11 @@
                         <td class="w-2/14 pr-2 text-sm md:px-4 py-1 text-center">  {{ Str::limit($order_h->shop_name,10) }} </td>
                         <td class="w-3/14 text-sm md:px-4 py-1 text-center">  {{ Str::limit($order_h->name,10) }} </td>
                         <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $order_h->pcs }}</td>
+                        @if($order_h->status_id <7)
+                        <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-red-600 text-center"> {{ $order_h->status }}</td>
+                        @else
                         <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $order_h->status }}</td>
+                        @endif
                     </tr>
                     @endforeach
 

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use \SplFileObject;
 use Throwable;
 use App\Models\Stock;
+use App\Models\Budget;
 use App\Models\Shop;
 use App\Models\Sale;
 use App\Models\Company;
@@ -197,7 +198,17 @@ class DataController extends Controller
 
         $min_year=Hinban::min('year_code');
 
-        return view('data.delete_index',compact('max_YM','max_YW','YMs','years','min_year'));
+        $bg_YMs=DB::table('budgets')
+        ->select(['YM'])
+        ->groupBy(['YM'])
+        ->orderBy('YM','desc')
+        ->get();
+        $bg_max_YM=Budget::max('YM');
+        $bg_max_YW=Budget::max('YW');
+
+        return view('data.delete_index',compact('max_YM','max_YW','YMs','years','min_year','bg_YMs','bg_max_YM','bg_max_YW'));
+
+
     }
 
     public function shop_edit($id)

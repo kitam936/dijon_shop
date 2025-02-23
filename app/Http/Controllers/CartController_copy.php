@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\SalesData;
 use App\Models\Hinban;
 use App\Models\Sku;
 use Illuminate\Support\Facades\Auth;
@@ -78,6 +79,15 @@ class CartController_copy extends Controller
     public function create(Request $request)
     {
         // $products = Sku::with('hinban')->paginate(50); // 商品一覧を取得
+        $logIn_user = DB::table('users')
+        ->where('users.id',Auth::id())->first();
+
+        $query = SalesData::where('shop_id','=', $logIn_user->shop_id);
+
+        $datas = DB::table($query)
+        ->groupBy('sku_id')
+        ->selectRaw('sku_id, sum(pcs) as sales_pcs');
+        // ->get();
 
         $carts = DB::table('carts')
         ->join('users','users.id','carts.user_id')
@@ -89,58 +99,120 @@ class CartController_copy extends Controller
         ->selectRaw('carts.sku_id,sum(carts.pcs) as pcs');
         // ->get();
 
-        $products = DB::table('skus')
-        ->leftjoin('sku_images','sku_images.sku_id','=','skus.id')
-        ->join('hinbans','hinbans.id','=','skus.hinban_id')
-        ->join('units','units.id','=','hinbans.unit_id')
-        ->leftjoinSub($carts, 'carts', 'carts.sku_id', '=', 'skus.id')
-        ->where('hinbans.vendor_id','<>',8200)
-        ->where('skus.col_id','<>',99)
-        ->where('hinbans.year_code','LIKE','%'.($request->year_code).'%')
-        ->where('units.season_id','LIKE','%'.($request->season_code).'%')
-        ->where('units.unit_code','LIKE','%'.($request->unit_code).'%')
-        ->where('hinbans.face','LIKE','%'.($request->face).'%')
-        ->where('hinbans.brand_id','LIKE','%'.($request->brand_code).'%')
-        ->where('hinbans.id','LIKE','%'.($request->hinban_code).'%')
-        ->select(['skus.id','skus.col_id','size_id','hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_id','units.season_name','hinbans.id as hinban_id','hinbans.hinban_name','hinbans.m_price','hinbans.price','hinbans.face','carts.pcs','sku_images.filename'])
-        ->orderBy('hinbans.year_code','desc')
-        ->orderBy('hinbans.brand_id','asc')
-        ->orderBy('units.season_id','desc')
-        ->orderBy('hinban_id','asc')
-        ->paginate(50);
-        // ->get();
-        $years=DB::table('hinbans')
-        ->select(['year_code'])
-        ->where('year_code','<',50)
-        ->groupBy(['year_code'])
-        ->orderBy('year_code','desc')
-        ->get();
-        $faces=DB::table('hinbans')
-        ->whereNotNull('face')
-        ->select(['face'])
-        ->groupBy(['face'])
-        ->orderBy('face','asc')
-        ->get();
-        $seasons=DB::table('units')
-        ->select(['season_id','season_name'])
-        ->groupBy(['season_id','season_name'])
-        ->orderBy('season_id','asc')
-        ->get();
-        $units=DB::table('units')
-        ->where('units.season_id','LIKE','%'.$request->season_code.'%')
-        ->select(['id','unit_code'])
-        ->groupBy(['id','unit_code'])
-        ->orderBy('id','asc')
-        ->get();
-        $brands=DB::table('brands')
-        ->select(['id'])
-        ->groupBy(['id'])
-        ->orderBy('id','asc')
-        ->get();
-        // dd($products);
-        return view('order.cart_create',
-        compact('products','years','faces',
-                'seasons','units','brands'));
+        if($request->type1 == '' || $request->type1 == 'a'){
+
+            $products = DB::table('skus')
+            ->leftjoin('sku_images','sku_images.sku_id','=','skus.id')
+            ->join('hinbans','hinbans.id','=','skus.hinban_id')
+            ->join('units','units.id','=','hinbans.unit_id')
+            ->leftjoinSub($carts, 'carts', 'carts.sku_id', '=', 'skus.id')
+            ->leftjoinSub($datas, 'data', 'skus.id', '=', 'data.sku_id')
+            ->where('hinbans.vendor_id','<>',8200)
+            ->where('skus.col_id','<>',99)
+            ->where('hinbans.year_code','LIKE','%'.($request->year_code).'%')
+            ->where('units.season_id','LIKE','%'.($request->season_code).'%')
+            ->where('units.unit_code','LIKE','%'.($request->unit_code).'%')
+            ->where('hinbans.face','LIKE','%'.($request->face).'%')
+            ->where('hinbans.brand_id','LIKE','%'.($request->brand_code).'%')
+            ->where('hinbans.id','LIKE','%'.($request->hinban_code).'%')
+            ->select(['skus.id','skus.col_id','size_id','hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_id','units.season_name','hinbans.id as hinban_id','hinbans.hinban_name','hinbans.m_price','hinbans.price','hinbans.face','carts.pcs','sku_images.filename','data.sales_pcs'])
+            ->orderBy('hinbans.year_code','desc')
+            ->orderBy('hinbans.brand_id','asc')
+            ->orderBy('units.season_id','desc')
+            ->orderBy('hinban_id','asc')
+            ->paginate(50);
+            // ->get();
+            $years=DB::table('hinbans')
+            ->select(['year_code'])
+            ->where('year_code','<',50)
+            ->groupBy(['year_code'])
+            ->orderBy('year_code','desc')
+            ->get();
+            $faces=DB::table('hinbans')
+            ->whereNotNull('face')
+            ->select(['face'])
+            ->groupBy(['face'])
+            ->orderBy('face','asc')
+            ->get();
+            $seasons=DB::table('units')
+            ->select(['season_id','season_name'])
+            ->groupBy(['season_id','season_name'])
+            ->orderBy('season_id','asc')
+            ->get();
+            $units=DB::table('units')
+            ->where('units.season_id','LIKE','%'.$request->season_code.'%')
+            ->select(['id','unit_code'])
+            ->groupBy(['id','unit_code'])
+            ->orderBy('id','asc')
+            ->get();
+            $brands=DB::table('brands')
+            ->select(['id'])
+            ->groupBy(['id'])
+            ->orderBy('id','asc')
+            ->get();
+            // dd($products);
+            return view('order.cart_create',
+            compact('products','years','faces',
+                    'seasons','units','brands'));
+        }
+
+        if($request->type1 == 's'){
+
+            $products = DB::table('skus')
+            ->leftjoin('sku_images','sku_images.sku_id','=','skus.id')
+            ->join('hinbans','hinbans.id','=','skus.hinban_id')
+            ->join('units','units.id','=','hinbans.unit_id')
+            ->leftjoinSub($carts, 'carts', 'carts.sku_id', '=', 'skus.id')
+            ->leftjoinSub($datas, 'data', 'skus.id', '=', 'data.sku_id')
+            ->where('hinbans.vendor_id','<>',8200)
+            ->where('skus.col_id','<>',99)
+            ->where('hinbans.year_code','LIKE','%'.($request->year_code).'%')
+            ->where('units.season_id','LIKE','%'.($request->season_code).'%')
+            ->where('units.unit_code','LIKE','%'.($request->unit_code).'%')
+            ->where('hinbans.face','LIKE','%'.($request->face).'%')
+            ->where('hinbans.brand_id','LIKE','%'.($request->brand_code).'%')
+            ->where('hinbans.id','LIKE','%'.($request->hinban_code).'%')
+            ->where('data.sales_pcs','>',0)
+            ->select(['skus.id','skus.col_id','size_id','hinbans.year_code','hinbans.brand_id','hinbans.unit_id','units.season_id','units.season_name','hinbans.id as hinban_id','hinbans.hinban_name','hinbans.m_price','hinbans.price','hinbans.face','carts.pcs','sku_images.filename','data.sales_pcs'])
+            ->orderBy('hinbans.year_code','desc')
+            ->orderBy('hinbans.brand_id','asc')
+            ->orderBy('units.season_id','desc')
+            ->orderBy('hinban_id','asc')
+            ->paginate(50);
+            // ->get();
+            $years=DB::table('hinbans')
+            ->select(['year_code'])
+            ->where('year_code','<',50)
+            ->groupBy(['year_code'])
+            ->orderBy('year_code','desc')
+            ->get();
+            $faces=DB::table('hinbans')
+            ->whereNotNull('face')
+            ->select(['face'])
+            ->groupBy(['face'])
+            ->orderBy('face','asc')
+            ->get();
+            $seasons=DB::table('units')
+            ->select(['season_id','season_name'])
+            ->groupBy(['season_id','season_name'])
+            ->orderBy('season_id','asc')
+            ->get();
+            $units=DB::table('units')
+            ->where('units.season_id','LIKE','%'.$request->season_code.'%')
+            ->select(['id','unit_code'])
+            ->groupBy(['id','unit_code'])
+            ->orderBy('id','asc')
+            ->get();
+            $brands=DB::table('brands')
+            ->select(['id'])
+            ->groupBy(['id'])
+            ->orderBy('id','asc')
+            ->get();
+            // dd($products);
+            return view('order.cart_create',
+            compact('products','years','faces',
+                    'seasons','units','brands'));
+        }
     }
 
     public function add(Request $request)

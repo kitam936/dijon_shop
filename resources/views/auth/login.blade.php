@@ -38,7 +38,7 @@
                     {{ __('Forgot your password?') }}
                 </a>
             @endif --}}
-            <span class="text-sm">パスワードを忘れた場合は管理者に連絡してください</span>
+            <span class="text-sm">パスワードを忘れた場合は <span  class="text-indigo-600 items-center"><a href="mailto:shop@dijon1988.net">　shop@dijon1988.net　</a></span><br>に連絡してください</span>
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>

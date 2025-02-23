@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -22,6 +23,7 @@ class OrderController extends Controller
         ->where('users.id',Auth::id())
         ->select('users.shop_id','shops.shop_name','users.name','users.id')
         ->first();
+
         $order_hs = DB::table('orders')
         ->join('order_items','orders.id','order_items.order_id')
         ->join('users','users.id','orders.user_id')
@@ -30,10 +32,13 @@ class OrderController extends Controller
         ->join('hinbans','hinbans.id','skus.hinban_id')
         ->join('statuses','statuses.id','orders.status')
         ->where('orders.shop_id',$user->shop_id)
-        ->groupBy('orders.id','orders.order_date','orders.user_id','users.name','shops.shop_name','statuses.status')
-        ->selectRaw('orders.id,orders.order_date,orders.user_id,users.name,shops.shop_name,sum(order_items.pcs) as pcs,statuses.status')
+        ->where('orders.order_date','>', (Carbon::today()->subDay(60)))
+        ->groupBy('orders.id','orders.order_date','orders.user_id','users.name','shops.shop_name','statuses.id','statuses.status')
+        ->selectRaw('orders.id,orders.order_date,orders.user_id,users.name,shops.shop_name,sum(order_items.pcs) as pcs,statuses.id as status_id,statuses.status')
         ->orderBy('orders.id','desc')
         ->get();
+
+
 
         $all_order_hs = DB::table('orders')
         ->join('order_items','orders.id','order_items.order_id')
@@ -42,8 +47,9 @@ class OrderController extends Controller
         ->join('skus','skus.id','order_items.sku_id')
         ->join('hinbans','hinbans.id','skus.hinban_id')
         ->join('statuses','statuses.id','orders.status')
-        ->groupBy('orders.id','orders.order_date','orders.user_id','users.name','statuses.status','shops.shop_name')
-        ->selectRaw('orders.id,orders.order_date,orders.user_id,users.name,statuses.status,shops.shop_name,sum(order_items.pcs) as pcs')
+        ->where('orders.order_date','>', (Carbon::today()->subDay(60)))
+        ->groupBy('orders.id','orders.order_date','orders.user_id','users.name','statuses.id','statuses.status','shops.shop_name')
+        ->selectRaw('orders.id,orders.order_date,orders.user_id,users.name,statuses.id as status_id,statuses.status,shops.shop_name,sum(order_items.pcs) as pcs')
         ->orderBy('orders.id','desc')
         ->get();
         // $order_fs = DB::table('orders')
@@ -84,8 +90,17 @@ class OrderController extends Controller
         ->groupBy('order_items.id','order_items.sku_id','skus.hinban_id','skus.col_id','skus.size_id','hinbans.hinban_name')
         ->selectRaw('order_items.id,order_items.sku_id,skus.hinban_id,skus.col_id,skus.size_id,hinbans.hinban_name,sum(order_items.pcs) as pcs')
         ->get();
-        // dd($user,$order_hs,$order_fs);
-        return view('order.order_detail',compact('user','order_hs','order_fs'));
+        $order_total = DB::table('orders')
+        ->join('order_items','orders.id','order_items.order_id')
+        ->join('skus','skus.id','order_items.sku_id')
+        ->join('shops','shops.id','orders.shop_id')
+        ->join('hinbans','hinbans.id','skus.hinban_id')
+        ->where('orders.id',$id)
+        ->groupBy('orders.id',)
+        ->selectRaw('orders.id,sum(order_items.pcs) as total_pcs,sum(order_items.pcs*hinbans.m_price) as total_baika,sum(FLOOR(order_items.pcs*hinbans.m_price*shops.rate/1000)) as total_genka')
+        ->first();
+        // dd($user,$order_hs,$order_fs,$order_total);
+        return view('order.order_detail',compact('user','order_hs','order_fs','order_total'));
     }
 
     public function order_edit($id)

@@ -81,7 +81,8 @@ class MyBudgetController extends Controller
 
             $query2 = DB::table('budgets')
             ->join('shops','shops.id','budgets.shop_id')
-            ->where('budgets.YM','<=',$max_YM)
+            ->where('budgets.YM','>=',($request->YM1 ?? $max_YM))
+            ->where('budgets.YM','<=',($request->YM2 ?? $max_YM))
             ->where('budgets.shop_id',$logIn_user->shop_id)
             ->groupBy('budgets.shop_id', 'YMD')
             ->selectRaw('budgets.shop_id, sum(budgets.bg_kingaku) as bg_kingaku, YMD');
@@ -137,7 +138,8 @@ class MyBudgetController extends Controller
 
             $query2 = DB::table('budgets')
             ->join('shops','shops.id','budgets.shop_id')
-            ->where('budgets.YM','<=',$max_YM)
+            ->where('budgets.YM','>=',($request->YM1 ?? $max_YM))
+            ->where('budgets.YM','<=',($request->YM2 ?? $max_YM))
             ->where('budgets.shop_id',$logIn_user->shop_id)
             ->groupBy('budgets.shop_id', 'YMD')
             ->selectRaw('budgets.shop_id, sum(budgets.bg_kingaku) as bg_kingaku, YMD');
@@ -194,7 +196,8 @@ class MyBudgetController extends Controller
 
             $query2 = DB::table('budgets')
             ->join('shops','shops.id','budgets.shop_id')
-            ->where('budgets.YM','<=',$max_YM)
+            ->where('budgets.YM','>=',($request->YM1 ?? $max_YM))
+            ->where('budgets.YM','<=',($request->YM2 ?? $max_YM))
             ->where('budgets.shop_id',$logIn_user->shop_id)
             ->groupBy('budgets.shop_id', 'YW')
             ->selectRaw('budgets.shop_id, sum(budgets.bg_kingaku) as bg_kingaku, YW');
@@ -259,7 +262,8 @@ class MyBudgetController extends Controller
 
             $query2 = DB::table('budgets')
             ->join('shops','shops.id','budgets.shop_id')
-            ->where('budgets.YM','<=',$max_YM)
+            ->where('budgets.YM','>=',($request->YM1 ?? $max_YM))
+            ->where('budgets.YM','<=',($request->YM2 ?? $max_YM))
             ->where('budgets.shop_id',$logIn_user->shop_id)
             ->groupBy('budgets.shop_id', 'YM')
             ->selectRaw('budgets.shop_id, sum(budgets.bg_kingaku) as bg_kingaku, YM');
@@ -435,6 +439,7 @@ class MyBudgetController extends Controller
 
         $query2 = DB::table('budgets')
         ->where('budgets.YM','<=',$max_YM)
+        ->where('budgets.YM','=',$max_YM)
         ->where('budgets.shop_id',$logIn_user->shop_id)
         ->groupBy('budgets.shop_id', 'YMD')
         ->selectRaw('budgets.shop_id, sum(budgets.bg_kingaku) as bg_kingaku, YMD');

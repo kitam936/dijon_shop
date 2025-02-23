@@ -81,7 +81,8 @@ class BudgetController extends Controller
 
             $query2 = DB::table('budgets')
             ->join('shops','shops.id','budgets.shop_id')
-            ->where('budgets.YM','<=',$max_YM)
+            ->where('budgets.YM','>=',($request->YM1 ?? $max_YM))
+            ->where('budgets.YM','<=',($request->YM2 ?? $max_YM))
             ->where('budgets.shop_id', 'LIKE', '%' . $request->sh_id . '%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('shops.company_id', 'LIKE', '%' . $request->co_id . '%')
@@ -91,9 +92,11 @@ class BudgetController extends Controller
             $bg_datas = DB::table($query2)
             // $prev_datas = $query2
             ->groupBy('YMD')
-            ->selectRaw('YMD as bg_date, sum(bg_kingaku) as bg_total');
-            // ->orderBy('prev_date', 'desc')
+            ->selectRaw('YMD as bg_date, sum(bg_kingaku) as bg_total')
+            ->orderBy('bg_date', 'desc');
             // ->get();
+
+            // dd($bg_datas);
 
             $merged_data = DB::table('ymds')
             ->where('ymds.YMD','<=',$max_YMD)
@@ -141,7 +144,8 @@ class BudgetController extends Controller
 
             $query2 = DB::table('budgets')
             ->join('shops','shops.id','budgets.shop_id')
-            ->where('budgets.YM','<=',$max_YM)
+            ->where('budgets.YM','>=',($request->YM1 ?? $max_YM))
+            ->where('budgets.YM','<=',($request->YM2 ?? $max_YM))
             ->where('budgets.shop_id', 'LIKE', '%' . $request->sh_id . '%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('shops.company_id', 'LIKE', '%' . $request->co_id . '%')
@@ -202,7 +206,8 @@ class BudgetController extends Controller
 
             $query2 = DB::table('budgets')
             ->join('shops','shops.id','budgets.shop_id')
-            ->where('budgets.YM','<=',$max_YM)
+            ->where('budgets.YM','>=',($request->YM1 ?? $max_YM))
+            ->where('budgets.YM','<=',($request->YM2 ?? $max_YM))
             ->where('budgets.shop_id', 'LIKE', '%' . $request->sh_id . '%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('shops.company_id', 'LIKE', '%' . $request->co_id . '%')
@@ -262,16 +267,17 @@ class BudgetController extends Controller
             // ->get();
 
 
-            $date_table = DB::table('sales')
-            ->groupBy('YM')
-            ->selectRaw('YM ,YM-100 as prev_date');
+            // $date_table = DB::table('sales')
+            // ->groupBy('YM')
+            // ->selectRaw('YM ,YM-100 as prev_date');
             // ->orderBy('YM', 'desc')->get();
 
             // 前年同月データを取得
 
             $query2 = DB::table('budgets')
             ->join('shops','shops.id','budgets.shop_id')
-            ->where('budgets.YM','<=',$max_YM)
+            ->where('budgets.YM','>=',($request->YM1 ?? $max_YM))
+            ->where('budgets.YM','<=',($request->YM2 ?? $max_YM))
             ->where('budgets.shop_id', 'LIKE', '%' . $request->sh_id . '%')
             ->where('area_id','LIKE','%'.$request->area_id.'%')
             ->where('shops.company_id', 'LIKE', '%' . $request->co_id . '%')
@@ -281,9 +287,11 @@ class BudgetController extends Controller
             $bg_datas = DB::table($query2)
             // $prev_datas = $query2
             ->groupBy('YM')
-            ->selectRaw('YM as bg_date, sum(bg_kingaku) as bg_total');
-            // ->orderBy('prev_date', 'desc')
+            ->selectRaw('YM as bg_date, sum(bg_kingaku) as bg_total')
+            ->orderBy('bg_date', 'desc');
             // ->get();
+
+            // dd($bg_datas);
 
             $merged_data = DB::table('yms')
             ->where('yms.YM','<=',$max_YM)
@@ -449,6 +457,7 @@ class BudgetController extends Controller
 
         $query2 = DB::table('budgets')
         ->where('budgets.YM','<=',$max_YM)
+        ->where('budgets.YM','>=',$max_YM)
         ->groupBy('budgets.shop_id', 'YMD')
         ->selectRaw('budgets.shop_id, sum(budgets.bg_kingaku) as bg_kingaku, YMD');
 

@@ -24,10 +24,17 @@ class CartController extends Controller
         ->get();
 
         $cart_total = DB::table('carts')
+        ->join('users','users.id','carts.user_id')
+        ->join('shops','shops.id','users.shop_id')
+        ->join('skus','skus.id','carts.sku_id')
+        ->join('hinbans','hinbans.id','skus.hinban_id')
         ->where('carts.user_id',Auth::id())
-        ->groupBy('carts.user_id')
-        ->selectRaw('carts.user_id,sum(carts.pcs) as total_pcs')
+        ->groupBy('carts.user_id','shops.rate')
+        ->selectRaw('carts.user_id,sum(carts.pcs) as total_pcs,
+            sum(carts.pcs*hinbans.m_price) as total_kingaku,FLOOR(sum(carts.pcs*hinbans.m_price)*shops.rate/1000) as total_gedai')
         ->first();
+
+        // dd($cart_total);
 
         $user = DB::table('users')
         ->join('shops','shops.id','users.shop_id')
@@ -153,7 +160,7 @@ class CartController extends Controller
             // dd($products);
             return view('order.cart_create',
             compact('products','years','faces',
-                    'seasons','units','brands'));
+                    'seasons','units','brands','logIn_user'));
         }
 
         if($request->type1 == 's'){
@@ -211,7 +218,7 @@ class CartController extends Controller
             // dd($products);
             return view('order.cart_create',
             compact('products','years','faces',
-                    'seasons','units','brands'));
+                    'seasons','units','brands','logIn_user'));
         }
     }
 
