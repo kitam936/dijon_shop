@@ -9,14 +9,14 @@
         <div class="md:flex">
             <div class="flex">
             <div class="pl-2 mt-2 ml-4 ">
-                <button type="button" class="w-32 h-8 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('analysis_index') }}'" >Menu</button>
+                <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('analysis_index') }}'" >Menu</button>
             </div>
             <div class="ml-4 mt-2 md:ml-4 md:mt-2">
-                <button type="button" class="w-32 h-8 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('order_index') }}'" >追加発注リスト</button>
+                <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('order_index') }}'" >追加発注リスト</button>
             </div>
             </div>
             <div class="mt-2 ml-6 md:ml-4">
-                <button type="button" class="w-32 h-8 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('cart_index') }}'" >カートを見る</button>
+                <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('cart_index') }}'" >カートを見る</button>
             </div>
 
         </div>
@@ -65,15 +65,7 @@
                     @endforeach
                     </select>
                 </div>
-                @if($logIn_user->role_id <10)
-                <div>
-                    <label for="type1" class="mr-1 leading-7 text-sm  text-gray-800 ">表示：</label>
-                    <select id="type1" name="type1" class="w-28 h-8 rounded text-sm pt-1 border mr-6 mb-2" type="text">
-                        <option value="a" @if(\Request::get('type1') == '0' || \Request::get('type1') == "a") selected @endif >全品番</option>
-                        <option value="s" @if(\Request::get('type1') == "s") selected @endif>売上品番</option>
-                    </select>
-                </div>
-                @endif
+
                 </div>
                 </div>
                 <div class="flex">
@@ -102,7 +94,6 @@
                         {{-- <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Size</th> --}}
                         <th class="w-5/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">商品名</th>
                         <th class="w-2/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売価</th>
-                        <th class="w-2/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売数</th>
                         {{-- <th class="w-1/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">画像</th> --}}
                         {{-- <th class="w-4/16 md:pr-4 pr-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数量</th> --}}
                         {{-- <th class="w-1/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"></th> --}}
@@ -115,8 +106,8 @@
                             {{-- <td class="w-1/15 md:px-4 py-1">{{ $cart->col_id }}</td> --}}
                             {{-- <td class="w-1/15 md:px-4 py-1">{{ $cart->size_id }}</td> --}}
                             <td class="w-5/15 md:px-4 py-1">{{ Str::limit($product->hinban_name,16) }}</td>
+
                             <td class="w-2/15 md:px-4 py-1">{{ $product->m_price }}</td>
-                            <td class="w-2/15 md:px-4 py-1">{{ $product->sales_pcs }}</td>
                             <td class="w-4/15 md:px-4 py-1">
                                 <form method="POST" action="{{ route('cart_add') }}">
                                 @csrf
@@ -154,8 +145,6 @@
             'season_code'=>\Request::get('season_code'),
             'unit_code'=>\Request::get('unit_code'),
             'face'=>\Request::get('face'),
-            'hinban_code'=>\Request::get('hinban_code'),
-            'type1'=>\Request::get('type1'),
             ])->links()}}
         </div>
 
@@ -171,7 +160,6 @@
                     {{-- <th class="w-1/15 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Size_ID</th> --}}
                     <th class="w-5/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">商品名</th>
                     <th class="w-2/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売価</th>
-                    <th class="w-2/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">売数</th>
                     {{-- <th class="w-1/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">画像</th> --}}
                     {{-- <th class="w-4/16 md:pr-4 pr-0 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数量</th> --}}
                     {{-- <th class="w-1/16 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100"></th> --}}
@@ -185,7 +173,6 @@
                         {{-- <td class="w-1/15 md:px-4 py-1">{{ $product->size_id }}</td> --}}
                         <td class="w-5/15 md:px-4 py-1">{{ Str::limit($product->hinban_name,24) }}</td>
                         <td class="w-2/15 md:px-4 py-1">{{ $product->m_price }}</td>
-                        <td class="w-2/15 md:px-4 py-1">{{ $product->sales_pcs }}</td>
                         <td class="w-4/15 md:px-4 py-0">
                             <form method="POST" action="{{ route('cart_add') }}">
                                 @csrf
@@ -226,7 +213,7 @@
                 'unit_code'=>\Request::get('unit_code'),
                 'face'=>\Request::get('face'),
                 'hinban_code'=>\Request::get('hinban_code'),
-                'type1'=>\Request::get('type1'),
+
             ])->links()}}
         </div>
         </div>
@@ -261,11 +248,6 @@
 
         const hinban = document.getElementById('hinban_code')
         hinban.addEventListener('change', function(){
-        this.form.submit()
-        })
-
-        const type1 = document.getElementById('type1')
-        type1.addEventListener('change', function(){
         this.form.submit()
         })
 

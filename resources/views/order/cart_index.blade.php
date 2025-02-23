@@ -34,10 +34,10 @@
                 <div class="flex">
                     <div class="flex">
                         <div class="pl-0 mt-0">
-                            <label for="user_id" class="leading-7 text-sm  text-gray-800 ">User_ID</label>
+                            <label for="user_id" class="md:ml-2 leading-7 text-sm  text-gray-800 ">User_ID</label>
                             <div class="pl-2 ml-0 md:ml-2 w-16 h-6 text-sm items-center bg-gray-100 border rounded" name="user_id"  value="">{{ $user->id }}</div>
                         </div>
-                        <div class="pl-2 mt-0">
+                        <div class="ml-2 pl-2 mt-0">
                             <label for="user_name" class="leading-7 text-sm  text-gray-800 ">発注者</label>
                             <div class="pl-2 w-36 h-6 text-sm items-center bg-gray-100 border rounded" name="user_name" value="">{{ $user->name }}</div>
                         </div>
@@ -57,6 +57,20 @@
                     <div class="md:pl-2 mt-0">
                         <label for="total_pcs" class="leading-7 text-sm  text-gray-800 ">合計数</label>
                         <div disable class="pl-2 w-24 h-6 text-sm items-center bg-gray-100 border rounded" name="total_pcs" value=""> {{ $cart_total->total_pcs ?? 0}} 枚</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="flex">
+                    <div class="md:pl-2 mt-0">
+                        <label for="total_pcs" class="leading-7 text-sm  text-gray-800 ">売価合計</label>
+                        <div disable class="pl-2 w-24 h-6 text-sm items-center bg-gray-100 border rounded" name="total_pcs" value=""> {{ $cart_total->total_kingaku ?? 0}} 円</div>
+                    </div>
+                </div>
+                <div class="ml-2 flex">
+                    <div class="md:pl-2 mt-0">
+                        <label for="total_pcs" class="leading-7 text-sm  text-gray-800 ">原価合計</label>
+                        <div disable class="pl-2 w-24 h-6 text-sm items-center bg-gray-100 border rounded" name="total_pcs" value=""> {{ $cart_total->total_gedai ?? 0}} 円</div>
                     </div>
                 </div>
             </div>

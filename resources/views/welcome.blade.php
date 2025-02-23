@@ -74,7 +74,7 @@
 
                                     　パスワードを忘れた場合　および<br>
                                     　このサイトに関する問い合わせは<br>
-                                    　shop@dijon1988.net までお願いします。<br>
+                                    <span  class="text-indigo-600 items-center"><a href="mailto:shop@dijon1988.net">　shop@dijon1988.net　</a></span> までお願いします。<br>
                                 </p>
                             </div>
                         </div>

@@ -25,7 +25,7 @@ class StatusSeeder extends Seeder
 
         ],
         [
-            'id' => 5,
+            'id' => 7,
             'status' => '対応済',
 
         ],

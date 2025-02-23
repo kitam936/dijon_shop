@@ -16,8 +16,8 @@
 
             <x-flash-message status="session('status')" />
             </div>
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
                     {{-- <x-input-error :messages="$errors->get('image')" class="mt-2" /> --}}
 
 
@@ -32,7 +32,7 @@
                                 <div class="flex">
                                     <div class="flex">
                                         <div class="flex">
-                                        {{-- <label for="YM1" class="mr-3 leading-7 text-sm  text-gray-800 dark:text-gray-200 ">期間(年月)</label> --}}
+                                        {{-- <label for="YM1" class="mr-3 leading-7 text-sm  text-gray-800 ">期間(年月)</label> --}}
                                         <select class="w-32 h-8 rounded text-sm pt-1" id="YM1" name="YM1" type="number" class="border">
                                             <option value="{{ $max_YM }}" @if(\Request::get('YM1') == '0') selected @endif >年月選択(from)</option>
                                             @foreach ($YMs as $YM)
@@ -41,7 +41,7 @@
                                         </select>
                                         </div>
                                         <div>
-                                        <span class="items-center text-sm mt-2 text-gray-800 dark:text-gray-200 leading-tight" >　～　</span>
+                                        <span class="items-center text-sm mt-2 text-gray-800 leading-tight" >　～　</span>
                                         <select class="w-32 h-8 rounded text-sm pt-1" id="YM2" name="YM2" type="number" class="border">
                                             <option value="{{ $max_YM }}" @if(\Request::get('YM2') == '0') selected @endif >年月選択(to)</option>
                                             @foreach ($YMs as $YM)
@@ -52,7 +52,40 @@
                                     <span class="items-center text-sm mt-2" >　　　</span><br>
                                     </div>
                                 <div>
-                                <button type="submit" class="text-sm ml-0 mt-0 text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded">売上データ削除</button>
+                                <button type="submit" class="text-sm w-32 ml-0 mt-0 text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded">売上データ削除</button>
+                                </div>
+                                </div>
+                            </form>
+                            </div>
+
+                            <div calss="flex">
+                            <form method="POST" action="{{ route('admin.data.yosan_destroy') }}" class=" p-1 mb-2" >
+                                @csrf
+                                @method('delete')
+                                <div class="flex">
+                                    <div class="flex">
+                                        <div class="flex">
+                                        {{-- <label for="YM1" class="mr-3 leading-7 text-sm  text-gray-800 ">期間(年月)</label> --}}
+                                        <select class="w-32 h-8 rounded text-sm pt-1" id="YM1" name="YM1" type="number" class="border">
+                                            <option value="{{ $bg_max_YM }}" @if(\Request::get('YM1') == '0') selected @endif >年月選択(from)</option>
+                                            @foreach ($bg_YMs as $YM)
+                                                <option value="{{ $YM->YM }}" @if(\Request::get('YM1') == $YM->YM) selected @endif >{{ floor(($YM->YM)/100)%100 }}年{{ ($YM->YM)%100 }}月</option>
+                                            @endforeach
+                                        </select>
+                                        </div>
+                                        <div>
+                                        <span class="items-center text-sm mt-2 text-gray-800 leading-tight" >　～　</span>
+                                        <select class="w-32 h-8 rounded text-sm pt-1" id="YM2" name="YM2" type="number" class="border">
+                                            <option value="{{ $bg_max_YM }}" @if(\Request::get('YM2') == '0') selected @endif >年月選択(to)</option>
+                                            @foreach ($bg_YMs as $YM)
+                                                <option value="{{ $YM->YM }}" @if(\Request::get('YM2') == $YM->YM) selected @endif >{{ floor(($YM->YM)/100)%100 }}年{{ ($YM->YM)%100 }}月</option>
+                                            @endforeach
+                                        </select>
+                                        </div>
+                                    <span class="items-center text-sm mt-2" >　　　</span><br>
+                                    </div>
+                                <div>
+                                <button type="submit" class="text-sm w-32 ml-0 mt-0 text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded">予算データ削除</button>
                                 </div>
                                 </div>
                             </form>
@@ -79,7 +112,7 @@
                                 <span class="items-center text-sm mt-2" >　　</span><br>
                                 </div>
                                 <div>
-                                <button type="submit" class="text-sm w-32 text-white bg-red-500 border-0 py-1 focus:outline-none hover:bg-red-600 rounded">品番データ削除</button>
+                                <button type="submit" class="text-sm w-32 ml-1 mt-0 text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded">品番削除</button>
                                 </div>
                                 </div>
                             </form>

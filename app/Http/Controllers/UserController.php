@@ -30,6 +30,7 @@ class UserController extends Controller
         ->select('users.id','users.name','users.role_id','roles.role_name','users.user_info','shops.shop_name','users.mailService')
         ->where('users.user_info','LIKE','%'.($request->search).'%')
         ->orWhere('users.name','LIKE','%'.($request->search).'%')
+        // ->where('users.role_id','<',10)
         ->paginate(50);
         $login_user = User::findOrFail(Auth::id());
 

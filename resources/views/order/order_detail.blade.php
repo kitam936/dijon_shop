@@ -97,6 +97,23 @@
                                         <div  id="status" name="status" value="{{$order_hs->status}}" class="h-8 text-sm w-32 bg-gray-100 bg-opacity-50 border rounded focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 px-3 leading-8 transition-colors duration-200 ease-in-out">{{$order_hs->status}}
                                         </div>
                                     </div>
+                                    <div class="flex">
+                                        <div class="relative">
+                                            <label for="status" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">売価計</label>
+                                            <div  id="total_baika" name="total_baika" value="{{$order_total->total_baika}}" class="h-8 text-sm w-36 bg-gray-100 bg-opacity-50 border rounded focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 px-3 leading-8 transition-colors duration-200 ease-in-out">{{$order_total->total_baika}}円
+                                            </div>
+                                        </div>
+                                        <div class="relative ml-2">
+                                            <label for="status" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">原価計</label>
+                                            <div  id="total_genka" name="total_genka" value="{{$order_total->total_genka}}" class="h-8 text-sm w-36 bg-gray-100 bg-opacity-50 border rounded focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 px-3 leading-8 transition-colors duration-200 ease-in-out">{{$order_total->total_genka}}円
+                                            </div>
+                                        </div>
+                                        <div class="relative ml-2">
+                                            <label for="status" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">数計</label>
+                                            <div  id="total_pcs" name="total_pcs" value="{{$order_total->total_pcs}}" class="h-8 text-sm w-36 bg-gray-100 bg-opacity-50 border rounded focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 px-3 leading-8 transition-colors duration-200 ease-in-out">{{$order_total->total_pcs}}枚
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="relative">
                                         <label for="comment" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">comment</label>
                                         <div  id="comment" rows="5" name="comment" value="{{$order_hs->comment}}" class="h-8 text-sm w-full bg-gray-100 bg-opacity-50 border rounded focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 px-3 leading-8 transition-colors duration-200 ease-in-out">{{$order_hs->comment}}
