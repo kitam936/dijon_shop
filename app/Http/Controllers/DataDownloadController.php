@@ -64,6 +64,7 @@ class DataDownloadController extends Controller
     {
         $user_role = User::findOrFail(Auth::id())->role_id;
         $user_shop = User::findOrFail(Auth::id())->shop_id;
+
         // dd($user_role);
         if($user_shop <200){
             $dl_filename1='本部マニュアル.pdf';
