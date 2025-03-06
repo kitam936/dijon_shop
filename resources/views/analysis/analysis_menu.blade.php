@@ -133,6 +133,10 @@
             <button type="button" class="w-32 h-8 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('product_index') }}'" >商品リスト</button>
              <button type="button" class="ml-2 md:ml-4 w-32 h-8 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('order_index') }}'" >追加発注</button>
         </div>
+        <div class="ml-8 md:ml-4 md:flex p-1 text-gray-900  ">
+            <button type="button" class="w-32 h-8 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('manual_download') }}'" >マニュアルDL</button>
+            <button type="button" class="ml-2 md:ml-4 h-8 w-32 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href=''" >***</button>
+        </div>
         </div>
 
         @endif

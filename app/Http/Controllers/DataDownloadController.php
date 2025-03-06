@@ -63,9 +63,10 @@ class DataDownloadController extends Controller
     public function manual_download()
     {
         $user_role = User::findOrFail(Auth::id())->role_id;
+        $user_shop = User::findOrFail(Auth::id())->shop_id;
         // dd($user_role);
-        if($user_role > 3){
-            $dl_filename1='マニュアル.pdf';
+        if($user_shop <200){
+            $dl_filename1='本部マニュアル.pdf';
             $file_path1 = 'public/manual/'.$dl_filename1;
             $mimeType1 = Storage::mimeType($file_path1);
             $headers1 = [['Content-Type' =>$mimeType1]];
@@ -73,7 +74,25 @@ class DataDownloadController extends Controller
             return Storage::download($file_path1,  $dl_filename1, $headers1);
         }
 
-        if($user_role <= 2){
+        if(($user_shop > 1100 && $user_shop < 4000) || ($user_shop > 5000 && $user_shop < 7000)){
+            $dl_filename1='shopマニュアル.pdf';
+            $file_path1 = 'public/manual/'.$dl_filename1;
+            $mimeType1 = Storage::mimeType($file_path1);
+            $headers1 = [['Content-Type' =>$mimeType1]];
+            // dd($dl_filename1,$file_path1,$user_role);
+            return Storage::download($file_path1,  $dl_filename1, $headers1);
+        }
+
+        if($user_shop > 4000 && $user_shop < 5000){
+            $dl_filename2='partnerマニュアル.pdf';
+            $file_path2 = 'public/manual/'.$dl_filename2;
+            $mimeType2 = Storage::mimeType($file_path2);
+            $headers2 = [['Content-Type' =>$mimeType2]];
+            // dd($dl_filename2,$file_path2,$mimeType2,$user_role);
+            return Storage::download($file_path2,  $dl_filename2, $headers2);
+        }
+
+        if($user_role <= 1){
             $dl_filename2='管理者マニュアル.pdf';
             $file_path2 = 'public/manual/'.$dl_filename2;
             $mimeType2 = Storage::mimeType($file_path2);
