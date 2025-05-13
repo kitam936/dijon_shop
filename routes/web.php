@@ -18,6 +18,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\MyBudgetController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\InventoryWorkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -123,6 +125,10 @@ Route::prefix('admin')
     Route::get('sku_image_adit/{sku}', [ImageController::class, 'sku_image_edit'])->name('admin.sku_image_edit');
     Route::POST('sku_image_store', [ImageController::class, 'sku_store'])->name('admin.sku_image_store');
     Route::delete('sku_image_destroy/{sku}', [ImageController::class, 'sku_image_destroy'])->name('admin.sku_image_destroy');
+    Route::get('hinban_image_check', [ImageController::class, 'hinban_image_check'])->name('admin.hinban_image_check');
+    Route::get('sku_image_check', [ImageController::class, 'sku_image_check'])->name('admin.sku_image_check');
+    Route::get('hinban_image_csv', [DataDownloadController::class, 'HinbanImageCheck_CSV_download'])->name('admin.hinban_image_csv');
+    Route::get('sku_image_csv', [DataDownloadController::class, 'SkuImageCheck_CSV_download'])->name('admin.sku_image_csv');
 });
 
 Route::prefix('manager')
@@ -205,6 +211,7 @@ Route::middleware('can:user-higher')
     Route::get('order_csv', [DataDownloadController::class, 'orderCSV_download'])->name('order_csv');
     Route::get('image_index', [ImageController::class, 'image_index'])->name('image_index');
     Route::get('image_show/{hinban}', [ImageController::class, 'image_show'])->name('image_show');
+    Route::get('image_show2/{hinban}', [ImageController::class, 'image_show2'])->name('image_show2');
     Route::get('sku_image_index', [ImageController::class, 'sku_image_index'])->name('sku_image_index');
     Route::get('sku_image_show/{sku}', [ImageController::class, 'sku_image_show'])->name('sku_image_show');
     Route::get('partner_index', [ShopController::class, 'partner_index'])->name('partner_index');
@@ -212,6 +219,21 @@ Route::middleware('can:user-higher')
     Route::get('budget_progress_reset', [BudgetController::class, 'budget_progress_reset'])->name('budget_progress_reset');
     Route::get('my_budget_progress', [MyBudgetController::class, 'budget_progress'])->name('my_budget_progress');
     Route::get('my_budget_progress_reset', [MyBudgetController::class, 'budget_progress_reset'])->name('my_budget_progress_reset');
+    // 棚卸用
+    Route::get('inventory_scan', [InventoryController::class, 'scan'])->name('inventory_scan');
+    Route::post('inventory_store', [InventoryController::class, 'store'])->name('inventory_store');
+    Route::post('inventory_manual', [InventoryController::class, 'manual'])->name('inventory_manual');
+    Route::get('inventory_confirm', [InventoryController::class, 'confirm'])->name('inventory_confirm');
+    Route::post('inventory_complete', [InventoryController::class, 'complete'])->name('inventory_complete');
+    Route::get('inventory_result/{id}', [InventoryController::class, 'result'])->name('inventory_result');
+    Route::get('inventory_download/{id}', [InventoryController::class, 'download'])->name('inventory_dl');
+    Route::get('inventory_result_index', [InventoryController::class, 'result_index'])->name('inventory_result_index');
+    Route::get('inventory_index', [InventoryWorkController::class, 'index'])->name('inventory_index');
+    Route::post('inventory_update/{id}', [InventoryWorkController::class, 'update'])->name('inventory_update');
+    Route::delete('inventory_destroy/{id}', [InventoryWorkController::class, 'destroy'])->name('inventory_destroy');
+    Route::post('inventory_update2/{id}', [InventoryWorkController::class, 'update2'])->name('inventory_update2');
+    Route::delete('inventory_destroy2/{id}', [InventoryWorkController::class, 'destroy2'])->name('inventory_destroy2');
+    Route::get('inventory_result_show/{id}', [InventoryController::class, 'result_show'])->name('inventory_result_show');
 });
 
 

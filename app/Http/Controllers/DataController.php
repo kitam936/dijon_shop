@@ -926,6 +926,7 @@ class DataController extends Controller
 				$data_arr[$i]['id'] = $line[0];
                 $data_arr[$i]['hinban_id'] = $line[1];
 				$data_arr[$i]['col_id'] = $line[2];
+                $data_arr[$i]['size_id'] = $line[3];
                 $data_arr[$i]['sku_image'] = $line[4];
 				$data_arr[$i]['created_at'] = $line[5];
 				$data_arr[$i]['updated_at'] = $line[6];

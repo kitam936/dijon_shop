@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             StatusSeeder::class,
             UserSeeder::class,
+            IvStatusSeeder::class,
+            // InventorySeeder::class,
             // CompanySeeder::class,
             // ShopSeeder::class,
             // BrandSeeder::class,

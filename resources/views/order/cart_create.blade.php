@@ -192,9 +192,18 @@
                             <div class="flex">
                                 <input type="hidden" name="sku_id" value="{{ $product->id }}">
 
-                                <div class="w-full ">
+                                {{-- <div class="w-full ">
                                 <x-sku2_image-thumbnail :filename="$product->filename"  />
-                                </div>
+                                </div> --}}
+
+                                @if(($product->filename))
+                                <a href="{{ route('image_show2',['hinban'=>$product->hinban_id]) }}">
+                                <x-sku2_image-thumbnail :filename="$product->filename"  />
+                                </a>
+                                @endif
+                                @if(!($product->filename))
+                                <x-sku2_image-thumbnail :filename="$product->filename"  />
+                                @endif
 
                                 <div class="mt-1">
                                 <div class="mt-1 md:mt-16">

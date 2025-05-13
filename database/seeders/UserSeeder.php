@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             'email' => 'test1@test.com',
             'password' => Hash::make('password123'),
             'role_id' => 9,
-            'shop_id' => 101,
+            'shop_id' => 1104,
             'mailService' => 1
         ],
         [
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             'email' => 'test2@test.com',
             'password' => Hash::make('password123'),
             'role_id' => 9,
-            'shop_id' => 101,
+            'shop_id' => 5201,
             'mailService' => 0
         ],
 
