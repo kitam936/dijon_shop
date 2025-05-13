@@ -33,8 +33,8 @@
 
             <div class="flex px-4 py-2 md:w-2/3">
             <button type="button" class="w-32 h-8 ml-4 border-gray-900 flex-auto p-0 text-sm text-white bg-indigo-400  hover:bg-indigo-600 rounded" onclick="location.href='{{ route('admin.data.y_index') }}'" >Yデータ</button>
-            <button type="button" class="w-32 h-8 ml-4 border-gray-900 flex-auto p-0 text-sm text-white bg-indigo-400  hover:bg-indigo-600 rounded" onclick="location.href=''" >***</button>
-            <button type="button" class="w-32 h-8 ml-4 border-gray-900 flex-auto p-0 text-sm text-white bg-indigo-400  hover:bg-indigo-600 rounded" onclick="location.href=''" >***</button>
+            <button type="button" class="w-32 h-8 ml-4 border-gray-900 flex-auto p-0 text-sm text-white bg-indigo-400  hover:bg-indigo-600 rounded" onclick="location.href='{{ route('admin.hinban_image_check') }}'" >品番写真未登録</button>
+            <button type="button" class="w-32 h-8 ml-4 border-gray-900 flex-auto p-0 text-sm text-white bg-indigo-400  hover:bg-indigo-600 rounded" onclick="location.href='{{ route('admin.sku_image_check') }}'" >SKU写真未登録</button>
             </div>
         </div>
 

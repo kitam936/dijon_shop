@@ -175,7 +175,7 @@ class OrderController extends Controller
         return to_route('order_index')->with(['message'=>'追加発注情報が更新されました','status'=>'info']);
     }
 
-    public function confirm()
+    public function confirm0()
     {
         // $userId = Auth::id();
         $user = DB::table('users')
@@ -234,5 +234,73 @@ class OrderController extends Controller
         }
 
         return redirect()->route('order_index')->with(['message'=>'オーダーが確定しました','status'=>'info']);
+    }
+
+
+    public function confirm()
+    {
+        $user = DB::table('users')
+            ->where('users.id', Auth::id())
+            ->select('users.shop_id', 'users.id')
+            ->first();
+
+        $cartItems = Cart::where('user_id', $user->id)->get();
+
+        if ($cartItems->isEmpty()) {
+            return to_route('cart_index')->with(['message' => 'カートに商品が入っていません', 'status' => 'alert']);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $order = Order::create([
+                'user_id' => $user->id,
+                'shop_id' => $user->shop_id,
+                'order_date' => now(),
+                'status' => 1,
+                'comment' => null,
+            ]);
+
+            foreach ($cartItems as $item) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'sku_id' => $item->sku_id,
+                    'pcs' => $item->pcs,
+                ]);
+            }
+
+            Cart::where('user_id', $user->id)->delete();
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with(['message' => '注文処理中にエラーが発生しました: ' . $e->getMessage(), 'status' => 'alert']);
+        }
+
+        // ここでメール送信（非同期）
+        $users = User::where('mailService', 1)
+            ->where('shop_id', '<', 1000)
+            ->get()
+            ->toArray();
+
+        $order_info = Order::where('orders.id', $order->id)
+            ->join('shops', 'shops.id', 'orders.shop_id')
+            ->join('users', 'users.id', 'orders.user_id')
+            ->select(
+                'orders.id as order_id',
+                'users.name',
+                'users.email',
+                'orders.shop_id',
+                'shops.shop_name'
+            )
+            ->first()
+            ->toArray();
+
+        foreach ($users as $user) {
+            SendOrderResvMail::dispatch($order_info, $user);
+        }
+
+        return redirect()->route('order_index')->with(['message' => 'オーダーが確定しました', 'status' => 'info']);
     }
 }

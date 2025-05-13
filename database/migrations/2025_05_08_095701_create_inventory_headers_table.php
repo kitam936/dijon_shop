@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('images', function (Blueprint $table) {
-            $table->id('hinban_id');
-            $table->string('filename')->nullable();
+        Schema::create('inventory_headers', function (Blueprint $table) {
+            $table->id();
+            $table->string('shop_id');
+            $table->date('inventory_date');
+            $table->string('memo')->nullable();
+            $table->tinyInteger('status_id')->default(1);
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('inventory_headers');
     }
 };
