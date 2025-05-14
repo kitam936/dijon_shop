@@ -11,7 +11,7 @@
             <button type="button" class="w-24 text-center text-sm text-white bg-indigo-500 border-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('inventory_result_index') }}'" >棚卸リスト</button>
         </div>
         <div class="ml-4 mt-2 md:ml-4 md:mt-0">
-            <button type="button" class="w-24 text-center text-sm text-white bg-green-500 binventory-0 py-1 px-2 focus:outline-none hover:bg-green-700 rounded " onclick="location.href='{{ route('inventory_scan') }}'" >棚卸開始</button>
+            <button type="button" class="w-24 text-center text-sm text-white bg-green-500 binventory-0 py-1 px-2 focus:outline-none hover:bg-green-600 rounded " onclick="location.href='{{ route('inventory_scan') }}'" >棚卸開始</button>
         </div>
     </div>
 
@@ -108,8 +108,8 @@
                     <form method="POST" action="{{ route('inventory_update', $work->id) }}">
                         @csrf
                         <div class="flex ml-2">
-                        <input name="raw_cd" value="{{ $work->raw_cd }}" class="rounded mr-4" style="width:140px;">
-                        <input type="number" name="pcs" value="{{ $work->pcs }}" min="1" class="rounded mr-4" style="width:50px;">
+                        <input name="raw_cd" value="{{ $work->raw_cd }}" class="rounded mr-2" style="width:140px;">
+                        <input type="number" name="pcs" value="{{ $work->pcs }}" class="rounded mr-2" style="width:60px;">
                         <button type="submit" class="w-16 h-9 mt-1 items-right bg-blue-500 text-sm text-white ml-1 hover:bg-blue-600 rounded ">更新</button>
                     </div>
                     </form>
