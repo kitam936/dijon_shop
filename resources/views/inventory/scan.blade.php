@@ -94,8 +94,8 @@
                     <form method="POST" action="{{ route('inventory_update2', $work->id) }}">
                         @csrf
                         <div class="flex ml-2">
-                        <input name="raw_cd" value="{{ $work->raw_cd }}" class="rounded mr-4" style="width:140px;">
-                        <input type="number" name="pcs" value="{{ $work->pcs }}" min="1" class="rounded mr-4" style="width:50px;">
+                        <input name="raw_cd" value="{{ $work->raw_cd }}" class="rounded mr-2" style="width:140px;">
+                        <input type="number" name="pcs" value="{{ $work->pcs }}" class="rounded mr-2" style="width:60px;">
                         <button type="submit" class="w-16 h-9 mt-1 items-right bg-blue-500 text-sm text-white ml-1 hover:bg-blue-600 rounded ">更新</button>
                     </div>
                     </form>
