@@ -52,6 +52,10 @@ class OrderController extends Controller
         ->selectRaw('orders.id,orders.order_date,orders.user_id,users.name,statuses.id as status_id,statuses.status,shops.shop_name,sum(order_items.pcs) as pcs')
         ->orderBy('orders.id','desc')
         ->get();
+
+        $dl_new = DB::table('orders') //未ＤＬ判定用
+        ->where('orders.status',1)
+        ->exists();
         // $order_fs = DB::table('orders')
         // ->join('order_items','orders.id','order_items.order_id')
         // ->join('users','users.id','orders.user_id')
@@ -62,8 +66,8 @@ class OrderController extends Controller
         // ->groupBy('orders.id','orders.user_id','users.name','shops.shop_name','order_items.sku_id')
         // ->selectRaw('orders.id,orders.user_id,users.name,shops.shop_name,order_items.sku_id,sum(order_items.pcs) as pcs')
         // ->get();
-        // dd($order_hs,$order_fs);
-        return view('order.order_index',compact('user','order_hs','all_order_hs'));
+        // dd($dl_new);
+        return view('order.order_index',compact('user','order_hs','all_order_hs','dl_new'));
     }
 
     public function order_detail($id)

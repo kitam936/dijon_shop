@@ -17,7 +17,7 @@ class InventoryWorkController extends Controller
                 ->join('users','users.id','inventory_works.user_id')
                 ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
                 ->leftjoin('skus','skus.id','inventory_works.sku_id')
-                ->where('inventory_works.user_id', Auth::User()->id)
+                ->where('inventory_works.shop_id', Auth::user()->shop_id)
                 ->whereNull('skus.id')
                 ->selectRaw('inventory_works.id as id,users.name,inventory_works.raw_cd,hinbans.id as hin_ck,skus.id as sku_ck,inventory_works.hinban_id,inventory_works.pcs,inventory_works.created_at')
                 ->orderby('inventory_works.sku_id','asc')
@@ -26,20 +26,20 @@ class InventoryWorkController extends Controller
                 $h_exist = DB::table('inventory_works')
                 ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
                 ->leftjoin('skus','skus.id','inventory_works.sku_id')
-                ->where('inventory_works.user_id', Auth::User()->id)
+                ->where('inventory_works.shop_id', Auth::user()->shop_id)
                 ->whereNull('hinbans.id')
                 ->exists();
 
                 $s_exist = DB::table('inventory_works')
                 ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
                 ->leftjoin('skus','skus.id','inventory_works.sku_id')
-                ->where('inventory_works.user_id', Auth::User()->id)
+                ->where('inventory_works.shop_id', Auth::user()->shop_id)
                 ->whereNull('skus.id')
                 ->exists();
 
-                $works_total = InventoryWork::where('user_id', Auth::User()->id)
-                ->groupBy('inventory_works.user_id')
-                ->selectRaw('inventory_works.user_id,sum(inventory_works.pcs) as pcs')                            // 5件に絞る
+                $works_total = InventoryWork::where('shop_id', Auth::user()->shop_id)
+                ->groupBy('inventory_works.shop_id')
+                ->selectRaw('inventory_works.shop_id,sum(inventory_works.pcs) as pcs')                            // 5件に絞る
                 ->first();
                 // dd($works);
                 return view('inventory.index', compact('works','works_total','s_exist','h_exist'));
@@ -48,7 +48,7 @@ class InventoryWorkController extends Controller
                 ->join('users','users.id','inventory_works.user_id')
                 ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
                 ->leftjoin('skus','skus.id','inventory_works.sku_id')
-                ->where('inventory_works.user_id', Auth::User()->id)
+                ->where('inventory_works.shop_id', Auth::user()->shop_id)
                 ->whereNull('skus.id')
                 ->selectRaw('inventory_works.id as id,users.name,inventory_works.raw_cd,hinbans.id as hin_ck,skus.id as sku_ck,inventory_works.hinban_id,inventory_works.pcs,inventory_works.created_at')
                 ->orderby('id','desc')
@@ -57,20 +57,20 @@ class InventoryWorkController extends Controller
                 $h_exist = DB::table('inventory_works')
                 ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
                 ->leftjoin('skus','skus.id','inventory_works.sku_id')
-                ->where('inventory_works.user_id', Auth::User()->id)
+                ->where('inventory_works.shop_id', Auth::user()->shop_id)
                 ->whereNull('hinbans.id')
                 ->exists();
 
                 $s_exist = DB::table('inventory_works')
                 ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
                 ->leftjoin('skus','skus.id','inventory_works.sku_id')
-                ->where('inventory_works.user_id', Auth::User()->id)
+                ->where('inventory_works.shop_id', Auth::user()->shop_id)
                 ->whereNull('skus.id')
                 ->exists();
 
-                $works_total = InventoryWork::where('user_id', Auth::User()->id)
-                ->groupBy('inventory_works.user_id')
-                ->selectRaw('inventory_works.user_id,sum(inventory_works.pcs) as pcs')                            // 5件に絞る
+                $works_total = InventoryWork::where('shop_id', Auth::user()->shop_id)
+                ->groupBy('inventory_works.shop_id')
+                ->selectRaw('inventory_works.shop_id,sum(inventory_works.pcs) as pcs')                            // 5件に絞る
                 ->first();
                 // dd($works);
                 return view('inventory.index', compact('works','works_total','s_exist','h_exist'));
@@ -82,7 +82,7 @@ class InventoryWorkController extends Controller
                 ->join('users','users.id','inventory_works.user_id')
                 ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
                 ->leftjoin('skus','skus.id','inventory_works.sku_id')
-                ->where('inventory_works.user_id', Auth::User()->id)
+                ->where('inventory_works.shop_id', Auth::user()->shop_id)
                 ->selectRaw('inventory_works.id as id,users.name,inventory_works.raw_cd,hinbans.id as hin_ck,skus.id as sku_ck,inventory_works.hinban_id,inventory_works.pcs,inventory_works.created_at')
                 ->orderby('inventory_works.sku_id','asc')
                 ->paginate(30);
@@ -90,20 +90,20 @@ class InventoryWorkController extends Controller
                 $h_exist = DB::table('inventory_works')
                 ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
                 ->leftjoin('skus','skus.id','inventory_works.sku_id')
-                ->where('inventory_works.user_id', Auth::User()->id)
+                ->where('inventory_works.shop_id', Auth::user()->shop_id)
                 ->whereNull('hinbans.id')
                 ->exists();
 
                 $s_exist = DB::table('inventory_works')
                 ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
                 ->leftjoin('skus','skus.id','inventory_works.sku_id')
-                ->where('inventory_works.user_id', Auth::User()->id)
+                ->where('inventory_works.shop_id', Auth::user()->shop_id)
                 ->whereNull('skus.id')
                 ->exists();
 
-                $works_total = InventoryWork::where('user_id', Auth::User()->id)
-                ->groupBy('inventory_works.user_id')
-                ->selectRaw('inventory_works.user_id,sum(inventory_works.pcs) as pcs')                            // 5件に絞る
+                $works_total = InventoryWork::where('shop_id', Auth::user()->shop_id)
+                ->groupBy('inventory_works.shop_id')
+                ->selectRaw('inventory_works.shop_id,sum(inventory_works.pcs) as pcs')                            // 5件に絞る
                 ->first();
                 // dd($works);
                 return view('inventory.index', compact('works','works_total','s_exist','h_exist'));
@@ -112,7 +112,7 @@ class InventoryWorkController extends Controller
                 ->join('users','users.id','inventory_works.user_id')
                 ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
                 ->leftjoin('skus','skus.id','inventory_works.sku_id')
-                ->where('inventory_works.user_id', Auth::User()->id)
+                ->where('inventory_works.shop_id', Auth::user()->shop_id)
                 ->selectRaw('inventory_works.id as id,users.name,inventory_works.raw_cd,hinbans.id as hin_ck,skus.id as sku_ck,inventory_works.hinban_id,inventory_works.pcs,inventory_works.created_at')
                 ->orderby('id','desc')
                 ->paginate(30);
@@ -120,20 +120,20 @@ class InventoryWorkController extends Controller
                 $h_exist = DB::table('inventory_works')
                 ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
                 ->leftjoin('skus','skus.id','inventory_works.sku_id')
-                ->where('inventory_works.user_id', Auth::User()->id)
+                ->where('inventory_works.shop_id', Auth::user()->shop_id)
                 ->whereNull('hinbans.id')
                 ->exists();
 
                 $s_exist = DB::table('inventory_works')
                 ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
                 ->leftjoin('skus','skus.id','inventory_works.sku_id')
-                ->where('inventory_works.user_id', Auth::User()->id)
+                ->where('inventory_works.shop_id', Auth::user()->shop_id)
                 ->whereNull('skus.id')
                 ->exists();
 
-                $works_total = InventoryWork::where('user_id', Auth::User()->id)
-                ->groupBy('inventory_works.user_id')
-                ->selectRaw('inventory_works.user_id,sum(inventory_works.pcs) as pcs')                            // 5件に絞る
+                $works_total = InventoryWork::where('shop_id', Auth::user()->shop_id)
+                ->groupBy('inventory_works.shop_id')
+                ->selectRaw('inventory_works.shop_id,sum(inventory_works.pcs) as pcs')                            // 5件に絞る
                 ->first();
                 // dd($works);
                 return view('inventory.index', compact('works','works_total','s_exist','h_exist'));

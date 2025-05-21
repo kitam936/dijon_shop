@@ -22,7 +22,7 @@ class InventoryController extends Controller
         $works = DB::table('inventory_works')
         ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
         ->leftjoin('skus','skus.id','inventory_works.sku_id')
-        ->where('inventory_works.user_id', Auth::user()->id)
+        ->where('inventory_works.shop_id', Auth::user()->shop_id)
         ->selectRaw('inventory_works.id,inventory_works.raw_cd,hinbans.id as hin_ck,skus.id as sku_ck,inventory_works.hinban_id,inventory_works.pcs,inventory_works.created_at')
         ->orderBy('created_at', 'desc') // 新しい順
         ->limit(5)                      // 5件に絞る
@@ -31,7 +31,7 @@ class InventoryController extends Controller
         $h_exist = DB::table('inventory_works')
         ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
         ->leftjoin('skus','skus.id','inventory_works.sku_id')
-        ->where('inventory_works.user_id', Auth::user()->id)
+        ->where('inventory_works.shop_id', Auth::user()->shop_id)
         ->limit(5)   // 5件に絞る
         ->whereNull('hinbans.id')
         ->exists();
@@ -39,14 +39,14 @@ class InventoryController extends Controller
         $s_exist = DB::table('inventory_works')
         ->leftjoin('hinbans','hinbans.id','inventory_works.hinban_id')
         ->leftjoin('skus','skus.id','inventory_works.sku_id')
-        ->where('inventory_works.user_id', Auth::user()->id)
+        ->where('inventory_works.shop_id', Auth::user()->shop_id)
         ->limit(5)   // 5件に絞る
         ->whereNull('skus.id')
         ->exists();
 
-        $works_total = InventoryWork::where('user_id', Auth::user()->id)
-        ->groupBy('inventory_works.user_id')
-        ->selectRaw('inventory_works.user_id,sum(inventory_works.pcs) as pcs')                            // 5件に絞る
+        $works_total = InventoryWork::where('shop_id', Auth::user()->shop_id)
+        ->groupBy('inventory_works.shop_id')
+        ->selectRaw('inventory_works.shop_id,sum(inventory_works.pcs) as pcs')                            // 5件に絞る
         ->first();
         // dd($h_exist,$s_exist);
         return view('inventory.scan',compact('works','works_total','s_exist','h_exist'));
@@ -83,21 +83,19 @@ class InventoryController extends Controller
     }
 
     public function complete(Request $request)
-    {
-        $headerId = null;
+{
+    $headerId = null;
 
-        DB::transaction(function () use ($request, &$headerId) {
-            $user_id = Auth::user()->id;
-            $shop_id = Auth::user()->shop_id;
-            $works = InventoryWork::where('user_id', $user_id)->get();
-            // dd($user_id,$shop_id,$works);
-            if ($works->isEmpty()) {
-                throw new \Exception("棚卸データがありません");
+    DB::transaction(function () use ($request, &$headerId) {
+        $user_id = Auth::user()->id;
+        $shop_id = Auth::user()->shop_id;
+        $works = InventoryWork::where('shop_id', $shop_id)->get();
+        if ($works->isEmpty()) {
+            throw new \Exception("棚卸データがありません");
         }
 
         $header = InventoryHeader::create([
             'shop_id' => $shop_id,
-            'user_id' => $user_id,
             'inventory_date' => now(),
             'memo' => $request->memo,
         ]);
@@ -111,7 +109,7 @@ class InventoryController extends Controller
             ]);
         }
 
-        InventoryWork::where('user_id', $user_id)->delete();
+        InventoryWork::where('shop_id', $shop_id)->delete();
 
         $headerId = $header->id;
     });
@@ -121,7 +119,7 @@ class InventoryController extends Controller
 
     public function result($id) {
         $header = InventoryHeader::with('details')->findOrFail($id);
-        $works = InventoryWork::where('user_id', Auth::user()->user_id)->paginete(5);
+        $works = InventoryWork::where('shop_id', Auth::user()->shop_id)->paginete(5);
         return view('inventory.result', compact('header','works'));
     }
 
@@ -133,8 +131,8 @@ class InventoryController extends Controller
         ->join('shops','shops.id','inventory_headers.shop_id')
         ->leftjoin('skus','skus.id','inventory_details.sku_id')
         ->where('inventory_headers.id',$id)
-        ->groupBy('inventory_headers.id','inventory_headers.inventory_date','inventory_headers.shop_id','shops.shop_name','users.name','inventory_details.sku_id','skus.hinban_id','skus.col_id','skus.size_id','inventory_headers.memo')
-        ->selectRaw('inventory_headers.id,inventory_headers.inventory_date,inventory_headers.shop_id,shops.shop_name,users.name,inventory_details.sku_id,skus.hinban_id,skus.col_id,skus.size_id,sum(inventory_details.pcs) as pcs,inventory_headers.memo')
+        ->groupBy('inventory_headers.id','inventory_headers.inventory_date','inventory_headers.shop_id','shops.shop_name','inventory_details.sku_id','skus.hinban_id','skus.col_id','skus.size_id')
+        ->selectRaw('inventory_headers.id,inventory_headers.inventory_date,inventory_headers.shop_id,shops.shop_name,inventory_details.sku_id,skus.hinban_id,skus.col_id,skus.size_id,sum(inventory_details.pcs) as pcs')
         ->orderBy('sku_id','asc')
         ->distinct()
         // ->groupBy('my_karts.maker_id')
@@ -143,7 +141,7 @@ class InventoryController extends Controller
 
         // dd($request->order,$orders[0]);
         $csvHeader = [
-            'id','date','shop_id','shop_name','staff_name','sku_id','hinban_id','col_id','size_id','pcs','memo'];
+            'id','date','shop_id','shop_name','sku_id','hinban_id','col_id','size_id','pcs'];
 
         $csvData = $inventorys->toArray();
 
@@ -182,8 +180,8 @@ class InventoryController extends Controller
         ->join('shops','shops.id','inventory_headers.shop_id')
         ->leftjoin('skus','skus.id','inventory_details.sku_id')
         ->where('inventory_headers.status_id',1)
-        ->groupBy('inventory_headers.id','inventory_headers.inventory_date','inventory_headers.shop_id','shops.shop_name','users.name','inventory_details.sku_id','skus.hinban_id','skus.col_id','skus.size_id','inventory_headers.memo')
-        ->selectRaw('inventory_headers.id,inventory_headers.inventory_date,inventory_headers.shop_id,shops.shop_name,users.name,inventory_details.sku_id,skus.hinban_id,skus.col_id,skus.size_id,sum(inventory_details.pcs) as pcs,inventory_headers.memo')
+        ->groupBy('inventory_headers.id','inventory_headers.inventory_date','inventory_headers.shop_id','shops.shop_name','inventory_details.sku_id','skus.hinban_id','skus.col_id','skus.size_id')
+        ->selectRaw('inventory_headers.id,inventory_headers.inventory_date,inventory_headers.shop_id,shops.shop_name,inventory_details.sku_id,skus.hinban_id,skus.col_id,skus.size_id,sum(inventory_details.pcs) as pcs')
         ->orderBy('sku_id','asc')
         ->distinct()
         // ->groupBy('my_karts.maker_id')
@@ -193,7 +191,7 @@ class InventoryController extends Controller
         // dd($inventorys);
 
         $csvHeader = [
-            'id','date','shop_id','shop_name','staff_name','sku_id','hinban_id','col_id','size_id','pcs','memo'];
+            'id','date','shop_id','shop_name','sku_id','hinban_id','col_id','size_id','pcs'];
 
         $csvData = $inventorys->toArray();
 
@@ -235,8 +233,8 @@ class InventoryController extends Controller
         ->join('shops','shops.id','inventory_headers.shop_id')
         ->join('iv_statuses','iv_statuses.id','inventory_headers.status_id')
         ->where('inventory_headers.shop_id',Auth::user()->shop_id)
-        ->groupBy('inventory_details.inventory_header_id','inventory_headers.shop_id','inventory_headers.status_id','iv_statuses.status_name','shops.shop_name','users.name','inventory_headers.memo','inventory_headers.inventory_date')
-        ->selectRaw('inventory_details.inventory_header_id as id,inventory_headers.inventory_date,inventory_headers.shop_id,inventory_headers.status_id,iv_statuses.status_name,shops.shop_name,inventory_headers.memo,users.name,sum(inventory_details.pcs) as pcs')
+        ->groupBy('inventory_details.inventory_header_id','inventory_headers.shop_id','inventory_headers.status_id','iv_statuses.status_name','shops.shop_name','users.name','inventory_headers.inventory_date')
+        ->selectRaw('inventory_details.inventory_header_id as id,inventory_headers.inventory_date,inventory_headers.shop_id,inventory_headers.status_id,iv_statuses.status_name,shops.shop_name,users.name,sum(inventory_details.pcs) as pcs')
         ->orderBy('inventory_header_id','desc')
         ->paginate(50);
 
@@ -245,8 +243,8 @@ class InventoryController extends Controller
         ->join('users','users.id','inventory_details.user_id')
         ->join('shops','shops.id','inventory_headers.shop_id')
         ->join('iv_statuses','iv_statuses.id','inventory_headers.status_id')
-        ->groupBy('inventory_details.inventory_header_id','inventory_headers.shop_id','inventory_headers.status_id','iv_statuses.status_name','shops.shop_name','users.name','inventory_headers.memo','inventory_headers.inventory_date')
-        ->selectRaw('inventory_details.inventory_header_id as id,inventory_headers.inventory_date,inventory_headers.shop_id,inventory_headers.status_id,iv_statuses.status_name,shops.shop_name,inventory_headers.memo,users.name,sum(inventory_details.pcs) as pcs')
+        ->groupBy('inventory_details.inventory_header_id','inventory_headers.shop_id','inventory_headers.status_id','iv_statuses.status_name','shops.shop_name','users.name','inventory_headers.inventory_date')
+        ->selectRaw('inventory_details.inventory_header_id as id,inventory_headers.inventory_date,inventory_headers.shop_id,inventory_headers.status_id,iv_statuses.status_name,shops.shop_name,users.name,sum(inventory_details.pcs) as pcs')
         ->orderBy('inventory_header_id','desc')
         ->paginate(50);
 
@@ -268,7 +266,7 @@ class InventoryController extends Controller
         ->join('iv_statuses','iv_statuses.id','inventory_headers.status_id')
         ->where('inventory_headers.id',$id)
         ->groupBy('inventory_details.inventory_header_id','inventory_headers.shop_id','inventory_headers.status_id','iv_statuses.status_name','shops.shop_name','users.name','shops.shop_name','inventory_headers.inventory_date','inventory_headers.memo')
-        ->selectRaw('inventory_details.inventory_header_id as id,inventory_headers.inventory_date,inventory_headers.shop_id,inventory_headers.status_id,iv_statuses.status_name,inventory_headers.memo,shops.shop_name,users.name,sum(inventory_details.pcs) as total_pcs')
+        ->selectRaw('inventory_details.inventory_header_id as id,inventory_headers.inventory_date,inventory_headers.shop_id,inventory_headers.status_id,iv_statuses.status_name,inventory_headers.memo,shops.shop_name,sum(inventory_details.pcs) as total_pcs')
         ->orderBy('inventory_header_id','desc')
         ->first();
 

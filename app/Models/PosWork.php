@@ -4,21 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\InventoryHeaader;
 
-class InventoryDetail extends Model
+class PosWork extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'inventory_header_id',
         'user_id',
+        'shop_id',
+        'raw_cd',
         'sku_id',
+        'hinban_id',
+        'price',
         'pcs'
     ];
-
-    public function Header()
-    {
-        return $this->belongsTo(InventoryHeader::class);
-    }
 }

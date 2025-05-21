@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\InventoryDetail;
+use App\Models\PosDetail;
 
-class InventoryHeader extends Model
+class PosHeader extends Model
 {
     use HasFactory;
 
@@ -14,13 +14,13 @@ class InventoryHeader extends Model
         'id',
         'shop_id',
         'user_id',
-        'inventory_date',
+        'pos_date',
         'status_id',
         'memo'
     ];
 
     public function details()
     {
-        return $this->hasMany(InventoryDetail::class);
+        return $this->hasMany(PosDetail::class);
     }
 }
