@@ -183,7 +183,7 @@
     @if($logIn_user->shop_id == 106)
 
     <h3 class="ml-8 mt-12 mb-8 font-semibold text-xl text-indigo-800 leading-tight">
-        神田運送店用Menu
+        神田運送店様用Menu
     </h3>
 
     <div class="md:flex ">
