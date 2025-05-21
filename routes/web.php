@@ -20,6 +20,8 @@ use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\MyBudgetController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\InventoryWorkController;
+use App\Http\Controllers\PosController;
+use App\Http\Controllers\PosWorkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -209,6 +211,9 @@ Route::middleware('can:user-higher')
     Route::get('order_edit/{order}', [OrderController::class, 'order_edit'])->name('order_edit');
     Route::post('order_update/{order}', [OrderController::class, 'order_update'])->name('order_update');
     Route::get('order_csv', [DataDownloadController::class, 'orderCSV_download'])->name('order_csv');
+    Route::get('order_csv_all', [DataDownloadController::class, 'orderCSV_download_all'])->name('order_csv_all');//一括ダウンロード
+    Route::get('order_csv_shop', [DataDownloadController::class, 'orderCSV_download_shop'])->name('order_csv_shop');//一括ダウンロード
+    Route::get('order_csv_ws', [DataDownloadController::class, 'orderCSV_download_ws'])->name('order_csv_ws');//一括ダウンロード
     Route::get('image_index', [ImageController::class, 'image_index'])->name('image_index');
     Route::get('image_show/{hinban}', [ImageController::class, 'image_show'])->name('image_show');
     Route::get('image_show2/{hinban}', [ImageController::class, 'image_show2'])->name('image_show2');
@@ -227,6 +232,7 @@ Route::middleware('can:user-higher')
     Route::post('inventory_complete', [InventoryController::class, 'complete'])->name('inventory_complete');
     Route::get('inventory_result/{id}', [InventoryController::class, 'result'])->name('inventory_result');
     Route::get('inventory_download/{id}', [InventoryController::class, 'download'])->name('inventory_dl');
+    Route::get('inventory_download_all', [InventoryController::class, 'download_all'])->name('inventory_dl_all'); //一括ダウンロード
     Route::get('inventory_result_index', [InventoryController::class, 'result_index'])->name('inventory_result_index');
     Route::get('inventory_index', [InventoryWorkController::class, 'index'])->name('inventory_index');
     Route::post('inventory_update/{id}', [InventoryWorkController::class, 'update'])->name('inventory_update');
@@ -234,6 +240,25 @@ Route::middleware('can:user-higher')
     Route::post('inventory_update2/{id}', [InventoryWorkController::class, 'update2'])->name('inventory_update2');
     Route::delete('inventory_destroy2/{id}', [InventoryWorkController::class, 'destroy2'])->name('inventory_destroy2');
     Route::get('inventory_result_show/{id}', [InventoryController::class, 'result_show'])->name('inventory_result_show');
+    Route::delete('inventory_result_destroy/{id}', [InventoryController::class, 'result_destroy'])->name('inventory_result_destroy');
+    // POS用
+    Route::get('pos_scan', [PosController::class, 'scan'])->name('pos_scan');
+    Route::post('pos_store', [PosController::class, 'store'])->name('pos_store');
+    Route::post('pos_manual', [PosController::class, 'manual'])->name('pos_manual');
+    Route::get('pos_confirm', [PosController::class, 'confirm'])->name('pos_confirm');
+    Route::post('pos_complete', [PosController::class, 'complete'])->name('pos_complete');
+    Route::get('pos_result/{id}', [PosController::class, 'result'])->name('pos_result');
+    Route::get('pos_download/{id}', [PosController::class, 'download'])->name('pos_dl');
+    Route::get('pos_download_all', [PosController::class, 'download_all'])->name('pos_dl_all'); //一括ダウンロード
+    Route::get('pos_result_index', [PosController::class, 'result_index'])->name('pos_result_index');
+    Route::get('pos_index', [PosWorkController::class, 'index'])->name('pos_index');
+    Route::post('pos_update/{id}', [PosWorkController::class, 'update'])->name('pos_update');
+    Route::delete('pos_destroy/{id}', [PosWorkController::class, 'destroy'])->name('pos_destroy');
+    Route::post('pos_update2/{id}', [PosWorkController::class, 'update2'])->name('pos_update2');
+    Route::delete('pos_destroy2/{id}', [PosWorkController::class, 'destroy2'])->name('pos_destroy2');
+    Route::get('pos_result_show/{id}', [PosController::class, 'result_show'])->name('pos_result_show');
+    Route::get('pos_result_show/{id}', [PosController::class, 'result_show'])->name('pos_result_show');
+    Route::delete('pos_result_destroy/{id}', [PosController::class, 'result_destroy'])->name('pos_result_destroy');
 });
 
 

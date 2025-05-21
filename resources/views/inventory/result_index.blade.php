@@ -11,13 +11,22 @@
             <div class="pl-2 mt-2 ml-4 ">
                 <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 binventory-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('analysis_index') }}'" >Menu</button>
             </div>
-            @if($user->shop_id >1000)
+            @if($user->shop_id >1000 || $user->shop_id == 101)
             <div class="pl-2 mt-2 ml-4 ">
                 <button type="button" class="w-32 text-center text-sm text-white bg-indigo-500 binventory-0 py-1 px-2 focus:outline-none hover:bg-indigo-700 rounded " onclick="location.href='{{ route('inventory_index') }}'" >棚卸入力状況</button>
             </div>
             </div>
+            <div class="flex">
             <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2">
                 <button type="button" class="w-32 text-center text-sm text-white bg-green-500 binventory-0 py-1 px-2 focus:outline-none hover:bg-green-700 rounded " onclick="location.href='{{ route('inventory_scan') }}'" >棚卸開始</button>
+            </div>
+            @if($dl_new)
+            <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2">
+                <button type="button" class="w-32 text-center text-sm text-white bg-blue-500 binventory-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('inventory_dl_all') }}'" >New一括DL</button>
+            </div>
+            @else
+            <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2 text-indigo-700">未ダウンロードのデータはありません</div>
+            @endif
             </div>
             @endif
         </div>
@@ -31,8 +40,9 @@
                     <tr>
                         <th class="w-1/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">id</th>
                         <th class="w-3/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Date</th>
-                        <th class="w-2/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">店コード</th>
+                        {{-- <th class="w-2/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">店コード</th> --}}
                         <th class="w-3/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">店名</th>
+                        <th class="w-3/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">memo</th>
                         <th class="w-2/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数計</th>
                         <th class="w-3/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Status</th>
                     </tr>
@@ -43,8 +53,9 @@
                     <tr>
                         <td class="w-1/14 md:px-4 py-1 text-center"> <a href="{{ route('inventory_result_show',['id'=>$inventory_h->id]) }}" class="w-20 h-8 text-indigo-500 ml-2 "  > {{ $inventory_h->id }}</a> </td>
                         <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->inventory_date }}</td>
-                        <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->shop_id }}</td>
+                        {{-- <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->shop_id }}</td> --}}
                         <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->shop_name }}</td>
+                        <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->memo }}</td>
                         <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->pcs }}</td>
                         @if($inventory_h->status_id == 1)
                         <td class="w-3/14 pl-2 text-pink-500 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->status_name }}</td>
@@ -76,8 +87,9 @@
                     <tr>
                         <th class="w-1/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">id</th>
                         <th class="w-3/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Date</th>
-                        <th class="w-2/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">店コード</th>
+                        {{-- <th class="w-2/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">店コード</th> --}}
                         <th class="w-3/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">店名</th>
+                        <th class="w-3/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">memo</th>
                         <th class="w-2/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">数計</th>
                         <th class="w-3/14 md:px-4 py-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Status</th>
                     </tr>
@@ -88,14 +100,24 @@
                     <tr>
                         <td class="w-1/14 md:px-4 py-1 text-center"> <a href="{{ route('inventory_result_show',['id'=>$inventory_h->id]) }}" class="w-20 h-8 text-indigo-500 ml-2 "  > {{ $inventory_h->id }}</a> </td>
                         <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->inventory_date }}</td>
-                        <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->shop_id }}</td>
+                        {{-- <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->shop_id }}</td> --}}
                         <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->shop_name }}</td>
+                        <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->memo }}</td>
                         <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->pcs }}</td>
                         @if($inventory_h->status_id == 1)
                         <td class="w-3/14 pl-2 text-pink-500 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->status_name }}</td>
                         @else
                         <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $inventory_h->status_name }}</td>
                         @endif
+                        <td class="w-2/16 md:px-2 py-1">
+                            <div>
+                            <form method="POST" action="{{ route('inventory_result_destroy', $inventory_h->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="w-12 h-9 mt-1 items-center bg-red-500 text-sm text-white ml-0 hover:bg-red-600 rounded " onclick="return confirm('削除しますか？')">削除</button>
+                            </form>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
 

@@ -79,16 +79,17 @@
                                     </div>
                                     </div>
                                     </div>
-                                    {{-- <div class="relative">
-                                        <label for="status" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">Status</label>
-                                        <div  id="status" name="status" value="{{$inventory_h->status}}" class="h-8 text-sm w-32 bg-gray-100 bg-opacity-50 border rounded focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 px-3 leading-8 transition-colors duration-200 ease-in-out">{{$inventory_h->status}}
-                                        </div>
-                                    </div> --}}
+
                                     <div class="flex">
 
                                         <div class="relative ml-2">
                                             <label for="total_pcs" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">数計</label>
-                                            <div  id="total_pcs" name="total_pcs" value="{{$inventory_h->total_pcs}}" class="h-8 text-sm w-36 bg-gray-100 bg-opacity-50 border rounded focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 px-3 leading-8 transition-colors duration-200 ease-in-out">{{$inventory_h->total_pcs}}枚
+                                            <div  id="total_pcs" name="total_pcs" value="{{$inventory_h->total_pcs}}" class="h-8 text-sm w-28 bg-gray-100 bg-opacity-50 border rounded focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 px-3 leading-8 transition-colors duration-200 ease-in-out">{{$inventory_h->total_pcs}}枚
+                                            </div>
+                                        </div>
+                                        <div class="relative ml-2">
+                                            <label for="user_name" class="leading-7 text-sm  text-gray-800 dark:text-gray-200 ">作業者</label>
+                                            <div  id="user_name" name="user_name" value="{{$inventory_h->name}}" class="h-8 text-sm w-36 bg-gray-100 bg-opacity-50 border rounded focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none text-gray-700 px-3 leading-8 transition-colors duration-200 ease-in-out">{{$inventory_h->name}}
                                             </div>
                                         </div>
                                         <div class="relative ml-2">

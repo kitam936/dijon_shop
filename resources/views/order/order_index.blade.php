@@ -21,6 +21,22 @@
                 <button type="button" class="w-32 text-center text-sm text-white bg-green-500 border-0 py-1 px-2 focus:outline-none hover:bg-green-700 rounded " onclick="location.href='{{ route('cart_create') }}'" >オーダー</button>
             </div>
             @endif
+
+            @if($user->shop_id == 101)
+            @if($dl_new)
+            <div class="flex">
+            <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2">
+                <button type="button" class="w-32 text-center text-sm text-white bg-blue-500 binventory-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('order_csv_shop') }}'" >New_shop一括DL</button>
+            </div>
+            <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2">
+                <button type="button" class="w-32 text-center text-sm text-white bg-blue-500 binventory-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('order_csv_ws') }}'" >New_卸一括DL</button>
+            </div>
+            </div>
+            @else
+            <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2 text-indigo-700">未ダウンロードのデータはありません</div>
+            @endif
+            @endif
+
     </div>
     </x-slot>
 

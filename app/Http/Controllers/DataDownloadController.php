@@ -115,7 +115,7 @@ class DataDownloadController extends Controller
         ->join('skus','skus.id','=','order_items.sku_id')
         ->join('hinbans','hinbans.id','=','skus.hinban_id')
         ->where('orders.id',$request->id2)
-        ->selectRaw('orders.shop_id ,skus.hinban_id,skus.col_id,skus.size_id,hinbans.m_price,FLOOR(hinbans.m_price * shops.rate /1000) as gedai')
+        ->selectRaw('orders.shop_id ,skus.hinban_id,skus.col_id,skus.size_id,hinbans.m_price,FLOOR(hinbans.m_price * shops.rate /1000) as gedai,order_items.pcs')
         ->distinct()
         // ->groupBy('my_karts.maker_id')
         // ->orderBy('order_items.sku_id')
@@ -123,7 +123,7 @@ class DataDownloadController extends Controller
 
         // dd($request->order,$orders[0]);
         $csvHeader = [
-            'shop_id' ,'hinban_id','col_id','size_id','m_price','gedai'];
+            'shop_id' ,'hinban_id','col_id','size_id','m_price','gedai','pcs'];
 
         $csvData = $orders->toArray();
 
@@ -176,13 +176,162 @@ class DataDownloadController extends Controller
         }
 
         return $response;
-
-
-
-
-
-
     }
+
+    public function orderCSV_download_all()
+    {
+        $orders = DB::table('orders')
+        ->join('order_items','order_items.order_id','=','orders.id')
+        ->join('shops','shops.id','=','orders.shop_id')
+        ->join('skus','skus.id','=','order_items.sku_id')
+        ->join('hinbans','hinbans.id','=','skus.hinban_id')
+        ->where('orders.status',1)
+        ->selectRaw('orders.shop_id ,skus.hinban_id,skus.col_id,skus.size_id,hinbans.m_price,FLOOR(hinbans.m_price * shops.rate /1000) as gedai,order_items.pcs')
+        ->distinct()
+        // ->groupBy('my_karts.maker_id')
+        // ->orderBy('order_items.sku_id')
+        ->get();
+
+        // dd($request->order,$orders[0]);
+        $csvHeader = [
+            'shop_id' ,'hinban_id','col_id','size_id','m_price','gedai','pcs'];
+
+        $csvData = $orders->toArray();
+
+        // dd($request,$orders,$csvHeader,$csvData);
+
+        $response = new StreamedResponse(function () use ($csvHeader, $csvData) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, $csvHeader);
+
+            foreach ($csvData as $row) {
+                $row = (array)$row; // 必要に応じてオブジェクトを配列に変換
+                mb_convert_variables('sjis-win', 'utf-8', $row);
+                fputcsv($handle, $row);
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="orders.csv"');
+
+        // Status変更
+        $orders=Order::where('status',1)->get();
+        foreach ($orders as $order) {
+            $order->status = 3;
+            $order->save();
+        }
+
+        return $response;
+    }
+
+    public function orderCSV_download_shop()
+    {
+        $orders = DB::table('orders')
+        ->join('order_items','order_items.order_id','=','orders.id')
+        ->join('shops','shops.id','=','orders.shop_id')
+        ->join('skus','skus.id','=','order_items.sku_id')
+        ->join('hinbans','hinbans.id','=','skus.hinban_id')
+        ->where('orders.status',1)
+        ->where('shops.company_id','>=',5000)
+        ->where('shops.company_id','<',7000)
+        ->selectRaw('orders.shop_id ,skus.hinban_id,skus.col_id,skus.size_id,hinbans.m_price,FLOOR(hinbans.m_price * shops.rate /1000) as gedai,order_items.pcs')
+        ->distinct()
+        // ->groupBy('my_karts.maker_id')
+        // ->orderBy('order_items.sku_id')
+        ->get();
+
+        // dd($request->order,$orders[0]);
+        $csvHeader = [
+            'shop_id' ,'hinban_id','col_id','size_id','m_price','gedai','pcs'];
+
+        $csvData = $orders->toArray();
+
+        // dd($request,$orders,$csvHeader,$csvData);
+
+        $response = new StreamedResponse(function () use ($csvHeader, $csvData) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, $csvHeader);
+
+            foreach ($csvData as $row) {
+                $row = (array)$row; // 必要に応じてオブジェクトを配列に変換
+                mb_convert_variables('sjis-win', 'utf-8', $row);
+                fputcsv($handle, $row);
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="orders.csv"');
+
+        // Status変更
+        $orders=Order::where('status',1)
+        ->where('shop_id','>=',5000)
+        ->where('shop_id','<',7000)
+        ->orwhere('shop_id',1104)
+        ->get();
+        foreach ($orders as $order) {
+            $order->status = 3;
+            $order->save();
+        }
+
+        return $response;
+    }
+
+    public function orderCSV_download_ws()
+    {
+        $orders = DB::table('orders')
+        ->join('order_items','order_items.order_id','=','orders.id')
+        ->join('shops','shops.id','=','orders.shop_id')
+        ->join('skus','skus.id','=','order_items.sku_id')
+        ->join('hinbans','hinbans.id','=','skus.hinban_id')
+        ->where('orders.status',1)
+        ->where('shops.company_id',400)
+        ->selectRaw('orders.shop_id ,skus.hinban_id,skus.col_id,skus.size_id,hinbans.m_price,FLOOR(hinbans.m_price * shops.rate /1000) as gedai,order_items.pcs')
+        ->distinct()
+        // ->groupBy('my_karts.maker_id')
+        // ->orderBy('order_items.sku_id')
+        ->get();
+
+        // dd($orders);
+        $csvHeader = [
+            'shop_id' ,'hinban_id','col_id','size_id','m_price','gedai','pcs'];
+
+        $csvData = $orders->toArray();
+
+        // dd($request,$orders,$csvHeader,$csvData);
+
+        $response = new StreamedResponse(function () use ($csvHeader, $csvData) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, $csvHeader);
+
+            foreach ($csvData as $row) {
+                $row = (array)$row; // 必要に応じてオブジェクトを配列に変換
+                mb_convert_variables('sjis-win', 'utf-8', $row);
+                fputcsv($handle, $row);
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="orders.csv"');
+
+        // Status変更
+        $orders=Order::where('status',1)
+        ->where('shop_id','>',4000)
+        ->where('shop_id','<',5000)->get();
+        // dd($orders);
+        foreach ($orders as $order) {
+            $order->status = 3;
+            $order->save();
+        }
+
+        return $response;
+    }
+
 
     // エラーがでたコード
     public function orderCSV_download2(Request $request)
