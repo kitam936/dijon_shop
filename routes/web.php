@@ -22,6 +22,8 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\InventoryWorkController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\PosWorkController;
+use App\Http\Controllers\MoveController;
+use App\Http\Controllers\MoveWorkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -259,6 +261,26 @@ Route::middleware('can:user-higher')
     Route::get('pos_result_show/{id}', [PosController::class, 'result_show'])->name('pos_result_show');
     Route::get('pos_result_show/{id}', [PosController::class, 'result_show'])->name('pos_result_show');
     Route::delete('pos_result_destroy/{id}', [PosController::class, 'result_destroy'])->name('pos_result_destroy');
+    //　返品・移動用
+    Route::get('move_scan', [MoveController::class, 'scan'])->name('move_scan');
+    Route::post('move_store', [MoveController::class, 'store'])->name('move_store');
+    Route::post('move_manual', [MoveController::class, 'manual'])->name('move_manual');
+    Route::get('move_confirm', [MoveController::class, 'confirm'])->name('move_confirm');
+    Route::post('move_complete', [MoveController::class, 'complete'])->name('move_complete');
+    Route::get('move_result/{id}', [MoveController::class, 'result'])->name('move_result');
+    Route::get('move_download/{id}', [MoveController::class, 'download'])->name('move_dl');
+    Route::get('move_download_all', [MoveController::class, 'download_all'])->name('move_dl_all'); //一括ダウンロード
+    Route::get('move_download_shop', [MoveController::class, 'download_shop'])->name('move_dl_shop'); //一括ダウンロード
+    Route::get('move_download_dc', [MoveController::class, 'download_dc'])->name('move_dl_dc'); //一括ダウンロード
+    Route::get('move_result_index', [MoveController::class, 'result_index'])->name('move_result_index');
+    Route::get('move_index', [MoveWorkController::class, 'index'])->name('move_index');
+    Route::post('move_update/{id}', [MoveWorkController::class, 'update'])->name('move_update');
+    Route::delete('move_destroy/{id}', [MoveWorkController::class, 'destroy'])->name('move_destroy');
+    Route::post('move_update2/{id}', [MoveWorkController::class, 'update2'])->name('move_update2');
+    Route::delete('move_destroy2/{id}', [MoveWorkController::class, 'destroy2'])->name('move_destroy2');
+    Route::get('move_result_show/{id}', [MoveController::class, 'result_show'])->name('move_result_show');
+    Route::get('move_result_show/{id}', [MoveController::class, 'result_show'])->name('move_result_show');
+    Route::delete('move_result_destroy/{id}', [MoveController::class, 'result_destroy'])->name('move_result_destroy');
 });
 
 
