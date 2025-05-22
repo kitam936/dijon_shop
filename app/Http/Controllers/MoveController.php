@@ -72,7 +72,7 @@ class MoveController extends Controller
             'price' => $price,
             'pcs' => 1,
         ]);
-        // return redirect()->back()->with(['message'=>'バーコードを読み取りました','status'=>'info']);
+
         return redirect()->route('move_scan')->with(['message'=>'バーコードを読み取りました','status'=>'info']);
     }
 
