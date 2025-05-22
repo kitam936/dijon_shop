@@ -45,7 +45,7 @@ class MoveController extends Controller
 
         $works_total = MoveWork::where('user_id', Auth::user()->id)
         ->groupBy('move_works.user_id')
-        ->selectRaw('move_works.user_id,sum(move_works.pcs) as pcs')                            // 5件に絞る
+        ->selectRaw('move_works.user_id,sum(move_works.pcs) as pcs')
         ->first();
         // dd($h_exist,$s_exist);
         return view('move.scan',compact('works','works_total','s_exist','h_exist'));
