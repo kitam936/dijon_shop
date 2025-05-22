@@ -39,7 +39,8 @@ class InventoryWorkController extends Controller
 
                 $works_total = InventoryWork::where('shop_id', Auth::user()->shop_id)
                 ->groupBy('inventory_works.shop_id')
-                ->selectRaw('inventory_works.shop_id,sum(inventory_works.pcs) as pcs')                            // 5件に絞る
+                ->selectRaw('inventory_works.shop_id,sum(inventory_works.pcs) as pcs')                            // 5件に絞るMMM
+
                 ->first();
                 // dd($works);
                 return view('inventory.index', compact('works','works_total','s_exist','h_exist'));
