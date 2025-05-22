@@ -154,11 +154,6 @@ class OrderController extends Controller
         ->get()
         ->toArray();
 
-        // dd($users);
-
-        // $order_info = Order::findOrFail($request->order_id2)
-        // ->toArray();
-
         $order_info = Order::Where('orders.id',$request->order_id2)
         ->join('shops','shops.id','orders.shop_id')
         ->join('users','users.id','orders.user_id')
@@ -166,13 +161,7 @@ class OrderController extends Controller
         ->first()
         ->toArray();
 
-
-
-        // dd($users,$order_info);
-
         foreach($users as $user){
-
-            // dd($request,$user,$order_info);
             SendOrderResponseMail::dispatch($order_info,$user);
         }
 
@@ -213,7 +202,7 @@ class OrderController extends Controller
         // ここでメール送信
 
         $users = User::Where('mailService','=',1)
-        ->where('shop_id','<',1000)
+        ->where('shop_id',101)
         ->get()->toArray();
 
         // $order_info = Order::findOrFail($order->id)
@@ -284,7 +273,7 @@ class OrderController extends Controller
 
         // ここでメール送信（非同期）
         $users = User::where('mailService', 1)
-            ->where('shop_id', '<', 1000)
+            ->where('shop_id', 101)
             ->get()
             ->toArray();
 

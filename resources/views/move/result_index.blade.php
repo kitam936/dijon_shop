@@ -182,6 +182,15 @@
                         @else
                         <td class="w-3/14 pl-2 text-sm md:px-4 py-1 text-center"> {{ $move_h->status_name }}</td>
                         @endif
+                        <td class="w-2/16 md:px-2 py-1">
+                            <div>
+                            <form method="POST" action="{{ route('move_result_destroy', $move_h->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="w-12 h-9 mt-1 items-center bg-red-500 text-sm text-white ml-0 hover:bg-red-600 rounded " onclick="return confirm('削除しますか？')">削除</button>
+                            </form>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
 

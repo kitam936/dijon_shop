@@ -43,7 +43,11 @@ class CommentController extends Controller
 
         // ここでメール送信
         $users = User::Where('mailService','=',1)
-        ->get()->toArray();
+        ->where('shop_id','<>',106)
+        ->where('shop_id','<',4000)
+        ->orwhere('shop_id','>',5000)
+        ->get()
+        ->toArray();
 
         $comment_info = Report::Where('reports.id','=',$request->report_id2)
         ->join('shops','reports.shop_id','shops.id')

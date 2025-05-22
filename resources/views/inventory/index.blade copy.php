@@ -25,7 +25,7 @@
 
 <div class="mt-4">
     <h3 class="flex ml-4 font-semibold text-ml text-indigo-700 leading-tight mt-4">
-        明細(新着順5)
+        明細(新着順)
 
         <div class="flex relative ml-20">
             <label for="total_pcs" class="leading-7 text-ml text-indigo-700 ">棚卸数</label>

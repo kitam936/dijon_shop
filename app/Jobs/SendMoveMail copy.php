@@ -8,18 +8,18 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\CommentMail;
+use App\Mail\MoveMail;
 
-class SendCommentMail implements ShouldQueue
+class SendMoveMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $comment_info;
+    public $move_info;
     public $user;
 
-    public function __construct($comment_info,$user)
+    public function __construct($move_info,$user)
     {
-        $this->comment_info = $comment_info;
+        $this->move_info = $move_info;
         $this->user = $user;
     }
 
@@ -28,6 +28,6 @@ class SendCommentMail implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->user['email'])->send(new CommentMail($this->comment_info,$this->user));
+        Mail::to($this->user['email'])->send(new MoveMail($this->move_info,$this->user));
     }
 }

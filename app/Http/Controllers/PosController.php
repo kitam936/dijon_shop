@@ -253,6 +253,122 @@ class PosController extends Controller
 
     }
 
+    public function download_iyc()
+    {
+        $inventorys = DB::table('pos_headers')
+        ->join('pos_details','pos_details.pos_header_id','pos_headers.id')
+        ->join('users','users.id','pos_details.user_id')
+        ->join('shops','shops.id','pos_headers.shop_id')
+        ->leftjoin('skus','skus.id','pos_details.sku_id')
+        ->where('pos_headers.status_id',1)
+        ->where('shops.company_id',5200)
+        ->groupBy('pos_headers.id','pos_headers.pos_date','pos_headers.shop_id','shops.shop_name','users.name','pos_details.sku_id','skus.hinban_id','skus.col_id','skus.size_id','pos_details.price')
+        ->selectRaw('pos_headers.id,pos_headers.pos_date,pos_headers.shop_id,shops.shop_name,users.name,pos_details.sku_id,skus.hinban_id,skus.col_id,skus.size_id,pos_details.price,sum(pos_details.pcs) as pcs,sum(pos_details.pcs * pos_details.price) as uriage')
+        ->orderBy('pos_headers.id','asc')
+        ->distinct()
+        // ->groupBy('my_karts.maker_id')
+        // ->orderBy('order_items.sku_id')
+        ->get();
+
+        // dd($inventorys);
+
+        $csvHeader = [
+            'id','date','shop_id','shop_name','staff_name','sku_id','hinban_id','col_id','size_id','price','pcs','uriage'];
+
+        $csvData = $inventorys->toArray();
+
+        // dd($request,$orders,$csvHeader,$csvData);
+
+        $response = new StreamedResponse(function () use ($csvHeader, $csvData) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, $csvHeader);
+
+            foreach ($csvData as $row) {
+                $row = (array)$row; // 必要に応じてオブジェクトを配列に変換
+                mb_convert_variables('sjis-win', 'utf-8', $row);
+                fputcsv($handle, $row);
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="POS実績.csv"');
+
+         // Status変更
+        $headers=PosHeader::where('status_id',1)
+        ->where('shop_id','>=',5200)
+        ->where('shop_id','<',5300)
+        ->get();
+        //  dd($headers);
+        foreach ($headers as $header) {
+            $header->status_id = 5;
+            $header->save();
+        }
+
+        return $response;
+
+    }
+
+    public function download_izc()
+    {
+        $inventorys = DB::table('pos_headers')
+        ->join('pos_details','pos_details.pos_header_id','pos_headers.id')
+        ->join('users','users.id','pos_details.user_id')
+        ->join('shops','shops.id','pos_headers.shop_id')
+        ->leftjoin('skus','skus.id','pos_details.sku_id')
+        ->where('pos_headers.status_id',1)
+        ->where('shops.company_id',5500)
+        ->groupBy('pos_headers.id','pos_headers.pos_date','pos_headers.shop_id','shops.shop_name','users.name','pos_details.sku_id','skus.hinban_id','skus.col_id','skus.size_id','pos_details.price')
+        ->selectRaw('pos_headers.id,pos_headers.pos_date,pos_headers.shop_id,shops.shop_name,users.name,pos_details.sku_id,skus.hinban_id,skus.col_id,skus.size_id,pos_details.price,sum(pos_details.pcs) as pcs,sum(pos_details.pcs * pos_details.price) as uriage')
+        ->orderBy('pos_headers.id','asc')
+        ->distinct()
+        // ->groupBy('my_karts.maker_id')
+        // ->orderBy('order_items.sku_id')
+        ->get();
+
+        // dd($inventorys);
+
+        $csvHeader = [
+            'id','date','shop_id','shop_name','staff_name','sku_id','hinban_id','col_id','size_id','price','pcs','uriage'];
+
+        $csvData = $inventorys->toArray();
+
+        // dd($request,$orders,$csvHeader,$csvData);
+
+        $response = new StreamedResponse(function () use ($csvHeader, $csvData) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, $csvHeader);
+
+            foreach ($csvData as $row) {
+                $row = (array)$row; // 必要に応じてオブジェクトを配列に変換
+                mb_convert_variables('sjis-win', 'utf-8', $row);
+                fputcsv($handle, $row);
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="POS実績.csv"');
+
+         // Status変更
+        $headers=PosHeader::where('status_id',1)
+        ->where('shop_id','>=',5500)
+        ->where('shop_id','<',5600)
+        ->get();
+        //  dd($headers);
+        foreach ($headers as $header) {
+            $header->status_id = 5;
+            $header->save();
+        }
+
+        return $response;
+
+    }
+
+
+
 
     public function result_index() {
         $pos_hs = DB::table('pos_headers')

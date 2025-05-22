@@ -9,8 +9,10 @@ use App\Models\MoveHeader;
 use App\Models\MoveWork;
 use App\Models\Hinban;
 use App\Models\User;
+use App\Models\Shop;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\SendMoveMail;
 
 class MoveController extends Controller
 {
@@ -106,6 +108,19 @@ class MoveController extends Controller
     {
         $headerId = null;
 
+        // メールテスト
+
+        // $users = User::Where('mailService','=',1)
+        // ->join('shops','shops.id','users.shop_id')
+        // ->where('shop_id','=',$request->to_shop_id)
+        // ->get();
+
+        // $move_info = Shop::Where('id',Auth::User()->shop_id)
+        // ->select('shops.id as shop_id','shops.shop_name')
+        // ->first();
+
+        // dd($users,$move_info);
+
         DB::transaction(function () use ($request, &$headerId) {
             $user_id = Auth::user()->id;
             $shop_id = Auth::user()->shop_id;
@@ -138,7 +153,24 @@ class MoveController extends Controller
 
             $headerId = $header->id;
         });
-            // return redirect('/inventory/result/' . MoveHeader::latest()->first()->id);
+
+        // ここでメール送信
+
+        $users = User::Where('mailService','=',1)
+        ->join('shops','shops.id','users.shop_id')
+        ->where('shop_id','=',$request->to_shop_id)
+        ->get()
+        ->toArray();
+
+        $move_info = Shop::Where('id',Auth::User()->shop_id)
+        ->select('shops.id as shop_id','shops.shop_name')
+        ->first()
+        ->toArray();
+
+        foreach($users as $user){
+            SendMoveMail::dispatch($user,$move_info);
+        }
+
             return to_route('move_result_index');
         }
 
@@ -186,9 +218,9 @@ class MoveController extends Controller
         $response->headers->set('Content-Disposition', 'attachment; filename="商品移動Data.csv"');
 
          // Status変更
-         $header=MoveHeader::findOrFail($id);
-         $header->status_id = 5;
-         $header->save();
+        $header=MoveHeader::findOrFail($id);
+        $header->status_id = 5;
+        $header->save();
 
         return $response;
 

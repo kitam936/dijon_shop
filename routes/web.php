@@ -252,6 +252,8 @@ Route::middleware('can:user-higher')
     Route::get('pos_result/{id}', [PosController::class, 'result'])->name('pos_result');
     Route::get('pos_download/{id}', [PosController::class, 'download'])->name('pos_dl');
     Route::get('pos_download_all', [PosController::class, 'download_all'])->name('pos_dl_all'); //一括ダウンロード
+    Route::get('pos_download_izc', [PosController::class, 'download_izc'])->name('pos_dl_izc'); //IZC一括ダウンロード
+    Route::get('pos_download_iyc', [PosController::class, 'download_iyc'])->name('pos_dl_iyc'); //IYC一括ダウンロード
     Route::get('pos_result_index', [PosController::class, 'result_index'])->name('pos_result_index');
     Route::get('pos_index', [PosWorkController::class, 'index'])->name('pos_index');
     Route::post('pos_update/{id}', [PosWorkController::class, 'update'])->name('pos_update');
@@ -270,8 +272,8 @@ Route::middleware('can:user-higher')
     Route::get('move_result/{id}', [MoveController::class, 'result'])->name('move_result');
     Route::get('move_download/{id}', [MoveController::class, 'download'])->name('move_dl');
     Route::get('move_download_all', [MoveController::class, 'download_all'])->name('move_dl_all'); //一括ダウンロード
-    Route::get('move_download_shop', [MoveController::class, 'download_shop'])->name('move_dl_shop'); //一括ダウンロード
-    Route::get('move_download_dc', [MoveController::class, 'download_dc'])->name('move_dl_dc'); //一括ダウンロード
+    Route::get('move_download_shop', [MoveController::class, 'download_shop'])->name('move_dl_shop'); //shop一括ダウンロード
+    Route::get('move_download_dc', [MoveController::class, 'download_dc'])->name('move_dl_dc'); //kanda一括ダウンロード
     Route::get('move_result_index', [MoveController::class, 'result_index'])->name('move_result_index');
     Route::get('move_index', [MoveWorkController::class, 'index'])->name('move_index');
     Route::post('move_update/{id}', [MoveWorkController::class, 'update'])->name('move_update');

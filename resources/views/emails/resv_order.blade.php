@@ -1,6 +1,6 @@
 <p class="mb-4">{{ $user['name']}}様</p>
 
-<p class="mb-4">dijon_shop　に追加発注がありました。</p>
+<p class="mb-4">店舗から発注がありました。</p>
 
 追加発注リスト
 
@@ -19,5 +19,5 @@ https://shop.dijon1988.net
 
 <br><br>
 
-***** dijon_shop *****
+*****     Dijon Co.Ltd.     *****
 

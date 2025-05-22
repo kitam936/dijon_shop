@@ -20,10 +20,15 @@
             <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2">
                 <button type="button" class="w-32 text-center text-sm text-white bg-green-500 bpos-0 py-1 px-2 focus:outline-none hover:bg-green-700 rounded " onclick="location.href='{{ route('pos_scan') }}'" >SCAN開始</button>
             </div>
+            </div>
+            <div class="flex">
             @if($user->shop_id == 101)
             @if($dl_new)
             <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2">
-                <button type="button" class="w-32 text-center text-sm text-white bg-blue-500 bpos-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('pos_dl_all') }}'" >New一括DL</button>
+                <button type="button" class="w-32 text-center text-sm text-white bg-blue-500 bpos-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('pos_dl_iyc') }}'" >IYC_New一括DL</button>
+            </div>
+            <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2">
+                <button type="button" class="w-32 text-center text-sm text-white bg-blue-500 bpos-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('pos_dl_izc') }}'" >IZC_New一括DL</button>
             </div>
             @else
             <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2 text-indigo-700">未ダウンロードのデータはありません</div>

@@ -20,12 +20,14 @@
             <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2">
                 <button type="button" class="w-32 text-center text-sm text-white bg-green-500 binventory-0 py-1 px-2 focus:outline-none hover:bg-green-700 rounded " onclick="location.href='{{ route('inventory_scan') }}'" >棚卸開始</button>
             </div>
+            @if($user->shop_id == 101)
             @if($dl_new)
             <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2">
                 <button type="button" class="w-32 text-center text-sm text-white bg-blue-500 binventory-0 py-1 px-2 focus:outline-none hover:bg-blue-700 rounded " onclick="location.href='{{ route('inventory_dl_all') }}'" >New一括DL</button>
             </div>
             @else
             <div class="pl-2 ml-4 mt-2 md:ml-4 md:mt-2 text-indigo-700">未ダウンロードのデータはありません</div>
+            @endif
             @endif
             </div>
             @endif

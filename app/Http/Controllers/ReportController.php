@@ -198,7 +198,14 @@ class ReportController extends Controller
             $fileNameToStore4 = '';
         };
 
-        // dd($request->sh_id,$request->comment);
+        // $users = User::Where('mailService','=',1)
+        // ->where('shop_id','<>',106)
+        // ->where('shop_id','<',4000)
+        // ->orwhere('shop_id','>',5000)
+        // ->get();
+
+        // dd($users);
+
         Report::create([
             'user_id' => $login_user->id,
             'shop_id' => $request->sh_id2,
@@ -212,7 +219,11 @@ class ReportController extends Controller
         // ここでメール送信
 
         $users = User::Where('mailService','=',1)
-        ->get()->toArray();
+        ->where('shop_id','<>',106)
+        ->where('shop_id','<',4000)
+        ->orwhere('shop_id','>',5000)
+        ->get()
+        ->toArray();
 
         // $report_info = Shop::findOrFail($request->sh_id2)
         // ->toArray();
@@ -283,6 +294,14 @@ class ReportController extends Controller
             $fileNameToStore4 = '';
         };
 
+        // $users = User::Where('mailService','=',1)
+        // ->where('shop_id','<>',106)
+        // ->where('shop_id','<',4000)
+        // ->orwhere('shop_id','>',5000)
+        // ->get();
+
+        // dd($users);
+
         // dd($request,$request->co_id,$request->sh_id,$request->report,$request->image1);
         Report::create([
             'user_id' => $login_user->id,
@@ -294,7 +313,11 @@ class ReportController extends Controller
             'report' => $request->report,
         ]);
 
+
         $users = User::Where('mailService','=',1)
+        ->where('shop_id','<>',106)
+        ->where('shop_id','<',4000)
+        ->orwhere('shop_id','>',5000)
         ->get()->toArray();
 
         // $report_info = Shop::findOrFail($request->sh_id)
